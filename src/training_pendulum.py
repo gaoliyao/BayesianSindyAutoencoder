@@ -10,35 +10,9 @@ def train_network(training_data, val_data, params):
     # SET UP NETWORK
     autoencoder_network = full_network(params)
     loss, losses, loss_refinement = define_loss_init(autoencoder_network, params)
-    # add L2
-    vars = tf.trainable_variables() 
-    # remove sindy coefficients
-#     print(vars)
-    vars = vars[:-1]
-    lossL2 = tf.add_n([ tf.nn.l2_loss(v) for v in vars ]) * params['l2_weight']
-    # end of L2
-    loss = loss + lossL2
     learning_rate = tf.placeholder(tf.float32, name='learning_rate')
-    max_grad_norm = params['max_grad_norm']
-    
-    # two optimizers for Xi and NN params
-    optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
-    tvars = tf.trainable_variables()
-    grads = tf.gradients(loss, tvars)
-    grads, _ = tf.clip_by_global_norm(grads, max_grad_norm)
-    global_step = tf.train.get_or_create_global_step()
-    train_op = optimizer.apply_gradients(zip(grads, tvars), global_step=global_step, name='train_op')
-    
-    optimizer_refinement = tf.train.AdamOptimizer(learning_rate=learning_rate)
-#     optimizer_refinement = tf.train.GradientDescentOptimizer(learning_rate=learning_rate)
-    tvars = tf.trainable_variables()
-    grads = tf.gradients(loss_refinement, tvars)
-    grads, _ = tf.clip_by_global_norm(grads, max_grad_norm)
-    global_step = tf.train.get_or_create_global_step()
-    train_op_refinement = optimizer_refinement.apply_gradients(zip(grads, tvars), global_step=global_step, name='train_op_refinement')
-    
-#     train_op = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss)
-#     train_op_refinement = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss_refinement)
+    train_op = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss)
+    train_op_refinement = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss_refinement)
     
 #     train_op = tf.train.GradientDescentOptimizer(learning_rate=learning_rate).minimize(loss)
 #     train_op_refinement = tf.train.GradientDescentOptimizer(learning_rate=learning_rate).minimize(loss_refinement)
@@ -84,57 +58,30 @@ def train_network(training_data, val_data, params):
     print('TRAINING')
     v1_dist = tf.distributions.Normal(loc=tf.constant(0.0), scale=tf.sqrt(v1))
     v0_dist = tf.distributions.Laplace(loc=tf.constant(0.0), scale=v0)
-    save_sindy_coeff = np.zeros((params['threshold_frequency'], params['library_dim'], 1))
+    save_sindy_coeff = np.zeros((110, 12, 1))
     with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, allow_soft_placement=True)) as sess:
         sess.run(tf.global_variables_initializer())
-        train_dict = None
         for i in range(params['max_epochs']):
-            save_sindy_coeff[i%params['threshold_frequency']] = sess.run(autoencoder_network['sindy_coefficients']*params['coefficient_mask'])
-            if (i+1) % 2000 == 0:
-                params['learning_rate'] /= 1.6
             if i % params['print_frequency'] == 0:
                 print("=========================")
                 print(sess.run(autoencoder_network['p_star']))
-                #################### debug network ####################
                 print(sess.run(autoencoder_network['sindy_coefficients']*params['coefficient_mask']))
-                print("encoder_weights", sess.run(tf.norm(autoencoder_network['encoder_weights'][0], axis = None)
-                                                 + tf.norm(autoencoder_network['encoder_weights'][1], axis = None)))
-                print("encoder_bias", sess.run(tf.norm(autoencoder_network['encoder_biases'][0], axis = None)
-                                              + tf.norm(autoencoder_network['encoder_biases'][1], axis = None)))
-                print("decoder_weights", sess.run(tf.norm(autoencoder_network['decoder_weights'][0], axis = None)
-                                                 + tf.norm(autoencoder_network['decoder_weights'][1], axis = None)))
-                print("decoder_bias", sess.run(tf.norm(autoencoder_network['decoder_biases'][0], axis = None)
-                                              + tf.norm(autoencoder_network['decoder_biases'][1], axis = None)))
-
-            idxs_all = np.arange(0, params['epoch_size'])
+#             start_time_huge = time.time()
+#             print("--- %s seconds for 0 ---" % (time.time() - start_time_huge))
             for j in range(params['epoch_size']//params['batch_size']):
-                batch_idxs = np.random.choice(idxs_all, size=params['batch_size'], replace=False)
-                idxs_all = np.setdiff1d(idxs_all, batch_idxs)
-#                 batch_idxs = np.arange(j*params['batch_size'], (j+1)*params['batch_size'])
+                batch_idxs = np.arange(j*params['batch_size'], (j+1)*params['batch_size'])
                 train_dict = create_feed_dictionary(training_data, params, idxs=batch_idxs)
-                
                 sess.run(train_op, feed_dict=train_dict)
-                if j == 0 and i % params['print_frequency'] == 0:
-                    if i % 300 == 0:
-                        x_decode = sess.run(autoencoder_network['x_decode'], feed_dict=train_dict)
-                        dx_decode = sess.run(autoencoder_network['dx_decode'], feed_dict=train_dict)
-                        ddx_decode = sess.run(autoencoder_network['ddx_decode'], feed_dict=train_dict)
-                        with open('decode_x.npy', 'wb') as f:
-                            np.save(f, x_decode)
-                        with open('dx_decode.npy', 'wb') as f:
-                            np.save(f, dx_decode)
-                        with open('ddx_decode.npy', 'wb') as f:
-                            np.save(f, ddx_decode)
-                        with open('z.npy', 'wb') as f:
-                            np.save(f, sess.run(autoencoder_network['z'], feed_dict=train_dict))
-                        with open('dz.npy', 'wb') as f:
-                            np.save(f, sess.run(autoencoder_network['dz'], feed_dict=train_dict))
-                        with open('ddz.npy', 'wb') as f:
-                            np.save(f, sess.run(autoencoder_network['ddz'], feed_dict=train_dict))
-                        with open('ddz_predict.npy', 'wb') as f:
-                            np.save(f, sess.run(autoencoder_network['ddz_predict'], feed_dict=train_dict))
+                
             # End of each eopch, we optimize a new p_star with Langevin noise
-                                
+            
+            # save file
+            if i >= params['max_epochs']-100:
+                save_sindy_coeff[i-900] = sess.run(autoencoder_network['sindy_coefficients'])
+            if i >= params['max_epochs']-1:
+                with open('save_1.npy', 'wb') as f:
+                    np.save(f, save_sindy_coeff)
+                    
             if params['prior'] == "spike-and-slab":
                 sindy_coefficients = autoencoder_network['sindy_coefficients']
                 if i >= params['threshold_start']:
@@ -142,15 +89,21 @@ def train_network(training_data, val_data, params):
                 else:
                     mask = tf.ones_like(sindy_coefficients)
 #                 print(sess.run(mask))
-                p_star = autoencoder_network['p_star']
                 sindy_coefficients = tf.multiply(sindy_coefficients, mask)
                 a_star = tf.multiply(tf.exp(v1_dist.log_prob(sindy_coefficients)), params['pi'])
                 b_star = tf.multiply(tf.exp(v0_dist.log_prob(sindy_coefficients)), (1 - params['pi']))
                 a_divide_a_and_b = tf.divide(tf.round(tf.multiply(a_star, 10000)), tf.add(tf.round(tf.multiply(a_star, 10000)), tf.round(tf.multiply(b_star, 10000))))
                 a_divide_a_and_b = tf.clip_by_value(a_divide_a_and_b, clip_value_min=0, clip_value_max=1)
                 
-                autoencoder_network['p_star'] = tf.add(tf.multiply((1 - params["decay"]), p_star), tf.multiply(params["decay"], a_divide_a_and_b))
-                 
+#                 print("p_star before")
+#                 print(sess.run(autoencoder_network['p_star']))
+                
+                autoencoder_network_propose = tf.add(tf.multiply((1 - decay), autoencoder_network['p_star']), tf.multiply(decay, a_divide_a_and_b))
+                if sess.run(tf.reduce_max(tf.abs(autoencoder_network_propose - autoencoder_network['p_star']))) > 0.05:
+                    print("error")
+                else:
+                    autoencoder_network['p_star'] = autoencoder_network_propose
+                        
                 autoencoder_network['p_star'] = tf.multiply(autoencoder_network['p_star'], mask)
                 
                 autoencoder_network['d_star0'] = tf.add(tf.multiply((1 - decay), autoencoder_network['d_star0']), tf.multiply(decay, tf.divide((1 - autoencoder_network['p_star']), v0)))
@@ -164,26 +117,19 @@ def train_network(training_data, val_data, params):
                 noise_ = tf.random.normal(shape = sindy_coefficients.get_shape(), mean=0., stddev=temp*noise_std)
                 noise_ = tf.multiply(noise_, mask)
                 autoencoder_network['sindy_coefficients'] = tf.add(sindy_coefficients, noise_)
-#                 params["decay"] /= (1.005)
-#                 params["learning_rate"] /= (1.005)
-#                 print("dz difference norm: ")
-#                 print(sess.run(tf.reduce_mean(tf.square(autoencoder_network['dz']-autoencoder_network['dz_tf']))))
+                params["decay"] /= (1.005)
+                params["learning_rate"] /= (1.005)
 #                 temp /= 1.002
 
 #             print("--- %s seconds for one epoch ---" % (time.time() - start_time_huge))
             
             if params['print_progress'] and (i % params['print_frequency'] == 0):
-                validation_losses.append(print_progress(sess, i, loss, losses, train_dict, validation_dict, x_norm, sindy_predict_norm_x, params))
+                validation_losses.append(print_progress(sess, i, loss, losses, train_dict, validation_dict, x_norm, sindy_predict_norm_x))
                 
             if params['sequential_thresholding'] and (i % params['threshold_frequency'] == 0) and (i > params['threshold_start']):
-                # sindy_coeff_sd
-                print("np.std(save_sindy_coeff, axis=0)", np.std(save_sindy_coeff, axis=0, keepdims=True)[0])
-                std_sindy = np.std(save_sindy_coeff, axis=0, keepdims=True)
                 if params['prior'] == "spike-and-slab":
                     active_num_mean = np.sum(params['coefficient_mask'] * params['pi'])
-#                     params['coefficient_mask'] = ~((np.abs(sess.run(autoencoder_network['p_star'])) < params['coefficient_threshold']) and np.where(std_sindy < 2*params['coefficient_threshold'], True, False))
-                    params['coefficient_mask'] = ~((np.abs(sess.run(autoencoder_network['p_star'])) < params['coefficient_threshold']) & (std_sindy[0] < params['coefficient_threshold']))
-                    print("params['coefficient_mask']", params['coefficient_mask'])
+                    params['coefficient_mask'] = np.abs(sess.run(autoencoder_network['p_star'])) > params['coefficient_threshold']
                     # debug version
     #                 params['coefficient_mask'] = np.zeros([12,1])
     #                 params['coefficient_mask'][-2][0] = 1
@@ -196,11 +142,11 @@ def train_network(training_data, val_data, params):
                     print("params['pi']")
                     print(params['pi'])
                 if params['prior'] == "laplace":
-                    params['coefficient_mask'] = ~((np.abs(params['coefficient_mask']*sess.run(autoencoder_network['sindy_coefficients'])) < params['coefficient_threshold']) & (std_sindy[0] < 0.2))
+                    params['coefficient_mask'] = np.abs(sess.run(autoencoder_network['sindy_coefficients'])) > params['coefficient_threshold']
                 validation_dict['coefficient_mask:0'] = params['coefficient_mask']
                 print('THRESHOLDING: %d active coefficients' % np.sum(params['coefficient_mask']))
 #                 params['loss_weight_sindy_regularization'] /= 0.8
-#                 loss, losses, loss_refinement = define_loss_init(autoencoder_network, params)
+                loss, losses, loss_refinement = define_loss_init(autoencoder_network, params)
                 
                 sindy_model_terms.append(np.sum(params['coefficient_mask']))
 
@@ -214,7 +160,7 @@ def train_network(training_data, val_data, params):
                 sess.run(train_op_refinement, feed_dict=train_dict)
             
             if params['print_progress'] and (i_refinement % params['print_frequency'] == 0):
-                validation_losses.append(print_progress(sess, i_refinement, loss_refinement, losses, train_dict, validation_dict, x_norm, sindy_predict_norm_x, params))
+                validation_losses.append(print_progress(sess, i_refinement, loss_refinement, losses, train_dict, validation_dict, x_norm, sindy_predict_norm_x))
 
         saver.save(sess, params['data_path'] + params['save_name'])
         print("params['save_name']")
@@ -245,10 +191,9 @@ def train_network(training_data, val_data, params):
         return results_dict
 
 
-def print_progress(sess, i, loss, losses, train_dict, validation_dict, x_norm, sindy_predict_norm, params):
+def print_progress(sess, i, loss, losses, train_dict, validation_dict, x_norm, sindy_predict_norm):
     """
     Print loss function values to keep track of the training progress.
-
     Arguments:
         sess - the tensorflow session
         i - the training iteration
@@ -259,7 +204,6 @@ def print_progress(sess, i, loss, losses, train_dict, validation_dict, x_norm, s
         x_norm - float, the mean square value of the input
         sindy_predict_norm - float, the mean square value of the time derivatives of the input.
         Can be first or second order time derivatives depending on the model order.
-
     Returns:
         Tuple of losses calculated on the validation set.
     """
@@ -269,9 +213,6 @@ def print_progress(sess, i, loss, losses, train_dict, validation_dict, x_norm, s
     print(losses.keys())
     print("   training loss {0}, {1}".format(training_loss_vals[0],
                                              training_loss_vals[1:]))
-    print("   train loss (original scale) {0}, {1}, {2}, {3}, {4}".format(training_loss_vals[0],
-                                             training_loss_vals[1]/params['loss_weight_decoder'], training_loss_vals[2]/params['loss_weight_sindy_x'],
-                                             training_loss_vals[3]/params['loss_weight_sindy_z'], training_loss_vals[4]/params['loss_weight_sindy_regularization']))
     print("   validation loss {0}, {1}".format(validation_loss_vals[0],
                                                validation_loss_vals[1:]))
     decoder_losses = sess.run((losses['decoder'], losses['sindy_x']), feed_dict=validation_dict)
@@ -283,7 +224,6 @@ def print_progress(sess, i, loss, losses, train_dict, validation_dict, x_norm, s
 def create_feed_dictionary(data, params, idxs=None):
     """
     Create the feed dictionary for passing into tensorflow.
-
     Arguments:
         data - Dictionary object containing the data to be passed in. Must contain input data x,
         along the first (and possibly second) order time derivatives dx (ddx).
@@ -295,7 +235,6 @@ def create_feed_dictionary(data, params, idxs=None):
         model), and learning rate (float that determines the learning rate).
         idxs - Optional array of indices that selects which examples from the dataset are passed
         in to tensorflow. If None, all examples are used.
-
     Returns:
         feed_dict - Dictionary object containing the relevant data to pass to tensorflow.
     """

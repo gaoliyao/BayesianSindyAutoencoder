@@ -1,7 +1,7 @@
 import sys
 sys.path.append("../../src")
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 import datetime
 import pandas as pd
 import numpy as np
@@ -26,10 +26,10 @@ params['include_sine'] = True
 params['library_dim'] = library_size(2*params['latent_dim'], params['poly_order'], params['include_sine'], True)
 
 # sequential thresholding parameters
-params['sequential_thresholding'] = False
+params['sequential_thresholding'] = True
 params['coefficient_threshold'] = 0.1
 params['threshold_frequency'] = 50
-params['threshold_start'] = 300
+params['threshold_start'] = 200
 params['coefficient_mask'] = np.ones((params['library_dim'], params['latent_dim']))
 params['coefficient_initialization'] = 'constant'
 
@@ -57,18 +57,18 @@ params['refinement_epochs'] = 501
 
 # Bayesian parameters
 # Setting of Spike-slab prior
-# params['prior'] = "spike-and-slab"
-# params['loss_weight_sindy_regularization'] = 1e-3
+params['prior'] = "spike-and-slab"
+params['loss_weight_sindy_regularization'] = 1e-3
 
 # Setting of Laplace prior
-params['prior'] = "laplace"
-params['loss_weight_sindy_regularization'] = 1e-5
-params['learning_rate'] = 1e-4
+# params['prior'] = "laplace"
+# params['loss_weight_sindy_regularization'] = 1e-5
+# params['learning_rate'] = 1e-4
 
 params['pi'] = 0.1
-params['c_std'] = 10.0
+params['c_std'] = 2.0
 params["epsilon"] = 0.1
-params["decay"] = 0.04
+params["decay"] = 0.01
 params["sigma"] = 1.0
 
 num_experiments = 1
