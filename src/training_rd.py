@@ -63,11 +63,11 @@ def train_network(training_data, val_data, params):
     with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, allow_soft_placement=True)) as sess:
         sess.run(tf.global_variables_initializer())
         for i in range(params['max_epochs']):
-            if i % params['print_frequency'] == 0:
-                print("=========================")
+            print("=================", i, " ==================")
+            if (i % params['print_frequency'] == 0):
                 print(sess.run(autoencoder_network['p_star']))
                 print(sess.run(autoencoder_network['sindy_coefficients']*params['coefficient_mask']))
-                start_time_huge = time.time()
+            start_time_huge = time.time()
             for j in range(params['epoch_size']//params['batch_size']):
                 batch_idxs = np.arange(j*params['batch_size'], (j+1)*params['batch_size'])
                 train_dict = create_feed_dictionary(training_data, params, idxs=batch_idxs)
@@ -83,14 +83,16 @@ def train_network(training_data, val_data, params):
                 with open('save_rd.npy', 'wb') as f:
                     np.save(f, save_sindy_coeff)
                     
-            if params['prior'] == "spike-and-slab":
+            if params['prior'] == "spike-and-slab" and i % 2 == 0:
+                print("--- %s seconds for before prior computation ---" % (time.time() - start_time_huge))
                 sindy_coefficients = autoencoder_network['sindy_coefficients']
                 p_star = autoencoder_network['p_star']
                 
-                a_star = tf.multiply(tf.exp(v1_dist.log_prob(sindy_coefficients)), params['pi'])
-                b_star = tf.multiply(tf.exp(v0_dist.log_prob(sindy_coefficients)), (1 - params['pi']))
-                a_divide_a_and_b = tf.divide(tf.round(tf.multiply(a_star, 10000)), tf.add(tf.round(tf.multiply(a_star, 10000)), tf.round(tf.multiply(b_star, 10000))))
-                a_divide_a_and_b = tf.clip_by_value(a_divide_a_and_b, clip_value_min=0, clip_value_max=1)
+                log_a_star = v1_dist.log_prob(sindy_coefficients)
+                log_b_star = v0_dist.log_prob(sindy_coefficients)
+                b_divide_a = tf.exp(log_b_star-log_a_star) * (1-params["pi"]) / params["pi"]
+                a_divide_a_and_b = 1.0 / (1.0 + b_divide_a)
+                # a_divide_a_and_b = tf.clip_by_value(a_divide_a_and_b, clip_value_min=0, clip_value_max=1)
                 
                 p_star = tf.add(tf.multiply((1 - params["decay"]), p_star), tf.multiply(params["decay"], a_divide_a_and_b))
                 
@@ -98,22 +100,24 @@ def train_network(training_data, val_data, params):
                 autoencoder_network['d_star1'] = tf.add(tf.multiply((1 - params["decay"]), autoencoder_network['d_star1']), tf.multiply(params["decay"], tf.divide(p_star, v1)))
                 autoencoder_network['p_star'] = tf.multiply(p_star, params['coefficient_mask'])
                 
-                alpha = 0.01
-                noise_std = np.sqrt(2 * alpha * params['learning_rate'])
-                noise_ = tf.random.normal(shape = sindy_coefficients.get_shape(), mean=0., stddev=temp*noise_std)
-#                 noise_ = tf.multiply(noise_, mask)
-                autoencoder_network['sindy_coefficients'] = tf.add(sindy_coefficients, noise_)
+#                 alpha = 0.001
+#                 noise_std = np.sqrt(2 * alpha * params['learning_rate'])
+#                 noise_ = tf.random.normal(shape = sindy_coefficients.get_shape(), mean=0., stddev=temp*noise_std)
+# #                 noise_ = tf.multiply(noise_, mask)
+#                 autoencoder_network['sindy_coefficients'] = tf.add(sindy_coefficients, noise_)
 
-#                 params["decay"] /= (1.0008)
-#                 params["learning_rate"] /= (1.0008)
+                params["decay"] /= (1.0008)
+                params["learning_rate"] /= (1.0008)
+                print("--- %s seconds for after prior computation ---" % (time.time() - start_time_huge))
 
 #             print("--- %s seconds for one epoch ---" % (time.time() - start_time_huge))
             
             if params['print_progress'] and (i % params['print_frequency'] == 0):
+                print("--- %s seconds for after prior before validation ---" % (time.time() - start_time_huge))
                 validation_losses.append(print_progress(sess, i, loss, losses, train_dict, validation_dict, x_norm, sindy_predict_norm_x))
-                print("params['loss_weight_sindy_regularization']")
-                print(params['loss_weight_sindy_regularization'])
-                print("--- %s seconds for print_frequency epochs ---" % (time.time() - start_time_huge))
+                # print("params['loss_weight_sindy_regularization']")
+                # print(params['loss_weight_sindy_regularization'])
+                print("--- %s seconds for after prior after validation ---" % (time.time() - start_time_huge))
                 
             if params['sequential_thresholding'] and (i % params['threshold_frequency'] == 0) and (i > params['threshold_start']):
                 if params['prior'] == "spike-and-slab":

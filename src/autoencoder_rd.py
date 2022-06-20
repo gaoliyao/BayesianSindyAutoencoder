@@ -39,8 +39,6 @@ def full_network(params):
     
     if model_order == 1:
         dz = z_derivative(x, dx, encoder_weights, encoder_biases, activation=activation)
-        dz_tf = tf.gradients(z, x)
-#         dz_tf = tf.multiply(dx, dz_tf)
         Theta = sindy_library_tf(z, latent_dim, poly_order, include_sine)
     else:
         dz,ddz = z_derivative_order2(x, dx, ddx, encoder_weights, encoder_biases, activation=activation)
@@ -98,7 +96,6 @@ def full_network(params):
     network['dx'] = dx
     network['z'] = z
     network['dz'] = dz
-    network['dz_tf'] = dz_tf
     network['x_decode'] = x_decode
     network['dx_decode'] = dx_decode
     network['dx_decode_tf'] = dx_decode_tf
@@ -152,7 +149,7 @@ def define_loss_init(network, params):
     else:
         losses['sindy_z'] = tf.reduce_mean((ddz - ddz_predict)**2) * params['loss_weight_sindy_z']
         losses['sindy_x'] = tf.reduce_mean((ddx - ddx_decode)**2) * params['loss_weight_sindy_x']
-#     losses['langevin_noise'] = xi_noise_gaussian(network, params)
+    losses['langevin_noise'] = xi_noise_gaussian(network, params)
     if params['prior'] == None:
         losses['sindy_regularization'] = tf.reduce_mean(tf.abs(sindy_coefficients)) * params['loss_weight_sindy_regularization']
     if params['prior'].lower() == "laplace":
@@ -165,7 +162,8 @@ def define_loss_init(network, params):
            + losses['sindy_x']
 #     loss *= (50*1000)
     loss += losses['sindy_regularization']
-           
+    loss += losses['langevin_noise']
+
     
     loss_refinement = losses['decoder'] \
                       + losses['sindy_z'] \
@@ -184,7 +182,6 @@ def laplace_prior(network, params):
 def spike_and_slab_prior_init(network, params):
     sindy_coefficients = params['coefficient_mask']*network['sindy_coefficients']
     
-    # TODO: start work from here
     prior_loss = 0
     prior_loss += tf.reduce_mean(tf.square(sindy_coefficients)*network['d_star1'])/(2.0*params['sigma'])
     prior_loss += tf.reduce_mean(tf.abs(sindy_coefficients)*network['d_star0'])/(params['sigma'])
@@ -192,13 +189,14 @@ def spike_and_slab_prior_init(network, params):
     return prior_loss
 
 def xi_noise_gaussian(network, params):
-    alpha = 0.01
-    temp = 10.0
-#     noise_std = np.sqrt(2 * alpha * params['learning_rate'])
-    noise_std = np.sqrt(2 * alpha)
-    sindy_coefficients = params['coefficient_mask']*network['sindy_coefficients']
+    alpha = 0.001
+    temp = 3.0
+    noise_std = np.sqrt(2 * alpha * params['learning_rate'])
+    sindy_coefficients = network['sindy_coefficients']
     noise_ = tf.distributions.Normal(0., temp*noise_std*tf.ones(sindy_coefficients.get_shape()))
-    noise_loss = tf.reduce_sum(sindy_coefficients * noise_.sample())
+    # noise_loss = tf.reduce_sum(sindy_coefficients * noise_.sample())
+    noise_loss = tf.reduce_sum(tf.ones(sindy_coefficients.get_shape()) * params['coefficient_mask'] * noise_.sample())
+    noise_loss /= 1000
     return noise_loss
 
 def linear_autoencoder(x, input_dim, latent_dim):
