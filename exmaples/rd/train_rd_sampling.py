@@ -24,7 +24,7 @@ params['library_dim'] = library_size(params['latent_dim'], params['poly_order'],
 # sequential thresholding parameters
 params['sequential_thresholding'] = True
 params['coefficient_threshold'] = 0.1
-params['threshold_frequency'] = 500
+params['threshold_frequency'] = 250
 params['threshold_start'] = 0
 params['coefficient_mask'] = np.ones((params['library_dim'], params['latent_dim']))
 params['coefficient_initialization'] = 'normal'
