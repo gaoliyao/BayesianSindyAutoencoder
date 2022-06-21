@@ -108,8 +108,8 @@ def train_network(training_data, val_data, params):
                 # noise_ = tf.random.normal(shape = sindy_coefficients.get_shape(), mean=0., stddev=temp*noise_std)
                 # noise_ = tf.multiply(noise_, mask)
                 # autoencoder_network['sindy_coefficients'] = tf.add(sindy_coefficients, noise_)
-                params["decay"] /= (1.005)
-                params["learning_rate"] /= (1.005)
+                # params["decay"] /= (1.005)
+                # params["learning_rate"] /= (1.005)
                 # temp /= 1.002
 
 #             print("--- %s seconds for one epoch ---" % (time.time() - start_time_huge))

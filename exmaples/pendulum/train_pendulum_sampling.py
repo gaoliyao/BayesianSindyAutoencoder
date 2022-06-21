@@ -58,7 +58,7 @@ params['refinement_epochs'] = 501
 # Bayesian parameters
 # Setting of Spike-slab prior
 params['prior'] = "spike-and-slab"
-params['loss_weight_sindy_regularization'] = 1e-3
+params['loss_weight_sindy_regularization'] = 1e-2
 
 # Setting of Laplace prior
 # params['prior'] = "laplace"
@@ -66,7 +66,7 @@ params['loss_weight_sindy_regularization'] = 1e-3
 # params['learning_rate'] = 1e-4
 
 params['pi'] = 0.1
-params['c_std'] = 10.0
+params['c_std'] = 4.0
 params["epsilon"] = 0.1
 params["decay"] = 0.02
 params["sigma"] = 1.0
