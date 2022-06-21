@@ -31,9 +31,9 @@ def full_network(params):
         ddx = tf.placeholder(tf.float32, shape=[None, input_dim], name='ddx')
 
     if activation == 'linear':
-        z, x_decode, encoder_weights, encoder_biases, decoder_weights, decoder_biases = linear_autoencoder(x, input_dim, latent_dim)
+        z, x_decode, encoder_weights, encoder_biases, decoder_weights, decoder_biases = linear_autoencoder(x, input_dim, latent_dim, init_sigma = params['init_sigma'])
     else:
-        z, x_decode, encoder_weights, encoder_biases, decoder_weights, decoder_biases = nonlinear_autoencoder(x, input_dim, latent_dim, params['widths'], activation=activation)
+        z, x_decode, encoder_weights, encoder_biases, decoder_weights, decoder_biases = nonlinear_autoencoder(x, input_dim, latent_dim, params['widths'], activation=activation, init_sigma = params['init_sigma'])
     
     if model_order == 1:
         dz = z_derivative(x, dx, encoder_weights, encoder_biases, activation=activation)
@@ -49,7 +49,7 @@ def full_network(params):
     elif params['coefficient_initialization'] == 'constant':
         sindy_coefficients = tf.get_variable('sindy_coefficients', shape=[library_dim,latent_dim], initializer=tf.constant_initializer(1.0))
     elif params['coefficient_initialization'] == 'normal':
-        sindy_coefficients = tf.get_variable('sindy_coefficients', shape=[library_dim,latent_dim], initializer=tf.initializers.random_normal(mean=0.0, stddev=0.1, seed=3))
+        sindy_coefficients = tf.get_variable('sindy_coefficients', shape=[library_dim,latent_dim], initializer=tf.initializers.random_normal(mean=0.0, stddev=0.0, seed=3))
     
     if params['sequential_thresholding']:
         coefficient_mask = tf.placeholder(tf.float32, shape=[library_dim,latent_dim], name='coefficient_mask')
@@ -144,7 +144,7 @@ def define_loss_init(network, params):
     else:
         losses['sindy_z'] = tf.reduce_mean((ddz - ddz_predict)**2)
         losses['sindy_x'] = tf.reduce_mean((ddx - ddx_decode)**2)
-#     losses['langevin_noise'] = xi_noise_gaussian(network, params)
+    losses['langevin_noise'] = xi_noise_gaussian(network, params)
     if params['prior'] == None:
         losses['sindy_regularization'] = tf.reduce_mean(tf.abs(sindy_coefficients)) * params['loss_weight_sindy_regularization']
     if params['prior'].lower() == "laplace":
@@ -157,6 +157,7 @@ def define_loss_init(network, params):
            + params['loss_weight_sindy_x'] * losses['sindy_x']
 #     loss *= (50*1000)
     loss += losses['sindy_regularization']
+    loss += losses['langevin_noise']
            
     
     loss_refinement = params['loss_weight_decoder'] * losses['decoder'] \
@@ -183,25 +184,25 @@ def spike_and_slab_prior_init(network, params):
     return prior_loss
 
 def xi_noise_gaussian(network, params):
-    alpha = 0.01
-    temp = 10.0
-#     noise_std = np.sqrt(2 * alpha * params['learning_rate'])
-    noise_std = np.sqrt(2 * alpha)
-    sindy_coefficients = params['coefficient_mask']*network['sindy_coefficients']
+    alpha = 0.001
+    temp = 3.0
+    noise_std = np.sqrt(2 * alpha * params['learning_rate'])
+    sindy_coefficients = network['sindy_coefficients']
     noise_ = tf.distributions.Normal(0., temp*noise_std*tf.ones(sindy_coefficients.get_shape()))
-    noise_loss = tf.reduce_sum(sindy_coefficients * noise_.sample())
+    # noise_loss = tf.reduce_sum(sindy_coefficients * noise_.sample())
+    noise_loss = tf.reduce_sum(tf.ones(sindy_coefficients.get_shape()) * params['coefficient_mask'] * noise_.sample())
     return noise_loss
 
-def linear_autoencoder(x, input_dim, d):
+def linear_autoencoder(x, input_dim, d, init_sigma):
     # z,encoder_weights,encoder_biases = encoder(x, input_dim, latent_dim, [], None, 'encoder')
     # x_decode,decoder_weights,decoder_biases = decoder(z, input_dim, latent_dim, [], None, 'decoder')
-    z,encoder_weights,encoder_biases = build_network_layers(x, input_dim, latent_dim, [], None, 'encoder')
-    x_decode,decoder_weights,decoder_biases = build_network_layers(z, latent_dim, input_dim, [], None, 'decoder')
+    z,encoder_weights,encoder_biases = build_network_layers(x, input_dim, latent_dim, [], None, 'encoder', sigma=init_sigma)
+    x_decode,decoder_weights,decoder_biases = build_network_layers(z, latent_dim, input_dim, [], None, 'decoder', sigma=init_sigma)
 
     return z, x_decode, encoder_weights, encoder_biases,decoder_weights,decoder_biases
 
 
-def nonlinear_autoencoder(x, input_dim, latent_dim, widths, activation='elu'):
+def nonlinear_autoencoder(x, input_dim, latent_dim, widths, activation='elu', init_sigma = 0.1):
     """
     Construct a nonlinear autoencoder.
     Arguments:
@@ -223,13 +224,13 @@ def nonlinear_autoencoder(x, input_dim, latent_dim, widths, activation='elu'):
         raise ValueError('invalid activation function')
     # z,encoder_weights,encoder_biases = encoder(x, input_dim, latent_dim, widths, activation_function, 'encoder')
     # x_decode,decoder_weights,decoder_biases = decoder(z, input_dim, latent_dim, widths[::-1], activation_function, 'decoder')
-    z,encoder_weights,encoder_biases = build_network_layers(x, input_dim, latent_dim, widths, activation_function, 'encoder')
-    x_decode,decoder_weights,decoder_biases = build_network_layers(z, latent_dim, input_dim, widths[::-1], activation_function, 'decoder')
+    z,encoder_weights,encoder_biases = build_network_layers(x, input_dim, latent_dim, widths, activation_function, 'encoder', sigma=init_sigma)
+    x_decode,decoder_weights,decoder_biases = build_network_layers(z, latent_dim, input_dim, widths[::-1], activation_function, 'decoder', sigma=init_sigma)
 
     return z, x_decode, encoder_weights, encoder_biases, decoder_weights, decoder_biases
 
 
-def build_network_layers(input, input_dim, output_dim, widths, activation, name):
+def build_network_layers(input, input_dim, output_dim, widths, activation, name, sigma=0.1):
     """
     Construct one portion of the network (either encoder or decoder).
     Arguments:

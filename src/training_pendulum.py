@@ -82,7 +82,7 @@ def train_network(training_data, val_data, params):
                 with open('save_1.npy', 'wb') as f:
                     np.save(f, save_sindy_coeff)
                     
-            if params['prior'] == "spike-and-slab":
+            if params['prior'] == "spike-and-slab" and i % 2 == 0:
                 sindy_coefficients = autoencoder_network['sindy_coefficients']
                 if i >= params['threshold_start']:
                     mask = params['coefficient_mask']
@@ -90,33 +90,24 @@ def train_network(training_data, val_data, params):
                     mask = tf.ones_like(sindy_coefficients)
 #                 print(sess.run(mask))
                 sindy_coefficients = tf.multiply(sindy_coefficients, mask)
-                a_star = tf.multiply(tf.exp(v1_dist.log_prob(sindy_coefficients)), params['pi'])
-                b_star = tf.multiply(tf.exp(v0_dist.log_prob(sindy_coefficients)), (1 - params['pi']))
-                a_divide_a_and_b = tf.divide(tf.round(tf.multiply(a_star, 10000)), tf.add(tf.round(tf.multiply(a_star, 10000)), tf.round(tf.multiply(b_star, 10000))))
-                a_divide_a_and_b = tf.clip_by_value(a_divide_a_and_b, clip_value_min=0, clip_value_max=1)
+                p_star = autoencoder_network['p_star']
+                log_a_star = v1_dist.log_prob(sindy_coefficients)
+                log_b_star = v0_dist.log_prob(sindy_coefficients)
+                b_divide_a = tf.exp(log_b_star-log_a_star) * (1-params["pi"]) / params["pi"]
+                a_divide_a_and_b = 1.0 / (1.0 + b_divide_a)
+                p_star = tf.add(tf.multiply((1 - params["decay"]), p_star), tf.multiply(params["decay"], a_divide_a_and_b))
                 
-#                 print("p_star before")
-#                 print(sess.run(autoencoder_network['p_star']))
-                
-                autoencoder_network_propose = tf.add(tf.multiply((1 - decay), autoencoder_network['p_star']), tf.multiply(decay, a_divide_a_and_b))
-                if sess.run(tf.reduce_max(tf.abs(autoencoder_network_propose - autoencoder_network['p_star']))) > 0.05:
-                    print("error")
-                else:
-                    autoencoder_network['p_star'] = autoencoder_network_propose
-                        
-                autoencoder_network['p_star'] = tf.multiply(autoencoder_network['p_star'], mask)
-                
-                autoencoder_network['d_star0'] = tf.add(tf.multiply((1 - decay), autoencoder_network['d_star0']), tf.multiply(decay, tf.divide((1 - autoencoder_network['p_star']), v0)))
-                autoencoder_network['d_star1'] = tf.add(tf.multiply((1 - decay), autoencoder_network['d_star1']), tf.multiply(decay, tf.divide(autoencoder_network['p_star'], v1)))
-                
+                autoencoder_network['d_star0'] = tf.add(tf.multiply((1 - params["decay"]), autoencoder_network['d_star0']), tf.multiply(params["decay"], tf.divide((1 - p_star), v0)))
+                autoencoder_network['d_star1'] = tf.add(tf.multiply((1 - params["decay"]), autoencoder_network['d_star1']), tf.multiply(params["decay"], tf.divide(p_star, v1)))
+                autoencoder_network['p_star'] = tf.multiply(p_star, params['coefficient_mask'])
 #                 print(type(autoencoder_network['p_star']))
 #                 print(type(autoencoder_network['d_star0']))
                 
-                alpha = 0.001
-                noise_std = np.sqrt(2 * alpha * params['learning_rate'])
-                noise_ = tf.random.normal(shape = sindy_coefficients.get_shape(), mean=0., stddev=temp*noise_std)
-                noise_ = tf.multiply(noise_, mask)
-                autoencoder_network['sindy_coefficients'] = tf.add(sindy_coefficients, noise_)
+                # alpha = 0.001
+                # noise_std = np.sqrt(2 * alpha * params['learning_rate'])
+                # noise_ = tf.random.normal(shape = sindy_coefficients.get_shape(), mean=0., stddev=temp*noise_std)
+                # noise_ = tf.multiply(noise_, mask)
+                # autoencoder_network['sindy_coefficients'] = tf.add(sindy_coefficients, noise_)
                 params["decay"] /= (1.005)
                 params["learning_rate"] /= (1.005)
                 # temp /= 1.002
