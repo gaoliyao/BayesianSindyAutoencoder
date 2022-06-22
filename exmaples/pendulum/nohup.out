@@ -1,0 +1,1394 @@
+2022-06-21 16:52:17.437782: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA
+2022-06-21 16:52:17.587833: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1432] Found device 0 with properties: 
+name: NVIDIA GeForce RTX 2080 Ti major: 7 minor: 5 memoryClockRate(GHz): 1.545
+pciBusID: 0000:67:00.0
+totalMemory: 10.76GiB freeMemory: 10.60GiB
+2022-06-21 16:52:17.587861: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1511] Adding visible gpu devices: 0
+2022-06-21 16:52:17.784735: I tensorflow/core/common_runtime/gpu/gpu_device.cc:982] Device interconnect StreamExecutor with strength 1 edge matrix:
+2022-06-21 16:52:17.784771: I tensorflow/core/common_runtime/gpu/gpu_device.cc:988]      0 
+2022-06-21 16:52:17.784777: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1001] 0:   N 
+2022-06-21 16:52:17.784857: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 9917 MB memory) -> physical GPU (device: 0, name: NVIDIA GeForce RTX 2080 Ti, pci bus id: 0000:67:00.0, compute capability: 7.5)
+(50000, 2601)
+EXPERIMENT 0
+Hyper-parameters and experimental setup
+{'input_dim': 2601, 'latent_dim': 1, 'model_order': 2, 'poly_order': 3, 'include_sine': True, 'library_dim': 12, 'sequential_thresholding': True, 'coefficient_threshold': 0.1, 'threshold_frequency': 50, 'threshold_start': 100, 'coefficient_mask': array([[1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.]]), 'coefficient_initialization': 'constant', 'loss_weight_decoder': 1.0, 'loss_weight_sindy_x': 0.0005, 'loss_weight_sindy_z': 5e-05, 'activation': 'sigmoid', 'widths': [128, 64, 32], 'epoch_size': 50000, 'batch_size': 1000, 'learning_rate': 0.001, 'data_path': '/home/marsgao/BayesianSindyAutoencoder/exmaples/pendulum/', 'print_progress': True, 'print_frequency': 25, 'max_epochs': 1001, 'refinement_epochs': 501, 'prior': 'spike-and-slab', 'loss_weight_sindy_regularization': 0.001, 'pi': 0.1, 'c_std': 4.0, 'epsilon': 0.1, 'decay': 0.02, 'sigma': 1.0, 'init_sigma': 0.0}
+TRAINING
+=========================
+[[0.5]
+ [0.5]
+ [0.5]
+ [0.5]
+ [0.5]
+ [0.5]
+ [0.5]
+ [0.5]
+ [0.5]
+ [0.5]
+ [0.5]
+ [0.5]]
+[[1.]
+ [1.]
+ [1.]
+ [1.]
+ [1.]
+ [1.]
+ [1.]
+ [1.]
+ [1.]
+ [1.]
+ [1.]
+ [1.]]
+Epoch 0
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.017952123656868935, (0.0076408368, 0.013482492, 21.351547, -0.0003737691, 8.606494e-06)
+   validation loss 0.02504933997988701, (0.007726149, 0.014564204, 22.129725, 0.006248993, 8.606494e-06)
+decoder loss ratio: 0.921120, decoder SINDy loss  ratio: 1.000000
+=========================
+[[0.60517794]
+ [0.60571223]
+ [0.3880126 ]
+ [0.6061658 ]
+ [0.3880128 ]
+ [0.38801283]
+ [0.60634303]
+ [0.38801324]
+ [0.38800952]
+ [0.38800955]
+ [0.6052633 ]
+ [0.3880126 ]]
+[[ 9.5339984e-01]
+ [ 9.6128118e-01]
+ [ 6.3224899e-04]
+ [ 9.6846008e-01]
+ [ 6.6977541e-04]
+ [ 6.8060105e-04]
+ [ 9.7140443e-01]
+ [ 7.5741194e-04]
+ [-2.6235561e-05]
+ [-2.8965267e-05]
+ [ 9.5462149e-01]
+ [ 6.3192082e-04]]
+Epoch 25
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.011569864116609097, (0.007539191, 0.0026892943, 21.351547, -0.006648789, 3.554065e-06)
+   validation loss 0.012644759379327297, (0.007591086, 0.0030135817, 22.129725, -0.0060148938, 3.554065e-06)
+decoder loss ratio: 0.905017, decoder SINDy loss  ratio: 1.000000
+=========================
+[[0.66801745]
+ [0.66932845]
+ [0.31154412]
+ [0.6734402 ]
+ [0.31154355]
+ [0.31154314]
+ [0.6737032 ]
+ [0.31154323]
+ [0.31154326]
+ [0.3115441 ]
+ [0.6651386 ]
+ [0.31154364]]
+[[ 8.9579642e-01]
+ [ 9.0255994e-01]
+ [-1.2394362e-04]
+ [ 9.2689973e-01]
+ [-6.2815801e-05]
+ [-1.4766629e-05]
+ [ 9.2865354e-01]
+ [-2.3989895e-05]
+ [-3.3019998e-05]
+ [ 1.1928943e-04]
+ [ 8.8222212e-01]
+ [ 7.1457544e-05]]
+Epoch 50
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.015310264192521572, (0.007543258, 0.0032585154, 21.351547, -0.0029122152, 3.283625e-06)
+   validation loss 0.03616010770201683, (0.007595117, 0.0039691273, 22.129725, 0.017496645, 3.283625e-06)
+decoder loss ratio: 0.905498, decoder SINDy loss  ratio: 1.000000
+=========================
+[[0.67931944]
+ [0.68497634]
+ [0.2492875 ]
+ [0.708813  ]
+ [0.24928708]
+ [0.24928653]
+ [0.7094084 ]
+ [0.24928589]
+ [0.24928723]
+ [0.24928762]
+ [0.6565533 ]
+ [0.24928747]]
+[[ 7.91421294e-01]
+ [ 8.00894976e-01]
+ [-1.47708008e-04]
+ [ 8.50557387e-01]
+ [-1.13255315e-04]
+ [-7.09980886e-05]
+ [ 8.52088630e-01]
+ [-1.31917623e-05]
+ [ 1.23826103e-04]
+ [ 1.57540009e-04]
+ [ 7.58531451e-01]
+ [-1.47231694e-04]]
+Epoch 75
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss -0.0015076883137226105, (0.007545001, 0.0021060705, 21.351547, -0.019731395, 2.827974e-06)
+   validation loss 0.028357546776533127, (0.00759724, 0.0027525197, 22.129725, 0.009692479, 2.827974e-06)
+decoder loss ratio: 0.905751, decoder SINDy loss  ratio: 1.000000
+=========================
+[[0.5201946 ]
+ [0.5400465 ]
+ [0.20555514]
+ [0.64403045]
+ [0.2055573 ]
+ [0.20555505]
+ [0.65231276]
+ [0.2055553 ]
+ [0.20555596]
+ [0.2055562 ]
+ [0.43399686]
+ [0.20555514]]
+[[ 6.26092196e-01]
+ [ 6.39716864e-01]
+ [-2.54685001e-05]
+ [ 7.19228625e-01]
+ [-1.83281009e-04]
+ [-1.56124024e-05]
+ [ 7.26742029e-01]
+ [ 3.96728938e-05]
+ [ 8.66517003e-05]
+ [-1.01248515e-04]
+ [ 5.66795528e-01]
+ [-2.61996174e-05]]
+Epoch 100
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss -0.0019746068865060806, (0.007545971, 0.0014256599, 21.351547, -0.020198572, 2.1499875e-06)
+   validation loss 0.01705554872751236, (0.0075981924, 0.00176252, 22.129725, -0.0016097436, 2.1499875e-06)
+decoder loss ratio: 0.905865, decoder SINDy loss  ratio: 1.000000
+=========================
+[[0.22220048]
+ [0.24429797]
+ [0.1689989 ]
+ [0.356507  ]
+ [0.16899857]
+ [0.16900036]
+ [0.36287072]
+ [0.16899894]
+ [0.16900013]
+ [0.16900069]
+ [0.19725853]
+ [0.16899867]]
+[[ 3.70363832e-01]
+ [ 4.08088863e-01]
+ [-3.62503924e-05]
+ [ 5.19662678e-01]
+ [-3.57968020e-06]
+ [-1.28863001e-04]
+ [ 5.24335742e-01]
+ [ 4.01087018e-05]
+ [-1.10149093e-04]
+ [-1.43779514e-04]
+ [ 3.05302143e-01]
+ [-1.25077095e-05]]
+Epoch 125
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.033553268760442734, (0.007546321, 0.0030691582, 21.351547, 0.015329759, 1.2612976e-06)
+   validation loss 0.014470474794507027, (0.0075978967, 0.003091493, 22.129725, -0.0041937013, 1.2612976e-06)
+decoder loss ratio: 0.905829, decoder SINDy loss  ratio: 1.000000
+=========================
+[[0.14418887]
+ [0.15536116]
+ [0.14269453]
+ [0.14356932]
+ [0.14272061]
+ [0.14826815]
+ [0.14284149]
+ [0.14272368]
+ [0.51944673]
+ [0.14268057]
+ [0.18286063]
+ [0.14271753]]
+[[ 6.7303710e-02]
+ [-2.2159253e-01]
+ [ 1.4382058e-03]
+ [-4.4950552e-02]
+ [ 3.0429803e-03]
+ [ 1.5182742e-01]
+ [ 1.0183001e-02]
+ [ 3.2257843e-03]
+ [-6.2325054e-01]
+ [-5.6007510e-04]
+ [-3.3314210e-01]
+ [ 2.8508995e-03]]
+Epoch 150
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.031251221895217896, (0.0065358547, 0.6653203, 21.29911, 0.014031638, 9.0837e-07)
+   validation loss 0.009098198264837265, (0.006628635, 0.75001365, 22.075123, -0.008606408, 9.0837e-07)
+decoder loss ratio: 0.790273, decoder SINDy loss  ratio: 0.997533
+THRESHOLDING: 12 active coefficients
+=========================
+[[0.1244106 ]
+ [0.12954678]
+ [0.1203564 ]
+ [0.12137017]
+ [0.12022195]
+ [0.17148326]
+ [0.1205128 ]
+ [0.12016535]
+ [0.21361104]
+ [0.12016612]
+ [0.13707654]
+ [0.12016452]]
+[[-0.12665129]
+ [-0.18961327]
+ [ 0.01174665]
+ [-0.05469757]
+ [ 0.00437926]
+ [ 0.35211715]
+ [-0.01968808]
+ [-0.00110515]
+ [-0.41686177]
+ [-0.00115071]
+ [-0.24251667]
+ [-0.00105128]]
+Epoch 175
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.02861316129565239, (0.0050095934, 1.8249882, 12.715889, 0.0096603, 0.0074940743)
+   validation loss 0.014691781252622604, (0.00534418, 1.9395767, 13.218563, -0.004852734, 0.0074940743)
+decoder loss ratio: 0.637139, decoder SINDy loss  ratio: 0.597322
+=========================
+[[0.1309244 ]
+ [0.11021428]
+ [0.10358143]
+ [0.10400302]
+ [0.1035863 ]
+ [0.16322011]
+ [0.10459823]
+ [0.10356452]
+ [0.15552929]
+ [0.10357372]
+ [0.10867574]
+ [0.10356485]]
+[[-2.8430495e-01]
+ [-1.5727478e-01]
+ [ 9.6711540e-04]
+ [-2.2301042e-02]
+ [ 1.2415554e-03]
+ [ 3.6338690e-01]
+ [-4.6324674e-02]
+ [-1.1532827e-05]
+ [-3.4893516e-01]
+ [-5.3624919e-04]
+ [-1.3685933e-01]
+ [-3.1110379e-05]]
+Epoch 200
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0014341697096824646, (0.0036709723, 1.9092414, 10.219513, -0.014548395, 0.007106373)
+   validation loss 0.013566709123551846, (0.004246019, 1.9439092, 10.51949, -0.003142624, 0.007106373)
+decoder loss ratio: 0.506215, decoder SINDy loss  ratio: 0.475356
+THRESHOLDING: 12 active coefficients
+=========================
+[[0.10565855]
+ [0.10074764]
+ [0.08908811]
+ [0.08928932]
+ [0.08911786]
+ [0.11655353]
+ [0.08991256]
+ [0.08908331]
+ [0.1131011 ]
+ [0.0890908 ]
+ [0.09927682]
+ [0.08908587]]
+[[-2.3325749e-01]
+ [-2.0156285e-01]
+ [ 2.7674367e-04]
+ [-1.0730026e-02]
+ [ 1.8948492e-03]
+ [ 2.8119814e-01]
+ [-3.7564434e-02]
+ [ 1.8477615e-05]
+ [-2.6820415e-01]
+ [-4.2566255e-04]
+ [-1.8982305e-01]
+ [-1.5159178e-04]]
+Epoch 225
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.015072755515575409, (0.0032310127, 1.1082208, 8.41021, -0.000113812275, 0.007695039)
+   validation loss -0.003926847130060196, (0.0037473873, 1.0938946, 8.5110235, -0.01967948, 0.007695039)
+decoder loss ratio: 0.446768, decoder SINDy loss  ratio: 0.384597
+=========================
+[[0.09113209]
+ [0.11041298]
+ [0.07822123]
+ [0.07846804]
+ [0.07827755]
+ [0.10093402]
+ [0.0782203 ]
+ [0.07821989]
+ [0.08728628]
+ [0.07821474]
+ [0.12794463]
+ [0.07822315]]
+[[-2.0828642e-01]
+ [-2.9420647e-01]
+ [ 3.8739588e-04]
+ [-1.2744379e-02]
+ [ 3.3427849e-03]
+ [ 2.6038855e-01]
+ [-3.3560925e-04]
+ [ 3.1414468e-04]
+ [-1.7767839e-01]
+ [ 4.0271894e-05]
+ [-3.3798319e-01]
+ [ 4.8687248e-04]]
+Epoch 250
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0010851416736841202, (0.003033086, 0.5772844, 7.460324, -0.013788852, 0.008081881)
+   validation loss 0.021321618929505348, (0.003458291, 0.6114994, 7.4771776, 0.006012283, 0.008081881)
+decoder loss ratio: 0.412301, decoder SINDy loss  ratio: 0.337879
+THRESHOLDING: 2 active coefficients
+=========================
+[[0.        ]
+ [0.11789578]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.17424223]
+ [0.        ]]
+[[-0.        ]
+ [-0.33486086]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.41636586]
+ [-0.        ]]
+Epoch 275
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.012617012485861778, (0.0024105702, 1.11351, 5.8219266, 0.002328325, 0.004911479)
+   validation loss 0.009075960144400597, (0.0027327181, 1.1469578, 5.7035785, -0.0014773735, 0.004911479)
+decoder loss ratio: 0.325798, decoder SINDy loss  ratio: 0.257734
+=========================
+[[0.        ]
+ [0.10575034]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.15802509]
+ [0.        ]]
+[[-0.        ]
+ [-0.32277712]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.4047336 ]
+ [-0.        ]]
+Epoch 300
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.011982119642198086, (0.0021573878, 0.38381678, 4.333008, 0.0028496245, 0.004789413)
+   validation loss 0.007930201478302479, (0.0024092055, 0.42856944, 4.110334, -0.0013450125, 0.004789413)
+decoder loss ratio: 0.287228, decoder SINDy loss  ratio: 0.185738
+THRESHOLDING: 2 active coefficients
+=========================
+[[0.        ]
+ [0.08341973]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.1744491 ]
+ [0.        ]]
+[[-0.        ]
+ [-0.27832752]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.42706826]
+ [ 0.        ]]
+Epoch 325
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.011303954757750034, (0.0017927551, 0.38682014, 3.7930295, 0.0026843154, 0.0049110283)
+   validation loss 0.007772425189614296, (0.0020040718, 0.42208755, 3.5571282, -0.0009423436, 0.0049110283)
+decoder loss ratio: 0.238928, decoder SINDy loss  ratio: 0.160740
+=========================
+[[0.        ]
+ [0.0769087 ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.14802103]
+ [0.        ]]
+[[-0.        ]
+ [-0.27260157]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.40386003]
+ [ 0.        ]]
+Epoch 350
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0016532083973288536, (0.0014060363, 0.43039048, 3.2115746, -0.0061634937, 0.004783359)
+   validation loss 0.0054520475678145885, (0.0016057305, 0.4560752, 2.964121, -0.002441906, 0.004783359)
+decoder loss ratio: 0.191437, decoder SINDy loss  ratio: 0.133943
+THRESHOLDING: 1 active coefficients
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.75412405]
+ [0.        ]]
+[[ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.7381697]
+ [-0.       ]]
+Epoch 375
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0064935823902487755, (0.0012544486, 0.38663676, 2.3665903, 0.0021012719, 0.001935235)
+   validation loss 0.000818958505988121, (0.0014242484, 0.40237513, 2.1116314, -0.0036164597, 0.001935235)
+decoder loss ratio: 0.169800, decoder SINDy loss  ratio: 0.095421
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.78453714]
+ [0.        ]]
+[[ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.75701314]
+ [-0.        ]]
+Epoch 400
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0005589653737843037, (0.0011600044, 0.18611105, 1.9927346, -0.0034451098, 0.0018383979)
+   validation loss 0.0030113973189145327, (0.0013122333, 0.19828206, 1.7158293, -0.0010070626, 0.0018383979)
+decoder loss ratio: 0.156446, decoder SINDy loss  ratio: 0.077535
+THRESHOLDING: 1 active coefficients
+=========================
+[[0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.791553]
+ [0.      ]]
+[[ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.7604565]
+ [ 0.       ]]
+Epoch 425
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.006270074285566807, (0.0011105861, 0.10748756, 1.7591602, 0.0024859204, 0.0017886134)
+   validation loss 0.0011944130528718233, (0.001239919, 0.10942837, 1.4748666, -0.002577024, 0.0017886134)
+decoder loss ratio: 0.147824, decoder SINDy loss  ratio: 0.066646
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.7867728]
+ [0.       ]]
+[[-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.7559056]
+ [ 0.       ]]
+Epoch 450
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.00753364572301507, (0.0010749786, 0.08670809, 1.6655604, 0.003805179, 0.0018163726)
+   validation loss -0.0005787760019302368, (0.0011853311, 0.0860947, 1.3859317, -0.0042777504, 0.0018163726)
+decoder loss ratio: 0.141316, decoder SINDy loss  ratio: 0.062628
+THRESHOLDING: 1 active coefficients
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.78161025]
+ [0.        ]]
+[[-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.7513426]
+ [-0.       ]]
+Epoch 475
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0010911456774920225, (0.0010479749, 0.07575424, 1.6097637, -0.0025835626, 0.0018180639)
+   validation loss 0.0018263033125549555, (0.0011425039, 0.07482639, 1.3351716, -0.0018055916, 0.0018180639)
+decoder loss ratio: 0.136211, decoder SINDy loss  ratio: 0.060334
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.7731746]
+ [0.       ]]
+[[ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.7450338]
+ [-0.       ]]
+Epoch 500
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.007547890767455101, (0.0010385121, 0.083984666, 1.5500972, 0.0038674728, 0.0018626578)
+   validation loss 0.007637700531631708, (0.0010901883, 0.08093532, 1.2822086, 0.0040397034, 0.0018626578)
+decoder loss ratio: 0.129973, decoder SINDy loss  ratio: 0.057941
+THRESHOLDING: 1 active coefficients
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.74636066]
+ [0.        ]]
+[[-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.72804826]
+ [ 0.        ]]
+Epoch 525
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.005923366639763117, (0.00095041085, 0.16351335, 1.4660755, 0.0022612389, 0.0019705035)
+   validation loss -0.0036213051062077284, (0.0009862429, 0.14451832, 1.2099447, -0.00719025, 0.0019705035)
+decoder loss ratio: 0.117581, decoder SINDy loss  ratio: 0.054675
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.7091327]
+ [0.       ]]
+[[-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.7071348]
+ [ 0.       ]]
+Epoch 550
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.002061468083411455, (0.00081030274, 0.23497902, 1.3638012, -0.0015779595, 0.0021354754)
+   validation loss 0.0004510825965553522, (0.00084952585, 0.19778284, 1.1222551, -0.0031049354, 0.0021354754)
+decoder loss ratio: 0.101281, decoder SINDy loss  ratio: 0.050713
+THRESHOLDING: 1 active coefficients
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.67631185]
+ [0.        ]]
+[[ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.69025916]
+ [-0.        ]]
+Epoch 575
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.001612197607755661, (0.00068367, 0.22663093, 1.2824287, -0.0019942939, 0.0022702755)
+   validation loss 0.005043608136475086, (0.00074019376, 0.19019777, 1.0542253, 0.0014965162, 0.0022702755)
+decoder loss ratio: 0.088247, decoder SINDy loss  ratio: 0.047638
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.6572059]
+ [0.       ]]
+[[ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.6809015]
+ [-0.       ]]
+Epoch 600
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.001792478491552174, (0.0006034434, 0.16976276, 1.2213051, -0.001778778, 0.0023486724)
+   validation loss 0.005009151063859463, (0.0006790321, 0.14478062, 1.0020243, 0.0014731952, 0.0023486724)
+decoder loss ratio: 0.080955, decoder SINDy loss  ratio: 0.045280
+THRESHOLDING: 1 active coefficients
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.64980257]
+ [0.        ]]
+[[ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.67726237]
+ [ 0.        ]]
+Epoch 625
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0025112745352089405, (0.0005622915, 0.11846221, 1.1878933, -0.0010309949, 0.0023801082)
+   validation loss 0.002331131137907505, (0.0006500127, 0.103523, 0.9753152, -0.0011918236, 0.0023801082)
+decoder loss ratio: 0.077495, decoder SINDy loss  ratio: 0.044073
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.6485198]
+ [0.       ]]
+[[ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.67652696]
+ [ 0.        ]]
+Epoch 650
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0023031309247016907, (0.0005420085, 0.08696333, 1.1535547, -0.0012055807, 0.0023855777)
+   validation loss 0.002951189409941435, (0.0006349519, 0.079645894, 0.9458329, -0.0005462388, 0.0023855777)
+decoder loss ratio: 0.075700, decoder SINDy loss  ratio: 0.042740
+THRESHOLDING: 1 active coefficients
+=========================
+[[0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.650298]
+ [0.      ]]
+[[-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.67721236]
+ [-0.        ]]
+Epoch 675
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.004306182265281677, (0.00052033144, 0.06915006, 1.1381375, 0.000833751, 0.0023795734)
+   validation loss 0.0017370398854836822, (0.00062317733, 0.066564895, 0.934757, -0.0017364175, 0.0023795734)
+decoder loss ratio: 0.074296, decoder SINDy loss  ratio: 0.042240
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.65460426]
+ [0.        ]]
+[[-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.67909175]
+ [-0.        ]]
+Epoch 700
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0017328192479908466, (0.00048983615, 0.072985, 1.1145418, -0.0016799173, 0.0023619803)
+   validation loss 0.004068389069288969, (0.00060194865, 0.06824775, 0.9137838, 0.00064415566, 0.0023619803)
+decoder loss ratio: 0.071765, decoder SINDy loss  ratio: 0.041292
+THRESHOLDING: 1 active coefficients
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.65400624]
+ [0.        ]]
+[[ 0.      ]
+ [-0.      ]
+ [-0.      ]
+ [ 0.      ]
+ [-0.      ]
+ [ 0.      ]
+ [-0.      ]
+ [-0.      ]
+ [-0.      ]
+ [-0.      ]
+ [-0.678701]
+ [ 0.      ]]
+Epoch 725
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0007372095715254545, (0.00046646205, 0.09249057, 1.1065464, -0.0026539487, 0.0023667985)
+   validation loss 0.001098883105441928, (0.00057813764, 0.080905005, 0.9091395, -0.002304668, 0.0023667985)
+decoder loss ratio: 0.068926, decoder SINDy loss  ratio: 0.041082
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.64943206]
+ [0.        ]]
+[[-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.6765001]
+ [ 0.       ]]
+Epoch 750
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0016661457484588027, (0.00043559616, 0.12259268, 1.0821829, -0.0017036261, 0.0023869546)
+   validation loss 0.0013665345031768084, (0.00054547016, 0.101232566, 0.888034, -0.0020149688, 0.0023869546)
+decoder loss ratio: 0.065032, decoder SINDy loss  ratio: 0.040129
+THRESHOLDING: 1 active coefficients
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.64330494]
+ [0.        ]]
+[[-0.      ]
+ [ 0.      ]
+ [ 0.      ]
+ [-0.      ]
+ [-0.      ]
+ [-0.      ]
+ [-0.      ]
+ [-0.      ]
+ [ 0.      ]
+ [-0.      ]
+ [-0.673615]
+ [-0.      ]]
+Epoch 775
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.004871516954153776, (0.00040042147, 0.15516412, 1.0677086, 0.0015146182, 0.0024148645)
+   validation loss 0.005445417482405901, (0.00050692307, 0.12349861, 0.8779315, 0.0020784894, 0.0024148645)
+decoder loss ratio: 0.060436, decoder SINDy loss  ratio: 0.039672
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.63655686]
+ [0.        ]]
+[[ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.67049503]
+ [-0.        ]]
+Epoch 800
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0023677884601056576, (0.00036296516, 0.1813992, 1.0411413, -0.0009686118, 0.0024437944)
+   validation loss 0.002261248417198658, (0.0004649656, 0.14153893, 0.85588497, -0.0010825311, 0.0024437944)
+decoder loss ratio: 0.055434, decoder SINDy loss  ratio: 0.038676
+THRESHOLDING: 1 active coefficients
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.6303553]
+ [0.       ]]
+[[ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.6676537]
+ [ 0.       ]]
+Epoch 825
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0020644706673920155, (0.00032847398, 0.19609715, 1.0216913, -0.0012563801, 0.0024717262)
+   validation loss 0.004598687402904034, (0.00042503385, 0.15152383, 0.8416068, 0.001273548, 0.0024717262)
+decoder loss ratio: 0.050673, decoder SINDy loss  ratio: 0.038031
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.6249291]
+ [0.       ]]
+[[ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.6651921]
+ [ 0.       ]]
+Epoch 850
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0020185476168990135, (0.00029761338, 0.19842838, 0.9957312, -0.0012815427, 0.0024946898)
+   validation loss 0.0019724685698747635, (0.00038855264, 0.15308261, 0.8205794, -0.0013287176, 0.0024946898)
+decoder loss ratio: 0.046324, decoder SINDy loss  ratio: 0.037080
+THRESHOLDING: 1 active coefficients
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.6206637]
+ [0.       ]]
+[[ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.6632616]
+ [-0.       ]]
+Epoch 875
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.004874470178037882, (0.0002721959, 0.18959549, 0.9758017, 0.0015907182, 0.0025141756)
+   validation loss 0.005160823464393616, (0.00035758197, 0.14707896, 0.8056072, 0.0018789086, 0.0025141756)
+decoder loss ratio: 0.042631, decoder SINDy loss  ratio: 0.036404
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.61714166]
+ [0.        ]]
+[[-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.6616761]
+ [-0.       ]]
+Epoch 900
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0033361685927957296, (0.00025101926, 0.17171808, 0.9534186, 7.071976e-05, 0.0025291345)
+   validation loss 0.002130067441612482, (0.00033145054, 0.1350607, 0.78768426, -0.0011311127, 0.0025291345)
+decoder loss ratio: 0.039516, decoder SINDy loss  ratio: 0.035594
+THRESHOLDING: 1 active coefficients
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.61368465]
+ [0.        ]]
+[[-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.66012776]
+ [ 0.        ]]
+Epoch 925
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.004177677445113659, (0.00023411581, 0.14934848, 0.93502027, 0.00092338206, 0.0025452022)
+   validation loss 0.004696248099207878, (0.00031022806, 0.1198552, 0.7734685, 0.0014480911, 0.0025452022)
+decoder loss ratio: 0.036986, decoder SINDy loss  ratio: 0.034952
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.6095748]
+ [0.       ]]
+[[ 0.      ]
+ [ 0.      ]
+ [-0.      ]
+ [-0.      ]
+ [ 0.      ]
+ [ 0.      ]
+ [-0.      ]
+ [ 0.      ]
+ [-0.      ]
+ [-0.      ]
+ [-0.658309]
+ [ 0.      ]]
+Epoch 950
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.001944606308825314, (0.00022029519, 0.13155814, 0.91709065, -0.0013036487, 0.0025628365)
+   validation loss 0.005751166492700577, (0.0002928813, 0.107454345, 0.7591441, 0.0025105036, 0.0025628365)
+decoder loss ratio: 0.034918, decoder SINDy loss  ratio: 0.034304
+THRESHOLDING: 1 active coefficients
+=========================
+[[0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.605285]
+ [0.      ]]
+[[-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.6564224]
+ [-0.       ]]
+Epoch 975
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0007048719562590122, (0.00020925418, 0.119449444, 0.8993064, -0.002542078, 0.0025820702)
+   validation loss 0.0026119514368474483, (0.00027883297, 0.09883592, 0.7447222, -0.0006262545, 0.0025820702)
+decoder loss ratio: 0.033243, decoder SINDy loss  ratio: 0.033653
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.60216355]
+ [0.        ]]
+[[-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.6550528]
+ [-0.       ]]
+Epoch 1000
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.00374516355805099, (0.00020104447, 0.10905677, 0.88540924, 0.00050080026, 0.0025951613)
+   validation loss 0.0021108915098011494, (0.00026729406, 0.091506705, 0.73362607, -0.0011229522, 0.0025951613)
+decoder loss ratio: 0.031867, decoder SINDy loss  ratio: 0.033151
+THRESHOLDING: 1 active coefficients
+REFINEMENT
+Epoch 0
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0006698973593302071, (0.00020734659, 0.10408285, 0.9146932, -0.00059261656, 0.0026089095)
+   validation loss 0.0006623261142522097, (0.00027578918, 0.087348014, 0.76433897, 0.00030673467, 0.0026089095)
+decoder loss ratio: 0.032880, decoder SINDy loss  ratio: 0.034539
+Epoch 25
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0006109133828431368, (0.00018221127, 0.05161539, 0.8522426, -0.00143843, 0.0025023085)
+   validation loss 0.000607020512688905, (0.00024732505, 0.048438936, 0.71454704, 0.0011403158, 0.0025023085)
+decoder loss ratio: 0.029486, decoder SINDy loss  ratio: 0.032289
+Epoch 50
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])/home/marsgao/.conda/envs/mars/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:523: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+/home/marsgao/.conda/envs/mars/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:524: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+/home/marsgao/.conda/envs/mars/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:525: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+/home/marsgao/.conda/envs/mars/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:526: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+/home/marsgao/.conda/envs/mars/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:527: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+/home/marsgao/.conda/envs/mars/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:532: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  np_resource = np.dtype([("resource", np.ubyte, 1)])
+
+   training loss 0.0006185406818985939, (0.00019150262, 0.044559654, 0.84962016, 6.309175e-06, 0.0023697824)
+   validation loss 0.0006221672520041466, (0.000260817, 0.04380561, 0.7183199, -0.0010819852, 0.0023697824)
+decoder loss ratio: 0.031095, decoder SINDy loss  ratio: 0.032460
+Epoch 75
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0005693747662007809, (0.00017196122, 0.04627232, 0.7901998, 0.0020102889, 0.0022048843)
+   validation loss 0.0005679387832060456, (0.00023476494, 0.048583977, 0.66148925, 0.001093477, 0.0022048843)
+decoder loss ratio: 0.027989, decoder SINDy loss  ratio: 0.029891
+Epoch 100
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0005652534891851246, (0.00017006643, 0.0565316, 0.7847209, -0.0001951116, 0.002110109)
+   validation loss 0.0005628610961139202, (0.0002300876, 0.05624577, 0.6599224, -0.0007500458, 0.002110109)
+decoder loss ratio: 0.027431, decoder SINDy loss  ratio: 0.029821
+Epoch 125
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.000537584419362247, (0.00014793659, 0.08129733, 0.77116597, 0.0006718482, 0.0020215728)
+   validation loss 0.0005261960905045271, (0.00019747262, 0.078124486, 0.6496344, -0.00053958374, 0.0020215728)
+decoder loss ratio: 0.023543, decoder SINDy loss  ratio: 0.029356
+Epoch 150
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.000496840919367969, (0.000118289056, 0.08769267, 0.74833447, -0.000519035, 0.0019497437)
+   validation loss 0.0004762099706567824, (0.0001559308, 0.08222259, 0.632336, 0.0024207856, 0.0019497437)
+decoder loss ratio: 0.018590, decoder SINDy loss  ratio: 0.028574
+Epoch 175
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0004618445527739823, (9.993992e-05, 0.07306082, 0.71650314, -0.00053277053, 0.0018639216)
+   validation loss 0.00043596449540928006, (0.00012863359, 0.06919467, 0.6077423, 0.00036740844, 0.0018639216)
+decoder loss ratio: 0.015336, decoder SINDy loss  ratio: 0.027463
+Epoch 200
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.00043505989015102386, (9.072091e-05, 0.059305824, 0.68274736, 0.0013112156, 0.0017642905)
+   validation loss 0.0004073367454111576, (0.000113605136, 0.058161363, 0.58164704, -0.00015176996, 0.0017642905)
+decoder loss ratio: 0.013544, decoder SINDy loss  ratio: 0.026284
+Epoch 225
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0004149409069214016, (8.624584e-05, 0.05216365, 0.65217376, -0.00021293348, 0.001658806)
+   validation loss 0.00038768068770878017, (0.00010614856, 0.052463684, 0.5578178, -0.00089052226, 0.001658806)
+decoder loss ratio: 0.012655, decoder SINDy loss  ratio: 0.025207
+Epoch 250
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.00039824831765145063, (8.3551044e-05, 0.048845273, 0.62451, 0.00097490253, 0.0015550342)
+   validation loss 0.00037228886503726244, (0.00010212617, 0.049275227, 0.5353978, -0.00091611303, 0.0015550342)
+decoder loss ratio: 0.012176, decoder SINDy loss  ratio: 0.024194
+Epoch 275
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.00038250203942880034, (8.072422e-05, 0.047110815, 0.5988445, -0.0012033731, 0.0014561424)
+   validation loss 0.0003584130317904055, (9.916011e-05, 0.047285065, 0.5137773, 0.00067380635, 0.0014561424)
+decoder loss ratio: 0.011822, decoder SINDy loss  ratio: 0.023217
+Epoch 300
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.00037007222999818623, (7.943836e-05, 0.046000373, 0.57666767, 0.000103296996, 0.001364377)
+   validation loss 0.00034821388544514775, (9.845578e-05, 0.0457862, 0.49493757, -0.0023307435, 0.001364377)
+decoder loss ratio: 0.011738, decoder SINDy loss  ratio: 0.022365
+Epoch 325
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.000359538069460541, (7.907135e-05, 0.044727687, 0.5564606, -0.0012930427, 0.00128109)
+   validation loss 0.00034011018578894436, (9.9207784e-05, 0.044215836, 0.4773832, 0.0011863079, 0.00128109)
+decoder loss ratio: 0.011828, decoder SINDy loss  ratio: 0.021572
+Epoch 350
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0003500544116832316, (7.801479e-05, 0.043505255, 0.5397287, -0.00015802993, 0.0012064524)
+   validation loss 0.0003326099249534309, (9.8899014e-05, 0.042702734, 0.46315148, 0.00091452897, 0.0012064524)
+decoder loss ratio: 0.011791, decoder SINDy loss  ratio: 0.020929
+Epoch 375
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.00034235173370689154, (7.7311306e-05, 0.042179137, 0.52586293, -0.0014826113, 0.0011417515)
+   validation loss 0.00032682670280337334, (9.905779e-05, 0.041051283, 0.4514327, -0.0006159616, 0.0011417515)
+decoder loss ratio: 0.011810, decoder SINDy loss  ratio: 0.020399
+Epoch 400
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0003343908756505698, (7.70404e-05, 0.04048521, 0.5106524, -0.0002219022, 0.0010859955)
+   validation loss 0.00032053759787231684, (9.963711e-05, 0.03926496, 0.43787444, 0.0008477132, 0.0010859955)
+decoder loss ratio: 0.011879, decoder SINDy loss  ratio: 0.019787
+Epoch 425
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0003277199575677514, (7.672123e-05, 0.038676117, 0.4981298, -0.00013145743, 0.0010376164)
+   validation loss 0.0003154591249767691, (0.00010012156, 0.037408702, 0.42693424, -0.0013873769, 0.0010376164)
+decoder loss ratio: 0.011937, decoder SINDy loss  ratio: 0.019292
+Epoch 450
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.0003208538983017206, (7.7112716e-05, 0.036514364, 0.48383087, -0.0015414853, 0.0009944707)
+   validation loss 0.0003102039627265185, (0.00010151396, 0.035316516, 0.41384834, -0.0001356138, 0.0009944707)
+decoder loss ratio: 0.012103, decoder SINDy loss  ratio: 0.018701
+Epoch 475
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.00031550705898553133, (7.6662946e-05, 0.034022644, 0.47428596, 0.0008571479, 0.00095572346)
+   validation loss 0.0003059687733184546, (0.00010147385, 0.03291108, 0.40569872, 0.0035622225, 0.00095572346)
+decoder loss ratio: 0.012098, decoder SINDy loss  ratio: 0.018333
+Epoch 500
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'langevin_noise', 'sindy_regularization'])
+   training loss 0.00031278104870580137, (7.7314064e-05, 0.03148061, 0.46778587, -0.00023258358, 0.00092015613)
+   validation loss 0.0003046698111575097, (0.000102868704, 0.030459924, 0.4005562, 0.001542203, 0.00092015613)
+decoder loss ratio: 0.012264, decoder SINDy loss  ratio: 0.018100
+params['save_name']
+pendulum_2022_06_21_16_52_14_217982
