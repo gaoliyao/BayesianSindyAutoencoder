@@ -29,7 +29,7 @@ params['library_dim'] = library_size(2*params['latent_dim'], params['poly_order'
 params['sequential_thresholding'] = True
 params['coefficient_threshold'] = 0.1
 params['threshold_frequency'] = 50
-params['threshold_start'] = 200
+params['threshold_start'] = 100
 params['coefficient_mask'] = np.ones((params['library_dim'], params['latent_dim']))
 params['coefficient_initialization'] = 'constant'
 
@@ -58,7 +58,7 @@ params['refinement_epochs'] = 501
 # Bayesian parameters
 # Setting of Spike-slab prior
 params['prior'] = "spike-and-slab"
-params['loss_weight_sindy_regularization'] = 1e-2
+params['loss_weight_sindy_regularization'] = 1e-3
 
 # Setting of Laplace prior
 # params['prior'] = "laplace"
@@ -66,7 +66,7 @@ params['loss_weight_sindy_regularization'] = 1e-2
 # params['learning_rate'] = 1e-4
 
 params['pi'] = 0.1
-params['c_std'] = 4.0
+params['c_std'] = 3.0
 params["epsilon"] = 0.1
 params["decay"] = 0.02
 params["sigma"] = 1.0
