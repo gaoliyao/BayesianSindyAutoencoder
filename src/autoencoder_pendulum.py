@@ -187,10 +187,11 @@ def xi_noise_gaussian(network, params):
     alpha = 0.001
     temp = 3.0
     noise_std = np.sqrt(2 * alpha * params['learning_rate'])
-    sindy_coefficients = network['sindy_coefficients']
+    sindy_coefficients = network['sindy_coefficients']*params['coefficient_mask']
     noise_ = tf.distributions.Normal(0., temp*noise_std*tf.ones(sindy_coefficients.get_shape()))
-    # noise_loss = tf.reduce_sum(sindy_coefficients * noise_.sample())
-    noise_loss = tf.reduce_sum(tf.ones(sindy_coefficients.get_shape()) * params['coefficient_mask'] * noise_.sample())
+    noise_loss = tf.reduce_sum(sindy_coefficients * noise_.sample())
+    noise_loss /= 1000
+    # noise_loss = tf.reduce_sum(tf.ones(sindy_coefficients.get_shape()) * params['coefficient_mask'] * noise_.sample())
     return noise_loss
 
 def linear_autoencoder(x, input_dim, d, init_sigma):

@@ -108,8 +108,10 @@ def train_network(training_data, val_data, params):
                 # noise_ = tf.random.normal(shape = sindy_coefficients.get_shape(), mean=0., stddev=temp*noise_std)
                 # noise_ = tf.multiply(noise_, mask)
                 # autoencoder_network['sindy_coefficients'] = tf.add(sindy_coefficients, noise_)
-                # params["decay"] /= (1.005)
-                # params["learning_rate"] /= (1.005)
+                if i % 500 == 0:
+                    params["learning_rate"] = 1e-3
+                params["decay"] /= (1.005)
+                params["learning_rate"] /= (1.005)
                 # temp /= 1.002
 
 #             print("--- %s seconds for one epoch ---" % (time.time() - start_time_huge))
@@ -125,13 +127,13 @@ def train_network(training_data, val_data, params):
     #                 params['coefficient_mask'] = np.zeros([12,1])
     #                 params['coefficient_mask'][-2][0] = 1
     #                 print(params['coefficient_mask'])
-                    if (active_num_mean/np.sum(params['coefficient_mask']) - params['pi']) > 0.01:
-                        div_scale = (10/np.sum(params['coefficient_mask']))**2
-                        params['loss_weight_sindy_regularization'] = loss_weight_sindy_regularization / div_scale
-                        print(params['loss_weight_sindy_regularization'])
-                    params['pi'] = np.minimum(active_num_mean/np.sum(params['coefficient_mask']), 1.0)
-                    print("params['pi']")
-                    print(params['pi'])
+                    # if (active_num_mean/np.sum(params['coefficient_mask']) - params['pi']) > 0.01:
+                    #     div_scale = (10/np.sum(params['coefficient_mask']))**2
+                    #     params['loss_weight_sindy_regularization'] = loss_weight_sindy_regularization / div_scale
+                    #     print(params['loss_weight_sindy_regularization'])
+                    # params['pi'] = np.minimum(active_num_mean/np.sum(params['coefficient_mask']), 1.0)
+                    # print("params['pi']")
+                    # print(params['pi'])
                 if params['prior'] == "laplace":
                     params['coefficient_mask'] = np.abs(sess.run(autoencoder_network['sindy_coefficients'])) > params['coefficient_threshold']
                 validation_dict['coefficient_mask:0'] = params['coefficient_mask']
