@@ -162,7 +162,8 @@ def define_loss_init(network, params):
     
     loss_refinement = params['loss_weight_decoder'] * losses['decoder'] \
                       + params['loss_weight_sindy_z'] * losses['sindy_z'] \
-                      + params['loss_weight_sindy_x'] * losses['sindy_x']
+                      + params['loss_weight_sindy_x'] * losses['sindy_x'] \
+                      + losses['langevin_noise']
 
     return loss, losses, loss_refinement
 
@@ -178,7 +179,7 @@ def spike_and_slab_prior_init(network, params):
     
     # TODO: start work from here
     prior_loss = 0
-    prior_loss += tf.reduce_sum(tf.square(sindy_coefficients)*network['d_star1'])/(2.0*params['sigma'])
+    prior_loss += tf.reduce_sum(tf.square(sindy_coefficients)*network['d_star1'])/(2.0*params['sigma']**2)
     prior_loss += tf.reduce_sum(tf.abs(sindy_coefficients)*network['d_star0'])/(params['sigma'])
     
     return prior_loss
