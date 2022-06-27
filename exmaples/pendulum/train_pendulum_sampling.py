@@ -28,8 +28,8 @@ params['library_dim'] = library_size(2*params['latent_dim'], params['poly_order'
 # sequential thresholding parameters
 params['sequential_thresholding'] = True
 params['coefficient_threshold'] = 0.1
-params['threshold_frequency'] = 50
-params['threshold_start'] = 100
+params['threshold_frequency'] = 100
+params['threshold_start'] = 0
 params['coefficient_mask'] = np.ones((params['library_dim'], params['latent_dim']))
 params['coefficient_initialization'] = 'constant'
 
@@ -44,6 +44,7 @@ params['widths'] = [128,64,32]
 # training parameters
 params['epoch_size'] = training_data['x'].shape[0]
 params['batch_size'] = 1000
+# params['learning_rate'] = 1e-3
 params['learning_rate'] = 1e-3
 # params['learning_rate'] = 
 
@@ -52,7 +53,7 @@ params['print_progress'] = True
 params['print_frequency'] = 25
 
 # training time cutoffs
-params['max_epochs'] = 2001
+params['max_epochs'] = 1001
 params['refinement_epochs'] = 501
 
 # Bayesian parameters
@@ -65,12 +66,13 @@ params['loss_weight_sindy_regularization'] = 1e-3
 # params['loss_weight_sindy_regularization'] = 1e-5
 # params['learning_rate'] = 1e-4
 
-params['pi'] = 0.1
+params['pi'] = 0.083
 params['c_std'] = 2.0
 params["epsilon"] = 0.05
-params["decay"] = 0.04
+params["decay"] = 0.05
 params["sigma"] = 1.0
 params["init_sigma"] = 0.0
+params["cycle_sgld"] = 500
 
 num_experiments = 1
 df = pd.DataFrame()
