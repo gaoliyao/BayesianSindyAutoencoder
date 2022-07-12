@@ -144,7 +144,7 @@ def define_loss_init(network, params):
     else:
         losses['sindy_z'] = tf.reduce_mean((ddz - ddz_predict)**2)
         losses['sindy_x'] = tf.reduce_mean((ddx - ddx_decode)**2)
-    losses['langevin_noise'] = xi_noise_gaussian(network, params)
+    # losses['langevin_noise'] = xi_noise_gaussian(network, params)
     if params['prior'] == None:
         losses['sindy_regularization'] = tf.reduce_mean(tf.abs(sindy_coefficients)) * params['loss_weight_sindy_regularization']
     if params['prior'].lower() == "laplace":
@@ -157,13 +157,12 @@ def define_loss_init(network, params):
            + params['loss_weight_sindy_x'] * losses['sindy_x']
 #     loss *= (50*1000)
     loss += losses['sindy_regularization']
-    loss += losses['langevin_noise']
+    # loss += losses['langevin_noise']
            
     
     loss_refinement = params['loss_weight_decoder'] * losses['decoder'] \
                       + params['loss_weight_sindy_z'] * losses['sindy_z'] \
-                      + params['loss_weight_sindy_x'] * losses['sindy_x'] \
-                      + losses['langevin_noise']
+                      + params['loss_weight_sindy_x'] * losses['sindy_x']
 
     return loss, losses, loss_refinement
 
@@ -181,6 +180,7 @@ def spike_and_slab_prior_init(network, params):
     prior_loss = 0
     prior_loss += tf.reduce_sum(tf.square(sindy_coefficients)*network['d_star1'])/(2.0*params['sigma']**2)
     prior_loss += tf.reduce_sum(tf.abs(sindy_coefficients)*network['d_star0'])/(params['sigma'])
+    prior_loss -= tf.reduce_sum(tf.log(params['pi']/(1-params['pi'])) * network['p_star'])
     
     return prior_loss
 

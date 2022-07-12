@@ -54,7 +54,7 @@ params['print_frequency'] = 25
 
 # training time cutoffs
 params['max_epochs'] = 3001
-params['refinement_epochs'] = 501
+params['refinement_epochs'] = 1001
 
 # Bayesian parameters
 # Setting of Spike-slab prior

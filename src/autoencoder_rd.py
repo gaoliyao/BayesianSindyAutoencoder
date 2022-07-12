@@ -149,7 +149,7 @@ def define_loss_init(network, params):
     else:
         losses['sindy_z'] = tf.reduce_mean((ddz - ddz_predict)**2) * params['loss_weight_sindy_z']
         losses['sindy_x'] = tf.reduce_mean((ddx - ddx_decode)**2) * params['loss_weight_sindy_x']
-    losses['langevin_noise'] = xi_noise_gaussian(network, params)
+    # losses['langevin_noise'] = xi_noise_gaussian(network, params)
     if params['prior'] == None:
         losses['sindy_regularization'] = tf.reduce_mean(tf.abs(sindy_coefficients)) * params['loss_weight_sindy_regularization']
     if params['prior'].lower() == "laplace":
@@ -162,7 +162,7 @@ def define_loss_init(network, params):
            + losses['sindy_x']
 #     loss *= (50*1000)
     loss += losses['sindy_regularization']
-    loss += losses['langevin_noise']
+    # loss += losses['langevin_noise']
 
     
     loss_refinement = losses['decoder'] \

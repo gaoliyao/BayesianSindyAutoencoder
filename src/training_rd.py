@@ -72,6 +72,19 @@ def train_network(training_data, val_data, params):
                 batch_idxs = np.arange(j*params['batch_size'], (j+1)*params['batch_size'])
                 train_dict = create_feed_dictionary(training_data, params, idxs=batch_idxs)
                 sess.run(train_op, feed_dict=train_dict)
+                if j == 0 and i % 100 == 0:
+                    x_decode = sess.run(autoencoder_network['x_decode'], feed_dict=train_dict)
+                    dx_decode = sess.run(autoencoder_network['dx_decode'], feed_dict=train_dict)
+                    with open('decode_x.npy', 'wb') as f:
+                        np.save(f, x_decode)
+                    with open('dx_decode.npy', 'wb') as f:
+                        np.save(f, dx_decode)
+                    with open('z.npy', 'wb') as f:
+                        np.save(f, sess.run(autoencoder_network['z'], feed_dict=train_dict))
+                    with open('dz.npy', 'wb') as f:
+                        np.save(f, sess.run(autoencoder_network['dz'], feed_dict=train_dict))
+                    with open('dz_predict.npy', 'wb') as f:
+                        np.save(f, sess.run(autoencoder_network['dz_predict'], feed_dict=train_dict))
                 
             # End of each eopch, we optimize a new p_star with Langevin noise
             
@@ -106,6 +119,9 @@ def train_network(training_data, val_data, params):
 # #                 noise_ = tf.multiply(noise_, mask)
 #                 autoencoder_network['sindy_coefficients'] = tf.add(sindy_coefficients, noise_)
 
+                if i % 500 == 0:
+                    # params["learning_rate"] = 1e-3
+                    params["learning_rate"] = 1e-3
                 params["decay"] /= (1.0008)
                 params["learning_rate"] /= (1.0008)
                 print("--- %s seconds for after prior computation ---" % (time.time() - start_time_huge))
@@ -140,6 +156,12 @@ def train_network(training_data, val_data, params):
                 batch_idxs = np.arange(j*params['batch_size'], (j+1)*params['batch_size'])
                 train_dict = create_feed_dictionary(training_data, params, idxs=batch_idxs)
                 sess.run(train_op_refinement, feed_dict=train_dict)
+            sindy_coefficients = tf.multiply(autoencoder_network['sindy_coefficients'], params['coefficient_mask'])
+            alpha = 0.001
+            temp = 3.0
+            noise_std = np.sqrt(2 * alpha * params['learning_rate'])
+            noise_ = tf.random.normal(shape = sindy_coefficients.get_shape(), mean=0., stddev=temp*noise_std)
+            autoencoder_network['sindy_coefficients'] = tf.add(autoencoder_network['sindy_coefficients'], noise_)
             
             if params['print_progress'] and (i_refinement % params['print_frequency'] == 0):
                 validation_losses.append(print_progress(sess, i_refinement, loss_refinement, losses, train_dict, validation_dict, x_norm, sindy_predict_norm_x))
