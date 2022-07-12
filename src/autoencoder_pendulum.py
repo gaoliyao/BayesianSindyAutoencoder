@@ -49,7 +49,7 @@ def full_network(params):
     elif params['coefficient_initialization'] == 'constant':
         sindy_coefficients = tf.get_variable('sindy_coefficients', shape=[library_dim,latent_dim], initializer=tf.constant_initializer(1.0))
     elif params['coefficient_initialization'] == 'normal':
-        sindy_coefficients = tf.get_variable('sindy_coefficients', shape=[library_dim,latent_dim], initializer=tf.initializers.random_normal(mean=0.0, stddev=0.0, seed=3))
+        sindy_coefficients = tf.get_variable('sindy_coefficients', shape=[library_dim,latent_dim], initializer=tf.initializers.random_normal(mean=0.0, stddev=1.0, seed=0))
     
     if params['sequential_thresholding']:
         coefficient_mask = tf.placeholder(tf.float32, shape=[library_dim,latent_dim], name='coefficient_mask')

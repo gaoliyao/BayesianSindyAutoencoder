@@ -31,7 +31,8 @@ params['coefficient_threshold'] = 0.1
 params['threshold_frequency'] = 100
 params['threshold_start'] = 0
 params['coefficient_mask'] = np.ones((params['library_dim'], params['latent_dim']))
-params['coefficient_initialization'] = 'constant'
+# params['coefficient_initialization'] = 'constant'
+params['coefficient_initialization'] = 'normal'
 
 # loss function weighting
 params['loss_weight_decoder'] = 1.0
