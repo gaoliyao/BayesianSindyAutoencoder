@@ -43,13 +43,13 @@ def train_network(training_data, val_data, params):
     validation_losses = []
     sindy_model_terms = [np.sum(params['coefficient_mask'])]
     
-    Xi = tf.placeholder(tf.float32, shape=[12, 1])
-    std = tf.placeholder(tf.float32, shape=())
-    pi = tf.placeholder(tf.float32, shape=())
-    eps = tf.placeholder(tf.float32, shape=())
+#     Xi = tf.placeholder(tf.float32, shape=[12, 1])
+#     std = tf.placeholder(tf.float32, shape=())
+#     pi = tf.placeholder(tf.float32, shape=())
+#     eps = tf.placeholder(tf.float32, shape=())
     
-    a_star_exec = (1/std) * tf.exp(-0.5*tf.square(tf.divide(Xi, std))) * pi
-    b_star_exec = (1/eps) * tf.exp(-0.5*tf.square(tf.divide(Xi, eps))) * (1-pi)
+#     a_star_exec = (1/std) * tf.exp(-0.5*tf.square(tf.divide(Xi, std))) * pi
+#     b_star_exec = (1/eps) * tf.exp(-0.5*tf.square(tf.divide(Xi, eps))) * (1-pi)
     
     gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.9)
     
@@ -66,7 +66,7 @@ def train_network(training_data, val_data, params):
                 print("=========================")
                 print(sess.run(autoencoder_network['p_star']))
                 print(sess.run(autoencoder_network['sindy_coefficients']*params['coefficient_mask']))
-#             start_time_huge = time.time()
+            start_time_huge = time.time()
 #             print("--- %s seconds for 0 ---" % (time.time() - start_time_huge))
             for j in range(params['epoch_size']//params['batch_size']):
                 batch_idxs = np.arange(j*params['batch_size'], (j+1)*params['batch_size'])
@@ -131,13 +131,13 @@ def train_network(training_data, val_data, params):
                 # noise_ = tf.multiply(noise_, mask)
                 # autoencoder_network['sindy_coefficients'] = tf.add(sindy_coefficients, noise_)
                 if i % params["cycle_sgld"] == 0:
-                    # params["learning_rate"] = 1e-3
-                    params["learning_rate"] = 1e-3 * (1.0 + 0.5*(i/params["cycle_sgld"]))
+                    params["learning_rate"] = 1e-3
+#                     params["learning_rate"] = 1e-3 * (1.0 + 0.5*(i/params["cycle_sgld"]))
                 params["decay"] /= (1.005)
-                params["learning_rate"] /= (1.005)
+                params["learning_rate"] /= (1.002)
                 # temp /= 1.002
 
-#             print("--- %s seconds for one epoch ---" % (time.time() - start_time_huge))
+            print("--- %s seconds for one epoch ---" % (time.time() - start_time_huge))
             
             if params['print_progress'] and (i % params['print_frequency'] == 0):
                 validation_losses.append(print_progress(sess, i, loss, losses, train_dict, validation_dict, x_norm, sindy_predict_norm_x))
@@ -146,17 +146,6 @@ def train_network(training_data, val_data, params):
                 if params['prior'] == "spike-and-slab":
                     active_num_mean = np.sum(params['coefficient_mask'] * params['pi'])
                     params['coefficient_mask'] = np.abs(sess.run(autoencoder_network['p_star'])) > params['coefficient_threshold']
-                    # debug version
-    #                 params['coefficient_mask'] = np.zeros([12,1])
-    #                 params['coefficient_mask'][-2][0] = 1
-    #                 print(params['coefficient_mask'])
-                    # if (active_num_mean/np.sum(params['coefficient_mask']) - params['pi']) > 0.01:
-                    #     div_scale = (10/np.sum(params['coefficient_mask']))**2
-                    #     params['loss_weight_sindy_regularization'] = loss_weight_sindy_regularization / div_scale
-                    #     print(params['loss_weight_sindy_regularization'])
-                    # params['pi'] = np.minimum(active_num_mean/np.sum(params['coefficient_mask']), 1.0)
-                    # print("params['pi']")
-                    # print(params['pi'])
                 if params['prior'] == "laplace":
                     params['coefficient_mask'] = np.abs(sess.run(autoencoder_network['sindy_coefficients'])) > params['coefficient_threshold']
                 validation_dict['coefficient_mask:0'] = params['coefficient_mask']

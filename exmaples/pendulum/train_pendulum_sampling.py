@@ -28,11 +28,11 @@ params['library_dim'] = library_size(2*params['latent_dim'], params['poly_order'
 # sequential thresholding parameters
 params['sequential_thresholding'] = True
 params['coefficient_threshold'] = 0.1
-params['threshold_frequency'] = 100
+params['threshold_frequency'] = 150
 params['threshold_start'] = 0
 params['coefficient_mask'] = np.ones((params['library_dim'], params['latent_dim']))
-# params['coefficient_initialization'] = 'constant'
-params['coefficient_initialization'] = 'normal'
+params['coefficient_initialization'] = 'constant'
+# params['coefficient_initialization'] = 'normal'
 
 # loss function weighting
 params['loss_weight_decoder'] = 1.0
@@ -54,8 +54,8 @@ params['print_progress'] = True
 params['print_frequency'] = 25
 
 # training time cutoffs
-params['max_epochs'] = 3001
-params['refinement_epochs'] = 1001
+params['max_epochs'] = 1501
+params['refinement_epochs'] = 501
 
 # Bayesian parameters
 # Setting of Spike-slab prior
