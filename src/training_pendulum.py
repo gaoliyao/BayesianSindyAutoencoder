@@ -133,7 +133,7 @@ def train_network(training_data, val_data, params):
                 if i % params["cycle_sgld"] == 0:
                     params["learning_rate"] = 1e-3
 #                     params["learning_rate"] = 1e-3 * (1.0 + 0.5*(i/params["cycle_sgld"]))
-                params["decay"] /= (1.005)
+                params["decay"] /= (1.002)
                 params["learning_rate"] /= (1.002)
                 # temp /= 1.002
 
@@ -243,6 +243,7 @@ def print_progress(sess, i, loss, losses, train_dict, validation_dict, x_norm, s
     decoder_losses = sess.run((losses['decoder'], losses['sindy_x']), feed_dict=validation_dict)
     loss_ratios = (decoder_losses[0]/x_norm, decoder_losses[1]/sindy_predict_norm)
     print("decoder loss ratio: %f, decoder SINDy loss  ratio: %f" % loss_ratios)
+    # Fraction of unexplained variance
     return validation_loss_vals
 
 

@@ -137,11 +137,7 @@ def train_network(training_data, val_data, params):
                 
             if params['sequential_thresholding'] and (i % params['threshold_frequency'] == 0) and (i > params['threshold_start']):
                 if params['prior'] == "spike-and-slab":
-                    active_num_mean = np.sum(params['coefficient_mask'] * params['pi'])
                     params['coefficient_mask'] = np.abs(sess.run(autoencoder_network['p_star'])) > params['coefficient_threshold']
-                    params['pi'] = np.minimum(active_num_mean/np.sum(params['coefficient_mask']), 1.0)
-                    print("params['pi']")
-                    print(params['pi'])
                 if params['prior'] == "laplace":
                     params['coefficient_mask'] = np.abs(sess.run(autoencoder_network['sindy_coefficients'])) > params['coefficient_threshold']
                 validation_dict['coefficient_mask:0'] = params['coefficient_mask']

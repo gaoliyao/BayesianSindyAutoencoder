@@ -183,8 +183,9 @@ def spike_and_slab_prior_init(network, params):
     sindy_coefficients = params['coefficient_mask']*network['sindy_coefficients']
     
     prior_loss = 0
-    prior_loss += tf.reduce_mean(tf.square(sindy_coefficients)*network['d_star1'])/(2.0*params['sigma'])
+    prior_loss += tf.reduce_mean(tf.square(sindy_coefficients)*network['d_star1'])/(2.0*params['sigma']**2)
     prior_loss += tf.reduce_mean(tf.abs(sindy_coefficients)*network['d_star0'])/(params['sigma'])
+    prior_loss -= tf.reduce_sum(tf.log(params['pi']/(1-params['pi'])) * network['p_star'])
     
     return prior_loss
 

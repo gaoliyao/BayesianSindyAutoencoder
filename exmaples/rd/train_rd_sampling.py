@@ -24,14 +24,14 @@ params['library_dim'] = library_size(params['latent_dim'], params['poly_order'],
 # sequential thresholding parameters
 params['sequential_thresholding'] = True
 params['coefficient_threshold'] = 0.1
-params['threshold_frequency'] = 250
+params['threshold_frequency'] = 500
 params['threshold_start'] = 0
 params['coefficient_mask'] = np.ones((params['library_dim'], params['latent_dim']))
 params['coefficient_initialization'] = 'normal'
 
 # loss function weighting
 params['loss_weight_decoder'] = 1.0
-params['loss_weight_sindy_z'] = 0.01
+params['loss_weight_sindy_z'] = 0.05
 params['loss_weight_sindy_x'] = 0.5
 
 params['activation'] = 'sigmoid'
@@ -54,16 +54,16 @@ params['print_frequency'] = 100
 
 # Setting of Spike-slab prior
 params['prior'] = "spike-and-slab"
-params['loss_weight_sindy_regularization'] = 5.0
+params['loss_weight_sindy_regularization'] = 20.0
 
-params['pi'] = 0.1
+params['pi'] = 0.083
 params['c_std'] = 3.0
-params["epsilon"] = 0.05
-params["decay"] = 0.01
+params["epsilon"] = 0.1
+params["decay"] = 0.02
 params["sigma"] = 1.0
 
 # training time cutoffs
-params['max_epochs'] = 1001
+params['max_epochs'] = 1501
 params['refinement_epochs'] = 1001
 
 num_experiments = 1
