@@ -43,17 +43,14 @@ def full_network(params):
         Theta = sindy_library_tf_order2(z, dz, latent_dim, poly_order, include_sine)
 
 
-    if params['fixed_coefficients']:
-        sindy_coefficients = tf.placeholder(tf.float32, shape=[library_dim,latent_dim], name='sindy_coefficients')
-    else:
-        if params['coefficient_initialization'] == 'xavier':
-            sindy_coefficients = tf.get_variable('sindy_coefficients', shape=[library_dim,latent_dim], initializer=tf.contrib.layers.xavier_initializer())
-        elif params['coefficient_initialization'] == 'specified':
-            sindy_coefficients = tf.get_variable('sindy_coefficients', initializer=params['init_coefficients'])
-        elif params['coefficient_initialization'] == 'constant':
-            sindy_coefficients = tf.get_variable('sindy_coefficients', shape=[library_dim,latent_dim], initializer=tf.constant_initializer(1.0))
-        elif params['coefficient_initialization'] == 'normal':
-            sindy_coefficients = tf.get_variable('sindy_coefficients', shape=[library_dim,latent_dim], initializer=tf.initializers.random_normal())
+    if params['coefficient_initialization'] == 'xavier':
+        sindy_coefficients = tf.get_variable('sindy_coefficients', shape=[library_dim,latent_dim], initializer=tf.contrib.layers.xavier_initializer())
+    elif params['coefficient_initialization'] == 'specified':
+        sindy_coefficients = tf.get_variable('sindy_coefficients', initializer=params['init_coefficients'])
+    elif params['coefficient_initialization'] == 'constant':
+        sindy_coefficients = tf.get_variable('sindy_coefficients', shape=[library_dim,latent_dim], initializer=tf.constant_initializer(1.0))
+    elif params['coefficient_initialization'] == 'normal':
+        sindy_coefficients = tf.get_variable('sindy_coefficients', shape=[library_dim,latent_dim], initializer=tf.initializers.random_normal())
     
     if params['sequential_thresholding']:
         coefficient_mask = tf.placeholder(tf.float32, shape=[library_dim,latent_dim], name='coefficient_mask')
@@ -68,6 +65,18 @@ def full_network(params):
         dx_decode,ddx_decode = z_derivative_order2(z, dz, sindy_predict, decoder_weights, decoder_biases,
                                              activation=activation)
 
+    # Init Stochastic Approximation paramsters
+    p_star = tf.zeros_like(sindy_coefficients)
+    d_star0 = tf.zeros_like(sindy_coefficients)
+    d_star1 = tf.zeros_like(sindy_coefficients)
+    
+    # Init vals
+    p_init = tf.constant(1.0)
+    d_init = tf.constant(5e-4)
+    p_star = tf.add(p_star, p_init)
+    d_star0 = tf.add(d_star0, d_init)
+    d_star1 = tf.add(d_star1, d_init)
+
     network['x'] = x
     network['dx'] = dx
     network['z'] = z
@@ -80,6 +89,9 @@ def full_network(params):
     network['decoder_biases'] = decoder_biases
     network['Theta'] = Theta
     network['sindy_coefficients'] = sindy_coefficients
+    network['p_star'] = p_star
+    network['d_star0'] = d_star0
+    network['d_star1'] = d_star1
 
     if model_order == 1:
         network['dz_predict'] = sindy_predict
@@ -88,15 +100,11 @@ def full_network(params):
         network['ddz_predict'] = sindy_predict
         network['ddx'] = ddx
         network['ddx_decode'] = ddx_decode
-
-    if params['include_true_dynamics']:
-        latent_dynamics = tf.placeholder(tf.float32, shape=[None,latent_dim], name='latent_dynamics')
-        network['latent_dynamics'] = latent_dynamics
         
     return network
 
 
-def define_loss(network, params):
+def define_loss_init(network, params):
     """
     Create the loss functions.
 
@@ -119,36 +127,52 @@ def define_loss(network, params):
     sindy_coefficients = params['coefficient_mask']*network['sindy_coefficients']
 
     losses = {}
-    losses['decoder'] = tf.reduce_mean((x - x_decode)**2)
+    losses['decoder'] = tf.reduce_mean((x - x_decode)**2) * params['loss_weight_decoder']
     if params['model_order'] == 1:
-        losses['sindy_z'] = tf.reduce_mean((dz - dz_predict)**2)
-        if params['normalize_dz_loss']:
-            losses['sindy_z'] /= tf.reduce_mean(dz**2)
-        losses['sindy_x'] = tf.reduce_mean((dx - dx_decode)**2)
+        losses['sindy_z'] = tf.reduce_mean((dz - dz_predict)**2) * params['loss_weight_sindy_z']
+        losses['sindy_x'] = tf.reduce_mean((dx - dx_decode)**2) * params['loss_weight_sindy_x']
     else:
-        losses['sindy_z'] = tf.reduce_mean((ddz - ddz_predict)**2)
-        if params['normalize_dz_loss']:
-            losses['sindy_z'] /= tf.reduce_mean(ddz**2)
-        losses['sindy_x'] = tf.reduce_mean((ddx - ddx_decode)**2)
-    losses['sindy_regularization'] = tf.reduce_mean(tf.abs(sindy_coefficients))
-    loss = params['loss_weight_decoder'] * losses['decoder'] \
-           + params['loss_weight_sindy_z'] * losses['sindy_z'] \
-           + params['loss_weight_sindy_x'] * losses['sindy_x'] \
-           + params['loss_weight_sindy_regularization'] * losses['sindy_regularization']
-    
-    loss_refinement = params['loss_weight_decoder'] * losses['decoder'] \
-                      + params['loss_weight_sindy_z'] * losses['sindy_z'] \
-                      + params['loss_weight_sindy_x'] * losses['sindy_x']
+        losses['sindy_z'] = tf.reduce_mean((ddz - ddz_predict)**2) * params['loss_weight_sindy_z']
+        losses['sindy_x'] = tf.reduce_mean((ddx - ddx_decode)**2) * params['loss_weight_sindy_x']
+    # losses['langevin_noise'] = xi_noise_gaussian(network, params)
+    if params['prior'] == None:
+        losses['sindy_regularization'] = tf.reduce_mean(tf.abs(sindy_coefficients)) * params['loss_weight_sindy_regularization']
+    if params['prior'].lower() == "laplace":
+        losses['sindy_regularization'] = laplace_prior(network, params) * params['loss_weight_sindy_regularization']
+    if params['prior'].lower() == "spike-and-slab":
+        losses['sindy_regularization'] = spike_and_slab_prior_init(network, params) * params['loss_weight_sindy_regularization']
+        
+    loss = losses['decoder'] \
+           + losses['sindy_z'] \
+           + losses['sindy_x']
+#     loss *= (50*1000)
+    loss += losses['sindy_regularization']
+    # loss += losses['langevin_noise']
 
-    if params['include_true_dynamics']:
-        z = network['z']
-        latent_dynamics = network['latent_dynamics']
-        losses['true_dynamics'] = tf.reduce_mean((z - latent_dynamics)**2)
-        loss += params['loss_weight_true_dynamics'] * losses['true_dynamics']
-        loss_refinement += params['loss_weight_true_dynamics'] * losses['true_dynamics']
     
+    loss_refinement = losses['decoder'] \
+                      + losses['sindy_z'] \
+                      + losses['sindy_x']
+
     return loss, losses, loss_refinement
 
+def laplace_prior(network, params):
+#     print("Init Laplace prior")
+    sindy_coefficients = params['coefficient_mask']*network['sindy_coefficients']
+    prior_loss = tf.reduce_mean(tf.abs(sindy_coefficients))
+    return prior_loss
+
+# TODO: Sep/9/2021
+# Notice here is reduce_mean instead of reduce sum
+def spike_and_slab_prior_init(network, params):
+    sindy_coefficients = params['coefficient_mask']*network['sindy_coefficients']
+    
+    prior_loss = 0
+    prior_loss += tf.reduce_mean(tf.square(sindy_coefficients)*network['d_star1'])/(2.0*params['sigma']**2)
+    prior_loss += tf.reduce_mean(tf.abs(sindy_coefficients)*network['d_star0'])/(params['sigma'])
+    prior_loss -= tf.reduce_sum(tf.log(params['pi']/(1-params['pi'])) * network['p_star'])
+    
+    return prior_loss
 
 def linear_autoencoder(x, input_dim, d):
     # z,encoder_weights,encoder_biases = encoder(x, input_dim, latent_dim, [], None, 'encoder')

@@ -158,6 +158,13 @@ def train_network(training_data, val_data, params):
             noise_std = np.sqrt(2 * alpha * params['learning_rate'])
             noise_ = tf.random.normal(shape = sindy_coefficients.get_shape(), mean=0., stddev=temp*noise_std)
             autoencoder_network['sindy_coefficients'] = tf.add(autoencoder_network['sindy_coefficients'], noise_)
+            count = 0
+            if i_refinement >= params['refinement_epochs']-100:
+                save_sindy_coeff[count] = sess.run(autoencoder_network['sindy_coefficients'])
+                count += 1
+            if i_refinement >= params['refinement_epochs']-1:
+                with open('save_rd_refinement.npy', 'wb') as f:
+                    np.save(f, save_sindy_coeff)
             
             if params['print_progress'] and (i_refinement % params['print_frequency'] == 0):
                 validation_losses.append(print_progress(sess, i_refinement, loss_refinement, losses, train_dict, validation_dict, x_norm, sindy_predict_norm_x))

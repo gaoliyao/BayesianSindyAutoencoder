@@ -70,14 +70,14 @@ params['learning_rate'] = 1e-3
 params['prior'] = "spike-and-slab"
 params['loss_weight_sindy_regularization'] = 1e-2
 
-params['pi'] = 0.1
+params['pi'] = 0.116
 params['c_std'] = 20.0
 params["epsilon"] = 0.1
 params["decay"] = 0.01
 params["sigma"] = 1.0
 
 # training time cutoffs
-params['max_epochs'] = 1001
+params['max_epochs'] = 2001
 params['refinement_epochs'] = 501
 
 print(tf.__version__)
