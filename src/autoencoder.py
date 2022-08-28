@@ -50,7 +50,7 @@ def full_network(params):
     elif params['coefficient_initialization'] == 'constant':
         sindy_coefficients = tf.get_variable('sindy_coefficients', shape=[library_dim,latent_dim], initializer=tf.constant_initializer(1.0))
     elif params['coefficient_initialization'] == 'normal':
-        sindy_coefficients = tf.get_variable('sindy_coefficients', shape=[library_dim,latent_dim], initializer=tf.initializers.random_normal())
+        sindy_coefficients = tf.get_variable('sindy_coefficients', shape=[library_dim,latent_dim], initializer=tf.initializers.random_normal(mean=0.0, stddev=10.0))
     
     if params['sequential_thresholding']:
         coefficient_mask = tf.placeholder(tf.float32, shape=[library_dim,latent_dim], name='coefficient_mask')
@@ -71,7 +71,7 @@ def full_network(params):
     d_star1 = tf.zeros_like(sindy_coefficients)
     
     # Init vals
-    p_init = tf.constant(1.0)
+    p_init = tf.constant(0.5)
     d_init = tf.constant(5e-4)
     p_star = tf.add(p_star, p_init)
     d_star0 = tf.add(d_star0, d_init)
@@ -170,7 +170,7 @@ def spike_and_slab_prior_init(network, params):
     prior_loss = 0
     prior_loss += tf.reduce_mean(tf.square(sindy_coefficients)*network['d_star1'])/(2.0*params['sigma']**2)
     prior_loss += tf.reduce_mean(tf.abs(sindy_coefficients)*network['d_star0'])/(params['sigma'])
-    prior_loss -= tf.reduce_sum(tf.log(params['pi']/(1-params['pi'])) * network['p_star'])
+    prior_loss -= tf.reduce_mean(tf.log(params['pi']/(1-params['pi'])) * network['p_star'])
     
     return prior_loss
 

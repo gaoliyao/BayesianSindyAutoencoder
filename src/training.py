@@ -52,7 +52,7 @@ def train_network(training_data, val_data, params):
             if (i % params['print_frequency'] == 0):
                 print(sess.run(autoencoder_network['p_star']))
                 print(sess.run(autoencoder_network['sindy_coefficients']*params['coefficient_mask']))
-            start_time_huge = time.time()
+#             start_time_huge = time.time()
             for j in range(params['epoch_size']//params['batch_size']):
                 batch_idxs = np.arange(j*params['batch_size'], (j+1)*params['batch_size'])
                 train_dict = create_feed_dictionary(training_data, params, idxs=batch_idxs)
@@ -79,7 +79,7 @@ def train_network(training_data, val_data, params):
                     np.save(f, save_sindy_coeff)
                     
             if params['prior'] == "spike-and-slab" and i % 2 == 0:
-                print("--- %s seconds for before prior computation ---" % (time.time() - start_time_huge))
+#                 print("--- %s seconds for before prior computation ---" % (time.time() - start_time_huge))
                 sindy_coefficients = autoencoder_network['sindy_coefficients']
                 p_star = autoencoder_network['p_star']
                 
@@ -106,7 +106,7 @@ def train_network(training_data, val_data, params):
                     params["learning_rate"] = 1e-3
                 params["decay"] /= (1.0008)
                 params["learning_rate"] /= (1.0008)
-                print("--- %s seconds for after prior computation ---" % (time.time() - start_time_huge))
+#                 print("--- %s seconds for after prior computation ---" % (time.time() - start_time_huge))
                 
             if params['print_progress'] and (i % params['print_frequency'] == 0):
                 validation_losses.append(print_progress(sess, i, loss, losses, train_dict, validation_dict, x_norm, sindy_predict_norm_x))

@@ -41,10 +41,10 @@ params['library_dim'] = library_size(params['latent_dim'], params['poly_order'],
 # sequential thresholding parameters
 params['sequential_thresholding'] = True
 params['coefficient_threshold'] = 0.1
-params['threshold_frequency'] = 200
+params['threshold_frequency'] = 500
 params['threshold_start'] = 0
 params['coefficient_mask'] = np.ones((params['library_dim'], params['latent_dim']))
-params['coefficient_initialization'] = 'normal'
+params['coefficient_initialization'] = 'constant'
 
 # loss function weighting
 params['loss_weight_decoder'] = 1.0
@@ -57,7 +57,6 @@ params['widths'] = [64,32]
 # training parameters
 params['epoch_size'] = training_data['x'].shape[0]
 params['batch_size'] = 1024
-params['learning_rate'] = 1e-2
 
 params['data_path'] = os.getcwd() + '/'
 params['print_progress'] = True
@@ -68,17 +67,17 @@ params['learning_rate'] = 1e-3
 # params['prior'] = "laplace"
 # params['loss_weight_sindy_regularization'] = 1e-5
 params['prior'] = "spike-and-slab"
-params['loss_weight_sindy_regularization'] = 1e-2
+params['loss_weight_sindy_regularization'] = 5e-3
 
-params['pi'] = 0.116
+params['pi'] = 0.1
 params['c_std'] = 20.0
-params["epsilon"] = 0.1
-params["decay"] = 0.01
+params["epsilon"] = 0.25
+params["decay"] = 0.02
 params["sigma"] = 1.0
 
 # training time cutoffs
 params['max_epochs'] = 2001
-params['refinement_epochs'] = 501
+params['refinement_epochs'] = 1001
 
 print(tf.__version__)
 num_experiments = 1
