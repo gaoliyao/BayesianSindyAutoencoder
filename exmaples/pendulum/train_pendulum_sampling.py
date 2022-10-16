@@ -1,7 +1,7 @@
 import sys
 sys.path.append("../../src")
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 import datetime
 import pandas as pd
 import numpy as np
@@ -55,7 +55,7 @@ params['print_frequency'] = 25
 
 # training time cutoffs
 params['max_epochs'] = 1501
-params['refinement_epochs'] = 501
+params['refinement_epochs'] = 1001
 
 # Bayesian parameters
 # Setting of Spike-slab prior

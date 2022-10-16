@@ -1,0 +1,3588 @@
+(mars) marsgao@the-machine:~/BayesianSindyAutoencoder/exmaples/pendulum$ sh sampling.sh 
+/home/marsgao/miniconda3/envs/mars/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:523: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+/home/marsgao/miniconda3/envs/mars/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:524: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+/home/marsgao/miniconda3/envs/mars/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:525: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+/home/marsgao/miniconda3/envs/mars/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:526: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+/home/marsgao/miniconda3/envs/mars/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:527: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+/home/marsgao/miniconda3/envs/mars/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:532: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  np_resource = np.dtype([("resource", np.ubyte, 1)])
+(50000, 2601)
+EXPERIMENT 0
+Hyper-parameters and experimental setup
+{'input_dim': 2601, 'latent_dim': 1, 'model_order': 2, 'poly_order': 3, 'include_sine': True, 'library_dim': 12, 'sequential_thresholding': True, 'coefficient_threshold': 0.1, 'threshold_frequency': 150, 'threshold_start': 0, 'coefficient_mask': array([[1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.],
+       [1.]]), 'coefficient_initialization': 'constant', 'loss_weight_decoder': 1.0, 'loss_weight_sindy_x': 0.005, 'loss_weight_sindy_z': 5e-05, 'activation': 'sigmoid', 'widths': [128, 64, 32], 'epoch_size': 50000, 'batch_size': 1000, 'learning_rate': 0.001, 'data_path': '/home/marsgao/BayesianSindyAutoencoder/exmaples/pendulum/', 'print_progress': True, 'print_frequency': 25, 'max_epochs': 1501, 'refinement_epochs': 1001, 'prior': 'spike-and-slab', 'loss_weight_sindy_regularization': 0.0008, 'pi': 0.083, 'c_std': 3.0, 'epsilon': 0.05, 'decay': 0.05, 'sigma': 1.0, 'init_sigma': 0.0, 'cycle_sgld': 500}
+TRAINING
+2022-10-15 15:24:32.873922: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA
+2022-10-15 15:24:33.101694: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1432] Found device 0 with properties: 
+name: NVIDIA GeForce RTX 2080 Ti major: 7 minor: 5 memoryClockRate(GHz): 1.545
+pciBusID: 0000:68:00.0
+totalMemory: 10.76GiB freeMemory: 10.27GiB
+2022-10-15 15:24:33.101720: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1511] Adding visible gpu devices: 0
+2022-10-15 15:24:33.314886: I tensorflow/core/common_runtime/gpu/gpu_device.cc:982] Device interconnect StreamExecutor with strength 1 edge matrix:
+2022-10-15 15:24:33.314918: I tensorflow/core/common_runtime/gpu/gpu_device.cc:988]      0 
+2022-10-15 15:24:33.314923: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1001] 0:   N 
+2022-10-15 15:24:33.315000: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 9915 MB memory) -> physical GPU (device: 0, name: NVIDIA GeForce RTX 2080 Ti, pci bus id: 0000:68:00.0, compute capability: 7.5)
+=========================
+[[0.5]
+ [0.5]
+ [0.5]
+ [0.5]
+ [0.5]
+ [0.5]
+ [0.5]
+ [0.5]
+ [0.5]
+ [0.5]
+ [0.5]
+ [0.5]]
+[[1.]
+ [1.]
+ [1.]
+ [1.]
+ [1.]
+ [1.]
+ [1.]
+ [1.]
+ [1.]
+ [1.]
+ [1.]
+ [1.]]
+--- 2.4357407093048096 seconds for one epoch ---
+Epoch 0
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.06256693601608276, (0.007212558, 7.0086055e-05, 8.763314, 0.0115378015)
+   validation loss 0.08475358784198761, (0.0074933786, 9.361914e-05, 13.144481, 0.0115378015)
+decoder loss ratio: 0.893369, decoder SINDy loss  ratio: 1.000000
+--- 1.3763468265533447 seconds for one epoch ---
+--- 1.4659068584442139 seconds for one epoch ---
+--- 1.5217702388763428 seconds for one epoch ---
+--- 1.535167932510376 seconds for one epoch ---
+--- 1.4964613914489746 seconds for one epoch ---
+--- 1.5078251361846924 seconds for one epoch ---
+--- 1.4945518970489502 seconds for one epoch ---
+--- 1.487185001373291 seconds for one epoch ---
+--- 1.4916162490844727 seconds for one epoch ---
+--- 1.496269941329956 seconds for one epoch ---
+--- 1.4660449028015137 seconds for one epoch ---
+--- 1.4462096691131592 seconds for one epoch ---
+--- 1.5326569080352783 seconds for one epoch ---
+--- 1.492433786392212 seconds for one epoch ---
+--- 1.5250627994537354 seconds for one epoch ---
+--- 1.4960706233978271 seconds for one epoch ---
+--- 1.4999079704284668 seconds for one epoch ---
+--- 1.4928805828094482 seconds for one epoch ---
+--- 1.4734711647033691 seconds for one epoch ---
+--- 1.4225265979766846 seconds for one epoch ---
+--- 1.50941801071167 seconds for one epoch ---
+--- 1.5129280090332031 seconds for one epoch ---
+--- 1.5284149646759033 seconds for one epoch ---
+--- 1.471625566482544 seconds for one epoch ---
+=========================
+[[0.74121356]
+ [0.74059886]
+ [0.2593472 ]
+ [0.7412222 ]
+ [0.25935477]
+ [0.2593486 ]
+ [0.5378827 ]
+ [0.25934744]
+ [0.2593477 ]
+ [0.25934803]
+ [0.74069333]
+ [0.25934687]]
+[[ 8.4253532e-01]
+ [ 6.6897082e-01]
+ [-4.7771871e-05]
+ [ 8.7146986e-01]
+ [ 7.0594042e-04]
+ [ 1.8370687e-04]
+ [ 3.5229966e-01]
+ [-7.9904043e-05]
+ [-1.0385658e-04]
+ [-1.2749602e-04]
+ [ 6.7706931e-01]
+ [ 1.7079508e-05]]
+--- 1.3842923641204834 seconds for one epoch ---
+Epoch 25
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.06265164166688919, (0.007302208, 0.0028265843, 8.763314, 0.011532723)
+   validation loss 0.08462102711200714, (0.0073657045, 0.003955001, 13.144481, 0.011532723)
+decoder loss ratio: 0.878147, decoder SINDy loss  ratio: 1.000000
+--- 1.3768887519836426 seconds for one epoch ---
+--- 1.4191715717315674 seconds for one epoch ---
+--- 1.4211463928222656 seconds for one epoch ---
+--- 1.4715659618377686 seconds for one epoch ---
+--- 1.4970052242279053 seconds for one epoch ---
+--- 1.449486494064331 seconds for one epoch ---
+--- 1.4519000053405762 seconds for one epoch ---
+--- 1.5290889739990234 seconds for one epoch ---
+--- 1.3982906341552734 seconds for one epoch ---
+--- 1.501037359237671 seconds for one epoch ---
+--- 1.4822993278503418 seconds for one epoch ---
+--- 1.5394039154052734 seconds for one epoch ---
+--- 1.4337384700775146 seconds for one epoch ---
+--- 1.8021330833435059 seconds for one epoch ---
+--- 1.6365625858306885 seconds for one epoch ---
+--- 1.494063138961792 seconds for one epoch ---
+--- 1.7076902389526367 seconds for one epoch ---
+--- 1.5636086463928223 seconds for one epoch ---
+--- 1.4948945045471191 seconds for one epoch ---
+--- 1.5607876777648926 seconds for one epoch ---
+--- 1.4893929958343506 seconds for one epoch ---
+--- 1.4919517040252686 seconds for one epoch ---
+--- 1.394841194152832 seconds for one epoch ---
+--- 1.5339181423187256 seconds for one epoch ---
+=========================
+[[0.313771  ]
+ [0.8471767 ]
+ [0.1439274 ]
+ [0.85683423]
+ [0.14392522]
+ [0.14465082]
+ [0.15088373]
+ [0.14392924]
+ [0.14616747]
+ [0.14392768]
+ [0.84677804]
+ [0.14392957]]
+[[ 2.7846241e-01]
+ [ 5.5089581e-01]
+ [-3.3139464e-04]
+ [ 7.8031957e-01]
+ [ 2.0414386e-04]
+ [-3.0800739e-02]
+ [ 1.1100566e-01]
+ [-4.3710327e-04]
+ [-6.4448357e-02]
+ [-3.4299796e-04]
+ [ 5.4885989e-01]
+ [-4.5809086e-04]]
+--- 1.4128742218017578 seconds for one epoch ---
+Epoch 50
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.062482140958309174, (0.0071015023, 0.6349755, 8.763363, 0.011532077)
+   validation loss 0.08443761616945267, (0.007140195, 0.8521702, 13.1445465, 0.011532077)
+decoder loss ratio: 0.851262, decoder SINDy loss  ratio: 1.000005
+--- 1.4178369045257568 seconds for one epoch ---
+--- 1.4194412231445312 seconds for one epoch ---
+--- 1.4896018505096436 seconds for one epoch ---
+--- 1.3944625854492188 seconds for one epoch ---
+--- 1.4670178890228271 seconds for one epoch ---
+--- 1.3473317623138428 seconds for one epoch ---
+--- 1.4907739162445068 seconds for one epoch ---
+--- 1.457953691482544 seconds for one epoch ---
+--- 1.515733242034912 seconds for one epoch ---
+--- 1.4895820617675781 seconds for one epoch ---
+--- 1.477717638015747 seconds for one epoch ---
+--- 1.4999752044677734 seconds for one epoch ---
+--- 1.5211272239685059 seconds for one epoch ---
+--- 1.5213372707366943 seconds for one epoch ---
+--- 1.5280256271362305 seconds for one epoch ---
+--- 1.491302728652954 seconds for one epoch ---
+--- 1.7501580715179443 seconds for one epoch ---
+--- 1.5749642848968506 seconds for one epoch ---
+--- 1.5086138248443604 seconds for one epoch ---
+--- 1.4354212284088135 seconds for one epoch ---
+--- 1.5458953380584717 seconds for one epoch ---
+--- 1.5027172565460205 seconds for one epoch ---
+--- 1.571657419204712 seconds for one epoch ---
+--- 1.471907615661621 seconds for one epoch ---
+=========================
+[[0.078265  ]
+ [0.8318634 ]
+ [0.0776232 ]
+ [0.18269618]
+ [0.07754584]
+ [0.92070967]
+ [0.08107188]
+ [0.07753912]
+ [0.9049148 ]
+ [0.07753976]
+ [0.915474  ]
+ [0.07758649]]
+[[-2.7126780e-02]
+ [-4.4213873e-01]
+ [-4.2441990e-03]
+ [ 2.3915064e-01]
+ [-6.2209641e-04]
+ [-6.2307781e-01]
+ [ 7.5155377e-02]
+ [ 2.9398917e-04]
+ [-5.2678734e-01]
+ [ 3.2673843e-04]
+ [-5.6958830e-01]
+ [ 2.5574693e-03]]
+--- 1.466944694519043 seconds for one epoch ---
+Epoch 75
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.02319030836224556, (0.0032693949, 8.023076, 1.5975236, 0.011532142)
+   validation loss 0.028348110616207123, (0.0041228877, 11.047235, 2.4281437, 0.011532142)
+decoder loss ratio: 0.491535, decoder SINDy loss  ratio: 0.184727
+--- 1.5426316261291504 seconds for one epoch ---
+--- 1.545577049255371 seconds for one epoch ---
+--- 1.4283497333526611 seconds for one epoch ---
+--- 1.524897575378418 seconds for one epoch ---
+--- 1.434586763381958 seconds for one epoch ---
+--- 1.548901081085205 seconds for one epoch ---
+--- 1.503251314163208 seconds for one epoch ---
+--- 1.544015884399414 seconds for one epoch ---
+--- 1.4751856327056885 seconds for one epoch ---
+--- 1.9335699081420898 seconds for one epoch ---
+--- 1.9628479480743408 seconds for one epoch ---
+--- 1.5877189636230469 seconds for one epoch ---
+--- 1.4743337631225586 seconds for one epoch ---
+--- 1.5335211753845215 seconds for one epoch ---
+--- 1.5103349685668945 seconds for one epoch ---
+--- 1.5877602100372314 seconds for one epoch ---
+--- 1.4803497791290283 seconds for one epoch ---
+--- 1.5402941703796387 seconds for one epoch ---
+--- 1.4687068462371826 seconds for one epoch ---
+--- 1.5576355457305908 seconds for one epoch ---
+--- 1.5186302661895752 seconds for one epoch ---
+--- 1.5834558010101318 seconds for one epoch ---
+--- 1.484415054321289 seconds for one epoch ---
+--- 1.5473086833953857 seconds for one epoch ---
+=========================
+[[0.05123334]
+ [0.9383565 ]
+ [0.04472053]
+ [0.08845172]
+ [0.04478982]
+ [0.92448306]
+ [0.0484436 ]
+ [0.04474076]
+ [0.8565019 ]
+ [0.04467267]
+ [0.95475113]
+ [0.04472946]]
+[[ 9.7549424e-02]
+ [-5.3201872e-01]
+ [-2.2850747e-03]
+ [ 1.8810970e-01]
+ [ 5.2179950e-03]
+ [-5.0266898e-01]
+ [ 7.4747041e-02]
+ [ 3.1595083e-03]
+ [-4.4147217e-01]
+ [-1.5581885e-04]
+ [-6.5219200e-01]
+ [ 2.6739058e-03]]
+--- 1.7696685791015625 seconds for one epoch ---
+Epoch 100
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0162274781614542, (0.0016928745, 3.2113516, 0.5683864, 0.011532105)
+   validation loss 0.019120559096336365, (0.0024309196, 4.894296, 0.9825639, 0.011532105)
+decoder loss ratio: 0.289817, decoder SINDy loss  ratio: 0.074751
+--- 1.5049045085906982 seconds for one epoch ---
+--- 1.4695446491241455 seconds for one epoch ---
+--- 1.642815351486206 seconds for one epoch ---
+--- 1.5307321548461914 seconds for one epoch ---
+--- 1.5793285369873047 seconds for one epoch ---
+--- 1.4773528575897217 seconds for one epoch ---
+--- 1.5924925804138184 seconds for one epoch ---
+--- 1.5283091068267822 seconds for one epoch ---
+--- 1.6010606288909912 seconds for one epoch ---
+--- 1.5002658367156982 seconds for one epoch ---
+--- 1.6011457443237305 seconds for one epoch ---
+--- 1.5309758186340332 seconds for one epoch ---
+--- 1.588402509689331 seconds for one epoch ---
+--- 1.491687536239624 seconds for one epoch ---
+--- 1.6560966968536377 seconds for one epoch ---
+--- 1.549375057220459 seconds for one epoch ---
+--- 1.633970022201538 seconds for one epoch ---
+--- 1.4802560806274414 seconds for one epoch ---
+--- 1.5829567909240723 seconds for one epoch ---
+--- 1.5212907791137695 seconds for one epoch ---
+--- 1.6116819381713867 seconds for one epoch ---
+--- 1.546860694885254 seconds for one epoch ---
+--- 1.7065579891204834 seconds for one epoch ---
+--- 1.519564151763916 seconds for one epoch ---
+=========================
+[[0.02863819]
+ [0.91288733]
+ [0.02518762]
+ [0.03684902]
+ [0.02519764]
+ [0.7838013 ]
+ [0.0267944 ]
+ [0.02520746]
+ [0.41644904]
+ [0.02520565]
+ [0.96387655]
+ [0.02519473]]
+[[ 6.97118640e-02]
+ [-4.69014704e-01]
+ [-4.89272970e-05]
+ [ 1.21413745e-01]
+ [ 4.85303171e-04]
+ [-4.05311018e-01]
+ [ 4.39678729e-02]
+ [ 9.08659189e-04]
+ [-3.18664223e-01]
+ [-8.30968609e-04]
+ [-5.54676414e-01]
+ [ 3.58338264e-04]]
+--- 1.6751010417938232 seconds for one epoch ---
+Epoch 125
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.014500364661216736, (0.0013420061, 1.2691989, 0.3126135, 0.011531831)
+   validation loss 0.01633678935468197, (0.0017539662, 2.0228205, 0.5899703, 0.011531831)
+decoder loss ratio: 0.209110, decoder SINDy loss  ratio: 0.044883
+--- 1.692009687423706 seconds for one epoch ---
+--- 1.7962799072265625 seconds for one epoch ---
+--- 1.692657232284546 seconds for one epoch ---
+--- 1.8196263313293457 seconds for one epoch ---
+--- 1.6974453926086426 seconds for one epoch ---
+--- 1.7963345050811768 seconds for one epoch ---
+--- 1.712897539138794 seconds for one epoch ---
+--- 1.8343143463134766 seconds for one epoch ---
+--- 1.7172470092773438 seconds for one epoch ---
+--- 1.8150389194488525 seconds for one epoch ---
+--- 1.7336058616638184 seconds for one epoch ---
+--- 1.8336021900177002 seconds for one epoch ---
+--- 1.6652324199676514 seconds for one epoch ---
+--- 1.8049674034118652 seconds for one epoch ---
+--- 1.6833059787750244 seconds for one epoch ---
+--- 1.6642985343933105 seconds for one epoch ---
+--- 1.525480031967163 seconds for one epoch ---
+--- 1.6405029296875 seconds for one epoch ---
+--- 1.5933558940887451 seconds for one epoch ---
+--- 1.9836246967315674 seconds for one epoch ---
+--- 1.6709234714508057 seconds for one epoch ---
+--- 1.6021339893341064 seconds for one epoch ---
+--- 1.482825756072998 seconds for one epoch ---
+--- 1.6619653701782227 seconds for one epoch ---
+=========================
+[[0.01627395]
+ [0.8697878 ]
+ [0.015267  ]
+ [0.02013425]
+ [0.01531994]
+ [0.4387433 ]
+ [0.01577389]
+ [0.015256  ]
+ [0.06254689]
+ [0.01529766]
+ [0.9322394 ]
+ [0.01532094]]
+[[ 3.1550780e-02]
+ [-4.3650964e-01]
+ [ 7.7295431e-04]
+ [ 8.2526162e-02]
+ [-2.9586877e-03]
+ [-3.2373753e-01]
+ [ 1.8586261e-02]
+ [ 3.0745612e-04]
+ [-1.8886113e-01]
+ [-2.0504766e-03]
+ [-4.7872314e-01]
+ [ 2.9991728e-03]]
+--- 1.4772605895996094 seconds for one epoch ---
+Epoch 150
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.013117797672748566, (0.00080065173, 0.7200796, 0.14990485, 0.0115316175)
+   validation loss 0.014269626699388027, (0.0010874349, 1.2566803, 0.317548, 0.0115316175)
+decoder loss ratio: 0.129645, decoder SINDy loss  ratio: 0.024158
+THRESHOLDING: 3 active coefficients
+--- 1.5796127319335938 seconds for one epoch ---
+--- 1.5320677757263184 seconds for one epoch ---
+--- 1.6469838619232178 seconds for one epoch ---
+--- 1.5149333477020264 seconds for one epoch ---
+--- 1.653205156326294 seconds for one epoch ---
+--- 1.5268213748931885 seconds for one epoch ---
+--- 1.5972318649291992 seconds for one epoch ---
+--- 1.4725992679595947 seconds for one epoch ---
+--- 1.6274003982543945 seconds for one epoch ---
+--- 1.5098755359649658 seconds for one epoch ---
+--- 1.6064414978027344 seconds for one epoch ---
+--- 1.5321686267852783 seconds for one epoch ---
+--- 1.6591084003448486 seconds for one epoch ---
+--- 1.464714527130127 seconds for one epoch ---
+--- 1.6338510513305664 seconds for one epoch ---
+--- 1.469043254852295 seconds for one epoch ---
+--- 1.6776018142700195 seconds for one epoch ---
+--- 1.4759795665740967 seconds for one epoch ---
+--- 1.6348888874053955 seconds for one epoch ---
+--- 1.5209527015686035 seconds for one epoch ---
+--- 1.6659436225891113 seconds for one epoch ---
+--- 1.4669582843780518 seconds for one epoch ---
+--- 1.6456687450408936 seconds for one epoch ---
+--- 1.432408332824707 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.96368057]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.03200537]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.49699056]
+ [0.        ]]
+[[ 0.        ]
+ [-0.51279944]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.15174589]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.33582175]
+ [ 0.        ]]
+--- 1.64430832862854 seconds for one epoch ---
+Epoch 175
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.009413556195795536, (0.00039030667, 0.30594143, 0.07997409, 0.008608082)
+   validation loss 0.010258832946419716, (0.000694804, 0.64648086, 0.18472457, 0.008608082)
+decoder loss ratio: 0.082835, decoder SINDy loss  ratio: 0.014053
+--- 1.4987537860870361 seconds for one epoch ---
+--- 1.592491865158081 seconds for one epoch ---
+--- 1.456974983215332 seconds for one epoch ---
+--- 1.6118552684783936 seconds for one epoch ---
+--- 1.4046928882598877 seconds for one epoch ---
+--- 1.9219205379486084 seconds for one epoch ---
+--- 1.8165032863616943 seconds for one epoch ---
+--- 1.893554925918579 seconds for one epoch ---
+--- 1.807917594909668 seconds for one epoch ---
+--- 1.9396708011627197 seconds for one epoch ---
+--- 1.776017665863037 seconds for one epoch ---
+--- 1.9132506847381592 seconds for one epoch ---
+--- 1.8721833229064941 seconds for one epoch ---
+--- 1.904667854309082 seconds for one epoch ---
+--- 1.8107397556304932 seconds for one epoch ---
+--- 1.916294813156128 seconds for one epoch ---
+--- 1.8796441555023193 seconds for one epoch ---
+--- 2.0068037509918213 seconds for one epoch ---
+--- 1.8182320594787598 seconds for one epoch ---
+--- 1.976301908493042 seconds for one epoch ---
+--- 1.8020761013031006 seconds for one epoch ---
+--- 1.9719536304473877 seconds for one epoch ---
+--- 1.874244213104248 seconds for one epoch ---
+--- 1.936079502105713 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.9642198 ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.01135407]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.28047532]
+ [0.        ]]
+[[ 0.        ]
+ [-0.50850827]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.08546963]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.28871655]
+ [ 0.        ]]
+--- 1.9662256240844727 seconds for one epoch ---
+Epoch 200
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.008295215666294098, (0.00022498098, 0.18101032, 0.059865657, 0.007761856)
+   validation loss 0.00894942693412304, (0.00046781535, 0.49513173, 0.13899975, 0.007761856)
+decoder loss ratio: 0.055773, decoder SINDy loss  ratio: 0.010575
+--- 1.7516484260559082 seconds for one epoch ---
+--- 1.7301750183105469 seconds for one epoch ---
+--- 1.9649503231048584 seconds for one epoch ---
+--- 1.8229475021362305 seconds for one epoch ---
+--- 2.0700323581695557 seconds for one epoch ---
+--- 1.7266852855682373 seconds for one epoch ---
+--- 2.0446150302886963 seconds for one epoch ---
+--- 1.7657687664031982 seconds for one epoch ---
+--- 1.9217839241027832 seconds for one epoch ---
+--- 1.863239049911499 seconds for one epoch ---
+--- 1.963897705078125 seconds for one epoch ---
+--- 1.7729668617248535 seconds for one epoch ---
+--- 1.961237907409668 seconds for one epoch ---
+--- 1.77840256690979 seconds for one epoch ---
+--- 1.5951766967773438 seconds for one epoch ---
+--- 1.4289922714233398 seconds for one epoch ---
+--- 1.6114258766174316 seconds for one epoch ---
+--- 1.438584327697754 seconds for one epoch ---
+--- 1.6458337306976318 seconds for one epoch ---
+--- 1.445155382156372 seconds for one epoch ---
+--- 1.656919002532959 seconds for one epoch ---
+--- 1.5128579139709473 seconds for one epoch ---
+--- 1.6233882904052734 seconds for one epoch ---
+--- 1.4679558277130127 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.96447307]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.0074055 ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.19407208]
+ [0.        ]]
+[[ 0.        ]
+ [-0.505875  ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.06747182]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.264571  ]
+ [-0.        ]]
+--- 1.4857349395751953 seconds for one epoch ---
+Epoch 225
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0077806212939321995, (0.00015868864, 0.10199447, 0.04333596, 0.007400153)
+   validation loss 0.008191120810806751, (0.00027678016, 0.3369453, 0.099468, 0.007400153)
+decoder loss ratio: 0.032998, decoder SINDy loss  ratio: 0.007567
+--- 1.3927171230316162 seconds for one epoch ---
+--- 1.5890915393829346 seconds for one epoch ---
+--- 1.4286534786224365 seconds for one epoch ---
+--- 1.6320903301239014 seconds for one epoch ---
+--- 1.479945182800293 seconds for one epoch ---
+--- 1.628070592880249 seconds for one epoch ---
+--- 1.4807286262512207 seconds for one epoch ---
+--- 1.674731969833374 seconds for one epoch ---
+--- 1.5087106227874756 seconds for one epoch ---
+--- 1.694777011871338 seconds for one epoch ---
+--- 1.4730224609375 seconds for one epoch ---
+--- 1.604022741317749 seconds for one epoch ---
+--- 1.4905498027801514 seconds for one epoch ---
+--- 1.5932517051696777 seconds for one epoch ---
+--- 1.453681230545044 seconds for one epoch ---
+--- 1.6668877601623535 seconds for one epoch ---
+--- 1.4694998264312744 seconds for one epoch ---
+--- 1.6943440437316895 seconds for one epoch ---
+--- 1.5022692680358887 seconds for one epoch ---
+--- 1.9872124195098877 seconds for one epoch ---
+--- 1.918463945388794 seconds for one epoch ---
+--- 1.707231044769287 seconds for one epoch ---
+--- 1.4524681568145752 seconds for one epoch ---
+--- 1.6740593910217285 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.94871485]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.00613794]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.16796783]
+ [0.        ]]
+[[ 0.        ]
+ [-0.48428696]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.06524532]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.25588214]
+ [-0.        ]]
+--- 1.4126231670379639 seconds for one epoch ---
+Epoch 250
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.007645804900676012, (7.953974e-05, 0.06489337, 0.042590108, 0.00735007)
+   validation loss 0.007960198447108269, (0.00017641831, 0.2712156, 0.084029794, 0.00735007)
+decoder loss ratio: 0.021033, decoder SINDy loss  ratio: 0.006393
+--- 1.3999288082122803 seconds for one epoch ---
+--- 1.412764549255371 seconds for one epoch ---
+--- 1.5879244804382324 seconds for one epoch ---
+--- 1.4773707389831543 seconds for one epoch ---
+--- 1.6667232513427734 seconds for one epoch ---
+--- 1.481830358505249 seconds for one epoch ---
+--- 1.6168808937072754 seconds for one epoch ---
+--- 1.4702577590942383 seconds for one epoch ---
+--- 1.6594176292419434 seconds for one epoch ---
+--- 1.4369070529937744 seconds for one epoch ---
+--- 1.6512784957885742 seconds for one epoch ---
+--- 1.4776129722595215 seconds for one epoch ---
+--- 1.661592960357666 seconds for one epoch ---
+--- 1.412811279296875 seconds for one epoch ---
+--- 1.637249231338501 seconds for one epoch ---
+--- 1.4151315689086914 seconds for one epoch ---
+--- 1.7123456001281738 seconds for one epoch ---
+--- 1.4590201377868652 seconds for one epoch ---
+--- 1.6308636665344238 seconds for one epoch ---
+--- 1.455848217010498 seconds for one epoch ---
+--- 1.7006428241729736 seconds for one epoch ---
+--- 1.5055127143859863 seconds for one epoch ---
+--- 1.7305951118469238 seconds for one epoch ---
+--- 1.5070643424987793 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.92077863]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.0050396 ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.18807429]
+ [0.        ]]
+[[ 0.        ]
+ [-0.45996198]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.06033164]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.26297006]
+ [ 0.        ]]
+--- 1.3520455360412598 seconds for one epoch ---
+Epoch 275
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.007604938931763172, (4.0383788e-05, 0.04327944, 0.029642697, 0.0074141775)
+   validation loss 0.007845603860914707, (0.00012521294, 0.13947344, 0.059847962, 0.0074141775)
+decoder loss ratio: 0.014928, decoder SINDy loss  ratio: 0.004553
+--- 1.4006998538970947 seconds for one epoch ---
+--- 1.6364037990570068 seconds for one epoch ---
+--- 1.4167394638061523 seconds for one epoch ---
+--- 1.6956348419189453 seconds for one epoch ---
+--- 1.405548095703125 seconds for one epoch ---
+--- 1.6756045818328857 seconds for one epoch ---
+--- 1.446439504623413 seconds for one epoch ---
+--- 1.6779649257659912 seconds for one epoch ---
+--- 1.490203619003296 seconds for one epoch ---
+--- 1.6891703605651855 seconds for one epoch ---
+--- 1.4279263019561768 seconds for one epoch ---
+--- 1.7025635242462158 seconds for one epoch ---
+--- 1.4101285934448242 seconds for one epoch ---
+--- 1.6755733489990234 seconds for one epoch ---
+--- 1.497983694076538 seconds for one epoch ---
+--- 1.671194076538086 seconds for one epoch ---
+--- 1.4247162342071533 seconds for one epoch ---
+--- 1.6910078525543213 seconds for one epoch ---
+--- 1.484804630279541 seconds for one epoch ---
+--- 1.7277369499206543 seconds for one epoch ---
+--- 1.4166793823242188 seconds for one epoch ---
+--- 1.7331149578094482 seconds for one epoch ---
+--- 1.4634721279144287 seconds for one epoch ---
+--- 1.6657450199127197 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.87647563]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.00408851]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.28979257]
+ [0.        ]]
+[[ 0.        ]
+ [-0.4348487 ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.05260753]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.2914692 ]
+ [ 0.        ]]
+--- 1.792252779006958 seconds for one epoch ---
+Epoch 300
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.007750706281512976, (3.8929447e-05, 0.03439213, 0.034289647, 0.007538609)
+   validation loss 0.007994254119694233, (0.00012478576, 0.09147555, 0.065257035, 0.007538609)
+decoder loss ratio: 0.014877, decoder SINDy loss  ratio: 0.004965
+THRESHOLDING: 2 active coefficients
+--- 1.6864676475524902 seconds for one epoch ---
+--- 1.4566407203674316 seconds for one epoch ---
+--- 1.6597404479980469 seconds for one epoch ---
+--- 1.4561855792999268 seconds for one epoch ---
+--- 1.9917802810668945 seconds for one epoch ---
+--- 1.821730136871338 seconds for one epoch ---
+--- 1.701869010925293 seconds for one epoch ---
+--- 1.4237196445465088 seconds for one epoch ---
+--- 2.120704412460327 seconds for one epoch ---
+--- 1.8133578300476074 seconds for one epoch ---
+--- 1.7322399616241455 seconds for one epoch ---
+--- 1.4282712936401367 seconds for one epoch ---
+--- 2.0611839294433594 seconds for one epoch ---
+--- 1.7739675045013428 seconds for one epoch ---
+--- 2.0381245613098145 seconds for one epoch ---
+--- 1.9143178462982178 seconds for one epoch ---
+--- 2.0022921562194824 seconds for one epoch ---
+--- 1.7996017932891846 seconds for one epoch ---
+--- 2.064800977706909 seconds for one epoch ---
+--- 1.821362018585205 seconds for one epoch ---
+--- 2.091749906539917 seconds for one epoch ---
+--- 1.7722434997558594 seconds for one epoch ---
+--- 2.016021251678467 seconds for one epoch ---
+--- 1.829127311706543 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.79912686]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.41934812]
+ [0.        ]]
+[[ 0.        ]
+ [-0.40569532]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.32011887]
+ [-0.        ]]
+--- 1.415968656539917 seconds for one epoch ---
+Epoch 325
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.006768854334950447, (2.1671038e-05, 0.024318144, 0.022706725, 0.0066324337)
+   validation loss 0.006950404029339552, (8.4395455e-05, 0.062699854, 0.046087984, 0.0066324337)
+decoder loss ratio: 0.010062, decoder SINDy loss  ratio: 0.003506
+--- 1.4357225894927979 seconds for one epoch ---
+--- 1.9337272644042969 seconds for one epoch ---
+--- 1.7035906314849854 seconds for one epoch ---
+--- 1.6285655498504639 seconds for one epoch ---
+--- 1.3862085342407227 seconds for one epoch ---
+--- 1.893120527267456 seconds for one epoch ---
+--- 1.641970157623291 seconds for one epoch ---
+--- 1.6365654468536377 seconds for one epoch ---
+--- 1.4959614276885986 seconds for one epoch ---
+--- 1.8954873085021973 seconds for one epoch ---
+--- 1.6232373714447021 seconds for one epoch ---
+--- 1.6570022106170654 seconds for one epoch ---
+--- 1.435154914855957 seconds for one epoch ---
+--- 2.060997247695923 seconds for one epoch ---
+--- 1.7417106628417969 seconds for one epoch ---
+--- 1.7241520881652832 seconds for one epoch ---
+--- 1.392280101776123 seconds for one epoch ---
+--- 2.098372459411621 seconds for one epoch ---
+--- 1.8514304161071777 seconds for one epoch ---
+--- 1.719801902770996 seconds for one epoch ---
+--- 1.4562368392944336 seconds for one epoch ---
+--- 2.096031904220581 seconds for one epoch ---
+--- 1.888075590133667 seconds for one epoch ---
+--- 1.718735694885254 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.6999227 ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.53913087]
+ [0.        ]]
+[[ 0.        ]
+ [-0.37889037]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.34429577]
+ [-0.        ]]
+--- 1.4071564674377441 seconds for one epoch ---
+Epoch 350
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.006880008615553379, (1.4113432e-05, 0.019838164, 0.020559551, 0.0067621055)
+   validation loss 0.007014973554760218, (4.8093967e-05, 0.053785224, 0.04041693, 0.0067621055)
+decoder loss ratio: 0.005734, decoder SINDy loss  ratio: 0.003075
+--- 1.3796355724334717 seconds for one epoch ---
+--- 1.391249418258667 seconds for one epoch ---
+--- 1.858189344406128 seconds for one epoch ---
+--- 1.6337697505950928 seconds for one epoch ---
+--- 1.685943841934204 seconds for one epoch ---
+--- 1.3889758586883545 seconds for one epoch ---
+--- 1.847851276397705 seconds for one epoch ---
+--- 1.644688606262207 seconds for one epoch ---
+--- 1.8850133419036865 seconds for one epoch ---
+--- 1.598846435546875 seconds for one epoch ---
+--- 1.9453864097595215 seconds for one epoch ---
+--- 1.612959384918213 seconds for one epoch ---
+--- 1.9582126140594482 seconds for one epoch ---
+--- 1.683769702911377 seconds for one epoch ---
+--- 1.922384262084961 seconds for one epoch ---
+--- 1.6835525035858154 seconds for one epoch ---
+--- 1.9195337295532227 seconds for one epoch ---
+--- 1.6860523223876953 seconds for one epoch ---
+--- 1.998321771621704 seconds for one epoch ---
+--- 1.6190783977508545 seconds for one epoch ---
+--- 1.9110019207000732 seconds for one epoch ---
+--- 1.6137850284576416 seconds for one epoch ---
+--- 1.9901952743530273 seconds for one epoch ---
+--- 1.6092643737792969 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.582008  ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.68600583]
+ [0.        ]]
+[[-0.        ]
+ [-0.35302302]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.3756019 ]
+ [ 0.        ]]
+--- 1.62884521484375 seconds for one epoch ---
+Epoch 375
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.006862002890557051, (1.2628544e-05, 0.017891893, 0.024842132, 0.006724269)
+   validation loss 0.006990156136453152, (3.7683974e-05, 0.046306178, 0.04517752, 0.006724269)
+decoder loss ratio: 0.004493, decoder SINDy loss  ratio: 0.003437
+--- 1.6209022998809814 seconds for one epoch ---
+--- 1.9022789001464844 seconds for one epoch ---
+--- 1.6182341575622559 seconds for one epoch ---
+--- 1.8967177867889404 seconds for one epoch ---
+--- 1.6699700355529785 seconds for one epoch ---
+--- 1.904989242553711 seconds for one epoch ---
+--- 1.5858993530273438 seconds for one epoch ---
+--- 1.7236967086791992 seconds for one epoch ---
+--- 1.4208292961120605 seconds for one epoch ---
+--- 1.908050298690796 seconds for one epoch ---
+--- 1.6327283382415771 seconds for one epoch ---
+--- 1.9088237285614014 seconds for one epoch ---
+--- 1.6623907089233398 seconds for one epoch ---
+--- 1.8744828701019287 seconds for one epoch ---
+--- 1.6026439666748047 seconds for one epoch ---
+--- 1.9280157089233398 seconds for one epoch ---
+--- 1.6529088020324707 seconds for one epoch ---
+--- 1.9134070873260498 seconds for one epoch ---
+--- 1.5826911926269531 seconds for one epoch ---
+--- 1.7602019309997559 seconds for one epoch ---
+--- 1.4180073738098145 seconds for one epoch ---
+--- 1.9281415939331055 seconds for one epoch ---
+--- 1.6486139297485352 seconds for one epoch ---
+--- 1.879831075668335 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.42755377]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.8078738 ]
+ [0.        ]]
+[[-0.        ]
+ [-0.32181266]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.40841788]
+ [ 0.        ]]
+--- 1.8647675514221191 seconds for one epoch ---
+Epoch 400
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0066831945441663265, (8.787257e-06, 0.015647953, 0.016870636, 0.0065892716)
+   validation loss 0.0067811585031449795, (2.8461296e-05, 0.037417103, 0.03231096, 0.0065892716)
+decoder loss ratio: 0.003393, decoder SINDy loss  ratio: 0.002458
+--- 1.7954535484313965 seconds for one epoch ---
+--- 1.8383426666259766 seconds for one epoch ---
+--- 2.040471076965332 seconds for one epoch ---
+--- 1.7851290702819824 seconds for one epoch ---
+--- 2.132964611053467 seconds for one epoch ---
+--- 1.739881992340088 seconds for one epoch ---
+--- 2.133558750152588 seconds for one epoch ---
+--- 1.771927833557129 seconds for one epoch ---
+--- 2.0893869400024414 seconds for one epoch ---
+--- 1.8073549270629883 seconds for one epoch ---
+--- 2.0543711185455322 seconds for one epoch ---
+--- 1.8448548316955566 seconds for one epoch ---
+--- 2.158026695251465 seconds for one epoch ---
+--- 1.9039371013641357 seconds for one epoch ---
+--- 2.1167826652526855 seconds for one epoch ---
+--- 1.74967360496521 seconds for one epoch ---
+--- 2.1088507175445557 seconds for one epoch ---
+--- 1.7756054401397705 seconds for one epoch ---
+--- 2.1036298274993896 seconds for one epoch ---
+--- 1.8197102546691895 seconds for one epoch ---
+--- 2.1852340698242188 seconds for one epoch ---
+--- 1.8390979766845703 seconds for one epoch ---
+--- 2.142432928085327 seconds for one epoch ---
+--- 1.7759623527526855 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.28793758]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.89458114]
+ [0.        ]]
+[[ 0.       ]
+ [-0.2910771]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.4436171]
+ [-0.       ]]
+--- 1.488149642944336 seconds for one epoch ---
+Epoch 425
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.006471605505794287, (8.998076e-06, 0.013731329, 0.021354465, 0.0063551487)
+   validation loss 0.006569158751517534, (2.1420994e-05, 0.031813122, 0.038199674, 0.0063551487)
+decoder loss ratio: 0.002554, decoder SINDy loss  ratio: 0.002906
+--- 1.4484431743621826 seconds for one epoch ---
+--- 1.8793768882751465 seconds for one epoch ---
+--- 1.5160624980926514 seconds for one epoch ---
+--- 1.8142421245574951 seconds for one epoch ---
+--- 1.4927077293395996 seconds for one epoch ---
+--- 1.7847375869750977 seconds for one epoch ---
+--- 1.4553964138031006 seconds for one epoch ---
+--- 1.8613312244415283 seconds for one epoch ---
+--- 1.5392735004425049 seconds for one epoch ---
+--- 1.8814754486083984 seconds for one epoch ---
+--- 1.6075639724731445 seconds for one epoch ---
+--- 1.8294646739959717 seconds for one epoch ---
+--- 1.4739603996276855 seconds for one epoch ---
+--- 1.8885231018066406 seconds for one epoch ---
+--- 1.4529342651367188 seconds for one epoch ---
+--- 1.8470542430877686 seconds for one epoch ---
+--- 1.4961910247802734 seconds for one epoch ---
+--- 1.8955562114715576 seconds for one epoch ---
+--- 1.534675121307373 seconds for one epoch ---
+--- 1.8641064167022705 seconds for one epoch ---
+--- 1.472235918045044 seconds for one epoch ---
+--- 1.8781330585479736 seconds for one epoch ---
+--- 1.4605998992919922 seconds for one epoch ---
+--- 1.7694900035858154 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.18027805]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.9415241 ]
+ [0.        ]]
+[[ 0.        ]
+ [-0.26057523]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.4757312 ]
+ [-0.        ]]
+--- 1.441934585571289 seconds for one epoch ---
+Epoch 450
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.006106551270931959, (6.075408e-06, 0.012271567, 0.0141395135, 0.006029165)
+   validation loss 0.00617452897131443, (1.1888767e-05, 0.028313361, 0.026411898, 0.006029165)
+decoder loss ratio: 0.001417, decoder SINDy loss  ratio: 0.002009
+THRESHOLDING: 2 active coefficients
+--- 1.8125333786010742 seconds for one epoch ---
+--- 1.4463810920715332 seconds for one epoch ---
+--- 1.8205814361572266 seconds for one epoch ---
+--- 1.4816310405731201 seconds for one epoch ---
+--- 1.8357059955596924 seconds for one epoch ---
+--- 1.4591374397277832 seconds for one epoch ---
+--- 1.7906057834625244 seconds for one epoch ---
+--- 1.5131349563598633 seconds for one epoch ---
+--- 1.8238070011138916 seconds for one epoch ---
+--- 1.5103425979614258 seconds for one epoch ---
+--- 1.7589962482452393 seconds for one epoch ---
+--- 1.4473397731781006 seconds for one epoch ---
+--- 1.9110915660858154 seconds for one epoch ---
+--- 1.4967596530914307 seconds for one epoch ---
+--- 1.8816437721252441 seconds for one epoch ---
+--- 1.5120089054107666 seconds for one epoch ---
+--- 1.823784589767456 seconds for one epoch ---
+--- 1.4563052654266357 seconds for one epoch ---
+--- 1.8524599075317383 seconds for one epoch ---
+--- 1.4781651496887207 seconds for one epoch ---
+--- 1.8710079193115234 seconds for one epoch ---
+--- 1.4739503860473633 seconds for one epoch ---
+--- 1.887082576751709 seconds for one epoch ---
+--- 1.5122144222259521 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.11177066]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.970538  ]
+ [0.        ]]
+[[ 0.        ]
+ [-0.23261917]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.51163656]
+ [ 0.        ]]
+--- 1.5610218048095703 seconds for one epoch ---
+Epoch 475
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.005707280244678259, (4.9825726e-06, 0.010993893, 0.0150438305, 0.005626529)
+   validation loss 0.005771715193986893, (8.574208e-06, 0.024340997, 0.027078986, 0.005626529)
+decoder loss ratio: 0.001022, decoder SINDy loss  ratio: 0.002060
+--- 1.8103806972503662 seconds for one epoch ---
+--- 1.8192017078399658 seconds for one epoch ---
+--- 1.4492971897125244 seconds for one epoch ---
+--- 2.0431573390960693 seconds for one epoch ---
+--- 1.7227387428283691 seconds for one epoch ---
+--- 1.8710529804229736 seconds for one epoch ---
+--- 1.5469143390655518 seconds for one epoch ---
+--- 2.024925947189331 seconds for one epoch ---
+--- 1.672778844833374 seconds for one epoch ---
+--- 1.8295886516571045 seconds for one epoch ---
+--- 1.474015474319458 seconds for one epoch ---
+--- 2.0976474285125732 seconds for one epoch ---
+--- 1.6970946788787842 seconds for one epoch ---
+--- 1.8718576431274414 seconds for one epoch ---
+--- 1.4739844799041748 seconds for one epoch ---
+--- 2.077514410018921 seconds for one epoch ---
+--- 1.7167420387268066 seconds for one epoch ---
+--- 1.884601354598999 seconds for one epoch ---
+--- 1.5261590480804443 seconds for one epoch ---
+--- 2.087414026260376 seconds for one epoch ---
+--- 1.7159645557403564 seconds for one epoch ---
+--- 1.8655915260314941 seconds for one epoch ---
+--- 1.5117683410644531 seconds for one epoch ---
+--- 2.0751681327819824 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.06740165]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.98538345]
+ [0.        ]]
+[[-0.        ]
+ [-0.20485663]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.54756933]
+ [ 0.        ]]
+--- 1.7016510963439941 seconds for one epoch ---
+Epoch 500
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.00527570117264986, (4.5801635e-06, 0.0099506695, 0.013029772, 0.005205475)
+   validation loss 0.005331461783498526, (7.2437983e-06, 0.021272002, 0.023535894, 0.005205475)
+decoder loss ratio: 0.000864, decoder SINDy loss  ratio: 0.001791
+--- 1.4706428050994873 seconds for one epoch ---
+--- 1.513848066329956 seconds for one epoch ---
+--- 1.9076941013336182 seconds for one epoch ---
+--- 1.4979865550994873 seconds for one epoch ---
+--- 1.8899493217468262 seconds for one epoch ---
+--- 1.4969236850738525 seconds for one epoch ---
+--- 1.901167392730713 seconds for one epoch ---
+--- 1.510453701019287 seconds for one epoch ---
+--- 1.8797657489776611 seconds for one epoch ---
+--- 1.5622353553771973 seconds for one epoch ---
+--- 1.868492603302002 seconds for one epoch ---
+--- 1.4751274585723877 seconds for one epoch ---
+--- 1.8582367897033691 seconds for one epoch ---
+--- 1.4415857791900635 seconds for one epoch ---
+--- 1.8660643100738525 seconds for one epoch ---
+--- 1.4779994487762451 seconds for one epoch ---
+--- 2.294755458831787 seconds for one epoch ---
+--- 1.8950998783111572 seconds for one epoch ---
+--- 2.2476253509521484 seconds for one epoch ---
+--- 1.9540364742279053 seconds for one epoch ---
+--- 2.330811023712158 seconds for one epoch ---
+--- 1.9150869846343994 seconds for one epoch ---
+--- 2.3905370235443115 seconds for one epoch ---
+--- 1.9378564357757568 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.03972801]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99447995]
+ [0.        ]]
+[[-0.       ]
+ [-0.1769316]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.5969316]
+ [-0.       ]]
+--- 1.510901689529419 seconds for one epoch ---
+Epoch 525
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.004903414752334356, (1.001552e-05, 0.009003627, 0.024471372, 0.0047705923)
+   validation loss 0.004987594671547413, (1.2520601e-05, 0.018475458, 0.04071162, 0.0047705923)
+decoder loss ratio: 0.001493, decoder SINDy loss  ratio: 0.003097
+--- 1.462228536605835 seconds for one epoch ---
+--- 2.077890157699585 seconds for one epoch ---
+--- 1.6276049613952637 seconds for one epoch ---
+--- 2.0879859924316406 seconds for one epoch ---
+--- 1.6584866046905518 seconds for one epoch ---
+--- 2.055490016937256 seconds for one epoch ---
+--- 1.6707699298858643 seconds for one epoch ---
+--- 2.12609601020813 seconds for one epoch ---
+--- 1.6963560581207275 seconds for one epoch ---
+--- 2.300075054168701 seconds for one epoch ---
+--- 1.8871402740478516 seconds for one epoch ---
+--- 2.367379903793335 seconds for one epoch ---
+--- 1.9318485260009766 seconds for one epoch ---
+--- 2.338904857635498 seconds for one epoch ---
+--- 1.9866821765899658 seconds for one epoch ---
+--- 2.406710147857666 seconds for one epoch ---
+--- 2.0241167545318604 seconds for one epoch ---
+--- 2.326939582824707 seconds for one epoch ---
+--- 1.9971373081207275 seconds for one epoch ---
+--- 2.3791544437408447 seconds for one epoch ---
+--- 2.0032589435577393 seconds for one epoch ---
+--- 2.0164241790771484 seconds for one epoch ---
+--- 1.4973688125610352 seconds for one epoch ---
+--- 2.409348249435425 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.02264758]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.9976615 ]
+ [0.        ]]
+[[-0.       ]
+ [-0.1479193]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.6402732]
+ [ 0.       ]]
+--- 1.529301643371582 seconds for one epoch ---
+Epoch 550
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.004360197577625513, (5.1711786e-06, 0.008673557, 0.011678453, 0.0042962003)
+   validation loss 0.004406954627484083, (6.798417e-06, 0.017561309, 0.020615553, 0.0042962003)
+decoder loss ratio: 0.000811, decoder SINDy loss  ratio: 0.001568
+--- 1.5191972255706787 seconds for one epoch ---
+--- 1.5334749221801758 seconds for one epoch ---
+--- 1.9310085773468018 seconds for one epoch ---
+--- 1.5180444717407227 seconds for one epoch ---
+--- 1.9739999771118164 seconds for one epoch ---
+--- 1.5175254344940186 seconds for one epoch ---
+--- 1.9703209400177002 seconds for one epoch ---
+--- 1.5459842681884766 seconds for one epoch ---
+--- 1.9944868087768555 seconds for one epoch ---
+--- 1.5422112941741943 seconds for one epoch ---
+--- 2.012136697769165 seconds for one epoch ---
+--- 1.5463488101959229 seconds for one epoch ---
+--- 1.9770207405090332 seconds for one epoch ---
+--- 1.5077569484710693 seconds for one epoch ---
+--- 1.9785540103912354 seconds for one epoch ---
+--- 1.5463309288024902 seconds for one epoch ---
+--- 1.9526841640472412 seconds for one epoch ---
+--- 1.4761021137237549 seconds for one epoch ---
+--- 1.9910252094268799 seconds for one epoch ---
+--- 1.5503125190734863 seconds for one epoch ---
+--- 1.9593634605407715 seconds for one epoch ---
+--- 1.537182331085205 seconds for one epoch ---
+--- 1.942451000213623 seconds for one epoch ---
+--- 1.524843692779541 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.01243689]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.9989989 ]
+ [0.        ]]
+[[ 0.        ]
+ [-0.11740209]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.68305284]
+ [ 0.        ]]
+--- 1.4949822425842285 seconds for one epoch ---
+Epoch 575
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.003915475215762854, (5.6945023e-06, 0.008123687, 0.020029083, 0.0038092292)
+   validation loss 0.0039814733900129795, (7.682485e-06, 0.015694907, 0.03275541, 0.0038092292)
+decoder loss ratio: 0.000916, decoder SINDy loss  ratio: 0.002492
+--- 1.5340478420257568 seconds for one epoch ---
+--- 1.9448859691619873 seconds for one epoch ---
+--- 1.4608855247497559 seconds for one epoch ---
+--- 1.9075195789337158 seconds for one epoch ---
+--- 1.4744517803192139 seconds for one epoch ---
+--- 1.99951171875 seconds for one epoch ---
+--- 1.5245704650878906 seconds for one epoch ---
+--- 1.9520647525787354 seconds for one epoch ---
+--- 1.4900312423706055 seconds for one epoch ---
+--- 2.0061724185943604 seconds for one epoch ---
+--- 1.5165858268737793 seconds for one epoch ---
+--- 2.0385265350341797 seconds for one epoch ---
+--- 1.5346567630767822 seconds for one epoch ---
+--- 1.9380855560302734 seconds for one epoch ---
+--- 1.4622583389282227 seconds for one epoch ---
+--- 2.0255126953125 seconds for one epoch ---
+--- 1.5289342403411865 seconds for one epoch ---
+--- 2.0211946964263916 seconds for one epoch ---
+--- 1.5133659839630127 seconds for one epoch ---
+--- 1.918201208114624 seconds for one epoch ---
+--- 1.5139946937561035 seconds for one epoch ---
+--- 2.0446290969848633 seconds for one epoch ---
+--- 1.5254135131835938 seconds for one epoch ---
+--- 1.9867055416107178 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.00695743]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99954945]
+ [0.        ]]
+[[ 0.        ]
+ [-0.08805805]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.72336394]
+ [-0.        ]]
+--- 1.7229421138763428 seconds for one epoch ---
+Epoch 600
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.003397955559194088, (3.973665e-06, 0.007632108, 0.010570181, 0.0033407493)
+   validation loss 0.003437864361330867, (5.1861425e-06, 0.0146418605, 0.018239353, 0.0033407493)
+decoder loss ratio: 0.000618, decoder SINDy loss  ratio: 0.001388
+THRESHOLDING: 1 active coefficients
+--- 2.001255750656128 seconds for one epoch ---
+--- 1.493591070175171 seconds for one epoch ---
+--- 1.9863905906677246 seconds for one epoch ---
+--- 1.527259111404419 seconds for one epoch ---
+--- 1.976914405822754 seconds for one epoch ---
+--- 1.4705703258514404 seconds for one epoch ---
+--- 1.9517688751220703 seconds for one epoch ---
+--- 1.4764447212219238 seconds for one epoch ---
+--- 1.9622159004211426 seconds for one epoch ---
+--- 1.407336711883545 seconds for one epoch ---
+--- 1.9240212440490723 seconds for one epoch ---
+--- 1.4044990539550781 seconds for one epoch ---
+--- 2.0214920043945312 seconds for one epoch ---
+--- 1.5245678424835205 seconds for one epoch ---
+--- 1.94404935836792 seconds for one epoch ---
+--- 1.4466831684112549 seconds for one epoch ---
+--- 1.9782555103302002 seconds for one epoch ---
+--- 1.4519696235656738 seconds for one epoch ---
+--- 1.9408161640167236 seconds for one epoch ---
+--- 1.4292066097259521 seconds for one epoch ---
+--- 2.035367727279663 seconds for one epoch ---
+--- 1.4507575035095215 seconds for one epoch ---
+--- 1.9504990577697754 seconds for one epoch ---
+--- 1.4488754272460938 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99996024]
+ [0.        ]]
+[[-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.84928435]
+ [-0.        ]]
+--- 1.3545787334442139 seconds for one epoch ---
+Epoch 625
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.002097729127854109, (7.8143075e-06, 0.007458351, 0.024445243, 0.0019673158)
+   validation loss 0.0021758554503321648, (1.0674505e-05, 0.013338342, 0.03943963, 0.0019673158)
+decoder loss ratio: 0.001273, decoder SINDy loss  ratio: 0.003000
+--- 1.4559929370880127 seconds for one epoch ---
+--- 1.958843469619751 seconds for one epoch ---
+--- 1.397566318511963 seconds for one epoch ---
+--- 1.8990724086761475 seconds for one epoch ---
+--- 1.4133286476135254 seconds for one epoch ---
+--- 1.9254286289215088 seconds for one epoch ---
+--- 1.4163618087768555 seconds for one epoch ---
+--- 1.9274065494537354 seconds for one epoch ---
+--- 1.3813331127166748 seconds for one epoch ---
+--- 1.9243805408477783 seconds for one epoch ---
+--- 1.3968050479888916 seconds for one epoch ---
+--- 1.8581702709197998 seconds for one epoch ---
+--- 1.4097726345062256 seconds for one epoch ---
+--- 1.9172680377960205 seconds for one epoch ---
+--- 1.4387292861938477 seconds for one epoch ---
+--- 1.8898744583129883 seconds for one epoch ---
+--- 1.4032371044158936 seconds for one epoch ---
+--- 1.9726548194885254 seconds for one epoch ---
+--- 1.4907004833221436 seconds for one epoch ---
+--- 1.9099466800689697 seconds for one epoch ---
+--- 1.3748760223388672 seconds for one epoch ---
+--- 1.9163737297058105 seconds for one epoch ---
+--- 1.4034943580627441 seconds for one epoch ---
+--- 1.93497633934021 seconds for one epoch ---
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.9999645]
+ [0.       ]]
+[[-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.85437226]
+ [ 0.        ]]
+--- 1.4106922149658203 seconds for one epoch ---
+Epoch 650
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0020253316033631563, (4.0013533e-06, 0.0070610596, 0.010931532, 0.0019663195)
+   validation loss 0.002065022010356188, (5.5351325e-06, 0.012734468, 0.01850615, 0.0019663195)
+decoder loss ratio: 0.000660, decoder SINDy loss  ratio: 0.001408
+--- 1.432865858078003 seconds for one epoch ---
+--- 1.4856624603271484 seconds for one epoch ---
+--- 1.884094476699829 seconds for one epoch ---
+--- 1.4160871505737305 seconds for one epoch ---
+--- 1.923447847366333 seconds for one epoch ---
+--- 1.3964152336120605 seconds for one epoch ---
+--- 2.0175580978393555 seconds for one epoch ---
+--- 1.4801549911499023 seconds for one epoch ---
+--- 1.872072696685791 seconds for one epoch ---
+--- 1.3889107704162598 seconds for one epoch ---
+--- 1.9778106212615967 seconds for one epoch ---
+--- 1.4480533599853516 seconds for one epoch ---
+--- 1.9390475749969482 seconds for one epoch ---
+--- 1.3312485218048096 seconds for one epoch ---
+--- 1.9166474342346191 seconds for one epoch ---
+--- 1.385495901107788 seconds for one epoch ---
+--- 1.8961870670318604 seconds for one epoch ---
+--- 1.3918852806091309 seconds for one epoch ---
+--- 1.97194242477417 seconds for one epoch ---
+--- 1.4379198551177979 seconds for one epoch ---
+--- 1.9753391742706299 seconds for one epoch ---
+--- 1.4878723621368408 seconds for one epoch ---
+--- 1.9684271812438965 seconds for one epoch ---
+--- 1.4499015808105469 seconds for one epoch ---
+=========================
+[[0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.999967]
+ [0.      ]]
+[[ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.8572851]
+ [ 0.       ]]
+--- 1.4447388648986816 seconds for one epoch ---
+Epoch 675
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.002003998029977083, (2.9012406e-06, 0.006636321, 0.007240617, 0.0019645619)
+   validation loss 0.0020325337536633015, (3.8975895e-06, 0.012019144, 0.012694689, 0.0019645619)
+decoder loss ratio: 0.000465, decoder SINDy loss  ratio: 0.000966
+--- 1.430894374847412 seconds for one epoch ---
+--- 1.9417550563812256 seconds for one epoch ---
+--- 1.3734679222106934 seconds for one epoch ---
+--- 1.9156088829040527 seconds for one epoch ---
+--- 1.414487600326538 seconds for one epoch ---
+--- 1.954845666885376 seconds for one epoch ---
+--- 1.4120287895202637 seconds for one epoch ---
+--- 2.0066375732421875 seconds for one epoch ---
+--- 1.428873062133789 seconds for one epoch ---
+--- 2.006544351577759 seconds for one epoch ---
+--- 1.4370250701904297 seconds for one epoch ---
+--- 2.03520131111145 seconds for one epoch ---
+--- 1.4646852016448975 seconds for one epoch ---
+--- 1.980210304260254 seconds for one epoch ---
+--- 1.3993425369262695 seconds for one epoch ---
+--- 1.9544346332550049 seconds for one epoch ---
+--- 1.371953010559082 seconds for one epoch ---
+--- 2.0419185161590576 seconds for one epoch ---
+--- 1.4046030044555664 seconds for one epoch ---
+--- 1.9758973121643066 seconds for one epoch ---
+--- 1.400022029876709 seconds for one epoch ---
+--- 1.952378749847412 seconds for one epoch ---
+--- 1.4123694896697998 seconds for one epoch ---
+--- 1.9241149425506592 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99997073]
+ [0.        ]]
+[[ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.86282223]
+ [-0.        ]]
+--- 1.655827522277832 seconds for one epoch ---
+Epoch 700
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0020283469930291176, (4.4056906e-06, 0.0068132915, 0.012293462, 0.0019621332)
+   validation loss 0.002071031602099538, (6.517733e-06, 0.011870096, 0.020357408, 0.0019621332)
+decoder loss ratio: 0.000777, decoder SINDy loss  ratio: 0.001549
+--- 1.537536382675171 seconds for one epoch ---
+--- 1.486119270324707 seconds for one epoch ---
+--- 2.063612461090088 seconds for one epoch ---
+--- 1.4766223430633545 seconds for one epoch ---
+--- 2.0309762954711914 seconds for one epoch ---
+--- 1.4484670162200928 seconds for one epoch ---
+--- 2.074643135070801 seconds for one epoch ---
+--- 1.4334945678710938 seconds for one epoch ---
+--- 2.1061818599700928 seconds for one epoch ---
+--- 1.4600985050201416 seconds for one epoch ---
+--- 2.0270049571990967 seconds for one epoch ---
+--- 1.4111754894256592 seconds for one epoch ---
+--- 2.0893054008483887 seconds for one epoch ---
+--- 1.4999167919158936 seconds for one epoch ---
+--- 2.04154634475708 seconds for one epoch ---
+--- 1.4914627075195312 seconds for one epoch ---
+--- 2.096653938293457 seconds for one epoch ---
+--- 1.4526445865631104 seconds for one epoch ---
+--- 2.0909931659698486 seconds for one epoch ---
+--- 1.471914291381836 seconds for one epoch ---
+--- 2.075195550918579 seconds for one epoch ---
+--- 1.4833228588104248 seconds for one epoch ---
+--- 2.0575857162475586 seconds for one epoch ---
+--- 1.491086483001709 seconds for one epoch ---
+=========================
+[[0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.999973]
+ [0.      ]]
+[[-0.      ]
+ [-0.      ]
+ [-0.      ]
+ [ 0.      ]
+ [ 0.      ]
+ [-0.      ]
+ [-0.      ]
+ [-0.      ]
+ [-0.      ]
+ [ 0.      ]
+ [-0.866237]
+ [-0.      ]]
+--- 1.4501478672027588 seconds for one epoch ---
+Epoch 725
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0020306608639657497, (4.7279004e-06, 0.006902502, 0.013214811, 0.0019595139)
+   validation loss 0.0020732772536575794, (5.549122e-06, 0.01190801, 0.02152378, 0.0019595139)
+decoder loss ratio: 0.000662, decoder SINDy loss  ratio: 0.001637
+--- 1.4962260723114014 seconds for one epoch ---
+--- 2.090649127960205 seconds for one epoch ---
+--- 1.4896602630615234 seconds for one epoch ---
+--- 2.1055874824523926 seconds for one epoch ---
+--- 1.492539882659912 seconds for one epoch ---
+--- 2.0586776733398438 seconds for one epoch ---
+--- 1.423340082168579 seconds for one epoch ---
+--- 1.9971380233764648 seconds for one epoch ---
+--- 1.4982643127441406 seconds for one epoch ---
+--- 2.098780393600464 seconds for one epoch ---
+--- 1.4887094497680664 seconds for one epoch ---
+--- 2.022793769836426 seconds for one epoch ---
+--- 1.502262830734253 seconds for one epoch ---
+--- 2.103912115097046 seconds for one epoch ---
+--- 1.5208022594451904 seconds for one epoch ---
+--- 2.135402202606201 seconds for one epoch ---
+--- 1.4901840686798096 seconds for one epoch ---
+--- 2.191387891769409 seconds for one epoch ---
+--- 1.4333510398864746 seconds for one epoch ---
+--- 2.090294599533081 seconds for one epoch ---
+--- 1.4818341732025146 seconds for one epoch ---
+--- 2.09411883354187 seconds for one epoch ---
+--- 1.476473093032837 seconds for one epoch ---
+--- 2.0184545516967773 seconds for one epoch ---
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.9999764]
+ [0.       ]]
+[[-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.8727045]
+ [ 0.       ]]
+--- 1.535884141921997 seconds for one epoch ---
+Epoch 750
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0020174470264464617, (3.7602697e-06, 0.006335486, 0.010883357, 0.0019589532)
+   validation loss 0.00205435324460268, (5.2272117e-06, 0.010921058, 0.017925363, 0.0019589532)
+decoder loss ratio: 0.000623, decoder SINDy loss  ratio: 0.001364
+THRESHOLDING: 1 active coefficients
+--- 2.1026771068573 seconds for one epoch ---
+--- 1.4632678031921387 seconds for one epoch ---
+--- 2.0134122371673584 seconds for one epoch ---
+--- 1.5047845840454102 seconds for one epoch ---
+--- 2.137981414794922 seconds for one epoch ---
+--- 1.5114548206329346 seconds for one epoch ---
+--- 2.1283767223358154 seconds for one epoch ---
+--- 1.5253064632415771 seconds for one epoch ---
+--- 2.1183598041534424 seconds for one epoch ---
+--- 1.4332242012023926 seconds for one epoch ---
+--- 2.0652987957000732 seconds for one epoch ---
+--- 1.4931130409240723 seconds for one epoch ---
+--- 2.1425678730010986 seconds for one epoch ---
+--- 1.4998550415039062 seconds for one epoch ---
+--- 2.140260696411133 seconds for one epoch ---
+--- 1.5025432109832764 seconds for one epoch ---
+--- 2.098072052001953 seconds for one epoch ---
+--- 1.4889616966247559 seconds for one epoch ---
+--- 2.107707977294922 seconds for one epoch ---
+--- 1.507573127746582 seconds for one epoch ---
+--- 2.1060948371887207 seconds for one epoch ---
+--- 1.4768593311309814 seconds for one epoch ---
+--- 2.0955564975738525 seconds for one epoch ---
+--- 1.4671502113342285 seconds for one epoch ---
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.9999784]
+ [0.       ]]
+[[ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.87712586]
+ [ 0.        ]]
+--- 1.5003376007080078 seconds for one epoch ---
+Epoch 775
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0019913536962121725, (2.4899377e-06, 0.006130393, 0.006434776, 0.0019563835)
+   validation loss 0.00201477762311697, (3.0197798e-06, 0.01060299, 0.010968834, 0.0019563835)
+decoder loss ratio: 0.000360, decoder SINDy loss  ratio: 0.000834
+--- 1.4268949031829834 seconds for one epoch ---
+--- 2.086183547973633 seconds for one epoch ---
+--- 1.489530086517334 seconds for one epoch ---
+--- 2.0621860027313232 seconds for one epoch ---
+--- 1.4236035346984863 seconds for one epoch ---
+--- 2.0574779510498047 seconds for one epoch ---
+--- 1.4884071350097656 seconds for one epoch ---
+--- 2.054382801055908 seconds for one epoch ---
+--- 1.4852275848388672 seconds for one epoch ---
+--- 2.07094144821167 seconds for one epoch ---
+--- 1.4322481155395508 seconds for one epoch ---
+--- 2.028446674346924 seconds for one epoch ---
+--- 1.4697086811065674 seconds for one epoch ---
+--- 2.0470383167266846 seconds for one epoch ---
+--- 1.4125571250915527 seconds for one epoch ---
+--- 2.04547119140625 seconds for one epoch ---
+--- 1.465527057647705 seconds for one epoch ---
+--- 2.151224374771118 seconds for one epoch ---
+--- 1.4511792659759521 seconds for one epoch ---
+--- 2.0702712535858154 seconds for one epoch ---
+--- 1.4084997177124023 seconds for one epoch ---
+--- 2.1372900009155273 seconds for one epoch ---
+--- 1.4442265033721924 seconds for one epoch ---
+--- 2.099184513092041 seconds for one epoch ---
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.9999803]
+ [0.       ]]
+[[ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.88126415]
+ [-0.        ]]
+--- 1.585852861404419 seconds for one epoch ---
+Epoch 800
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0019995146431028843, (2.6484067e-06, 0.005940635, 0.007966611, 0.0019567362)
+   validation loss 0.0020273500122129917, (3.3795966e-06, 0.010219598, 0.01334466, 0.0019567362)
+decoder loss ratio: 0.000403, decoder SINDy loss  ratio: 0.001015
+--- 1.4370992183685303 seconds for one epoch ---
+--- 1.4009630680084229 seconds for one epoch ---
+--- 2.1363699436187744 seconds for one epoch ---
+--- 1.4218783378601074 seconds for one epoch ---
+--- 2.0076498985290527 seconds for one epoch ---
+--- 1.4195847511291504 seconds for one epoch ---
+--- 2.0968737602233887 seconds for one epoch ---
+--- 1.430175542831421 seconds for one epoch ---
+--- 2.035050630569458 seconds for one epoch ---
+--- 1.4335241317749023 seconds for one epoch ---
+--- 2.0497794151306152 seconds for one epoch ---
+--- 1.4541351795196533 seconds for one epoch ---
+--- 2.011972665786743 seconds for one epoch ---
+--- 1.3960678577423096 seconds for one epoch ---
+--- 2.080430269241333 seconds for one epoch ---
+--- 1.4249546527862549 seconds for one epoch ---
+--- 2.041093349456787 seconds for one epoch ---
+--- 1.4279508590698242 seconds for one epoch ---
+--- 2.0466320514678955 seconds for one epoch ---
+--- 1.3877284526824951 seconds for one epoch ---
+--- 2.0708651542663574 seconds for one epoch ---
+--- 1.4235446453094482 seconds for one epoch ---
+--- 2.0562925338745117 seconds for one epoch ---
+--- 1.4074146747589111 seconds for one epoch ---
+=========================
+[[0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.999982]
+ [0.      ]]
+[[-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.88542277]
+ [-0.        ]]
+--- 1.6312446594238281 seconds for one epoch ---
+Epoch 825
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0020296897273510695, (4.034126e-06, 0.0059317136, 0.013676803, 0.001956975)
+   validation loss 0.002070692367851734, (5.3041217e-06, 0.009992371, 0.021582732, 0.001956975)
+decoder loss ratio: 0.000632, decoder SINDy loss  ratio: 0.001642
+--- 1.691023349761963 seconds for one epoch ---
+--- 2.27187442779541 seconds for one epoch ---
+--- 1.6230475902557373 seconds for one epoch ---
+--- 2.1339545249938965 seconds for one epoch ---
+--- 1.508023738861084 seconds for one epoch ---
+--- 2.309427499771118 seconds for one epoch ---
+--- 1.6587450504302979 seconds for one epoch ---
+--- 2.0949387550354004 seconds for one epoch ---
+--- 1.5319514274597168 seconds for one epoch ---
+--- 2.127365827560425 seconds for one epoch ---
+--- 1.4330213069915771 seconds for one epoch ---
+--- 2.1605489253997803 seconds for one epoch ---
+--- 1.4857378005981445 seconds for one epoch ---
+--- 2.1318728923797607 seconds for one epoch ---
+--- 1.5251610279083252 seconds for one epoch ---
+--- 2.1546552181243896 seconds for one epoch ---
+--- 1.457479476928711 seconds for one epoch ---
+--- 2.130681276321411 seconds for one epoch ---
+--- 1.458322286605835 seconds for one epoch ---
+--- 2.1348366737365723 seconds for one epoch ---
+--- 1.467416763305664 seconds for one epoch ---
+--- 2.0879595279693604 seconds for one epoch ---
+--- 1.4624550342559814 seconds for one epoch ---
+--- 2.130488634109497 seconds for one epoch ---
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.9999825]
+ [0.       ]]
+[[-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.8880384]
+ [ 0.       ]]
+--- 1.4934937953948975 seconds for one epoch ---
+Epoch 850
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0020134998485445976, (6.9349003e-06, 0.007964824, 0.009777184, 0.0019572808)
+   validation loss 0.002045802539214492, (7.889674e-06, 0.012986835, 0.015996551, 0.0019572808)
+decoder loss ratio: 0.000941, decoder SINDy loss  ratio: 0.001217
+--- 1.5414152145385742 seconds for one epoch ---
+--- 1.4639806747436523 seconds for one epoch ---
+--- 2.5288243293762207 seconds for one epoch ---
+--- 1.9168832302093506 seconds for one epoch ---
+--- 2.5966975688934326 seconds for one epoch ---
+--- 1.9542794227600098 seconds for one epoch ---
+--- 2.5390801429748535 seconds for one epoch ---
+--- 1.9069454669952393 seconds for one epoch ---
+--- 2.6260764598846436 seconds for one epoch ---
+--- 1.9948251247406006 seconds for one epoch ---
+--- 2.6020989418029785 seconds for one epoch ---
+--- 1.9196257591247559 seconds for one epoch ---
+--- 2.2391579151153564 seconds for one epoch ---
+--- 1.5105125904083252 seconds for one epoch ---
+--- 2.6053600311279297 seconds for one epoch ---
+--- 1.9404089450836182 seconds for one epoch ---
+--- 2.6735846996307373 seconds for one epoch ---
+--- 1.9441516399383545 seconds for one epoch ---
+--- 2.665670394897461 seconds for one epoch ---
+--- 1.9397618770599365 seconds for one epoch ---
+--- 2.2466652393341064 seconds for one epoch ---
+--- 1.5266995429992676 seconds for one epoch ---
+--- 2.621535539627075 seconds for one epoch ---
+--- 2.012510061264038 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99998444]
+ [0.        ]]
+[[ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.8933146]
+ [ 0.       ]]
+--- 2.144803285598755 seconds for one epoch ---
+Epoch 875
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.002001181012019515, (2.9334533e-06, 0.0052984287, 0.008086796, 0.0019575485)
+   validation loss 0.002028239890933037, (3.945098e-06, 0.0089657605, 0.013259577, 0.0019575485)
+decoder loss ratio: 0.000470, decoder SINDy loss  ratio: 0.001009
+--- 2.156831741333008 seconds for one epoch ---
+--- 2.883788824081421 seconds for one epoch ---
+--- 2.231567621231079 seconds for one epoch ---
+--- 2.783952236175537 seconds for one epoch ---
+--- 2.214536428451538 seconds for one epoch ---
+--- 2.882091522216797 seconds for one epoch ---
+--- 2.2112514972686768 seconds for one epoch ---
+--- 2.794368028640747 seconds for one epoch ---
+--- 2.275437116622925 seconds for one epoch ---
+--- 2.676886558532715 seconds for one epoch ---
+--- 2.026623249053955 seconds for one epoch ---
+--- 2.7033371925354004 seconds for one epoch ---
+--- 2.0592668056488037 seconds for one epoch ---
+--- 2.886566400527954 seconds for one epoch ---
+--- 2.1346981525421143 seconds for one epoch ---
+--- 2.6606943607330322 seconds for one epoch ---
+--- 1.9210920333862305 seconds for one epoch ---
+--- 2.6868088245391846 seconds for one epoch ---
+--- 2.0421688556671143 seconds for one epoch ---
+--- 2.862220287322998 seconds for one epoch ---
+--- 2.1132516860961914 seconds for one epoch ---
+--- 2.293189525604248 seconds for one epoch ---
+--- 1.523601770401001 seconds for one epoch ---
+--- 2.832441806793213 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99998504]
+ [0.        ]]
+[[ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.8960731]
+ [-0.       ]]
+--- 1.843188762664795 seconds for one epoch ---
+Epoch 900
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0019807862117886543, (1.883731e-06, 0.005215839, 0.004169546, 0.001957794)
+   validation loss 0.0019966899417340755, (2.3151356e-06, 0.008854585, 0.007227625, 0.001957794)
+decoder loss ratio: 0.000276, decoder SINDy loss  ratio: 0.000550
+THRESHOLDING: 1 active coefficients
+--- 2.230572462081909 seconds for one epoch ---
+--- 1.522007942199707 seconds for one epoch ---
+--- 2.2119319438934326 seconds for one epoch ---
+--- 1.4869203567504883 seconds for one epoch ---
+--- 2.2310845851898193 seconds for one epoch ---
+--- 1.4940102100372314 seconds for one epoch ---
+--- 2.191279411315918 seconds for one epoch ---
+--- 1.50968337059021 seconds for one epoch ---
+--- 2.357606887817383 seconds for one epoch ---
+--- 1.5106329917907715 seconds for one epoch ---
+--- 2.455385208129883 seconds for one epoch ---
+--- 1.588982105255127 seconds for one epoch ---
+--- 2.324092388153076 seconds for one epoch ---
+--- 1.5841760635375977 seconds for one epoch ---
+--- 2.326033592224121 seconds for one epoch ---
+--- 1.558312177658081 seconds for one epoch ---
+--- 2.3506875038146973 seconds for one epoch ---
+--- 1.5375232696533203 seconds for one epoch ---
+--- 2.2448954582214355 seconds for one epoch ---
+--- 1.516061544418335 seconds for one epoch ---
+--- 2.2982335090637207 seconds for one epoch ---
+--- 1.4935235977172852 seconds for one epoch ---
+--- 2.287400960922241 seconds for one epoch ---
+--- 1.5106871128082275 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99998605]
+ [0.        ]]
+[[-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.8986146]
+ [-0.       ]]
+--- 1.4703483581542969 seconds for one epoch ---
+Epoch 925
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0019868777599185705, (1.9282256e-06, 0.0050103716, 0.0053529, 0.0019579346)
+   validation loss 0.0020061959512531757, (2.4501298e-06, 0.008478633, 0.009077441, 0.0019579346)
+decoder loss ratio: 0.000292, decoder SINDy loss  ratio: 0.000691
+--- 1.7231333255767822 seconds for one epoch ---
+--- 2.4957242012023926 seconds for one epoch ---
+--- 1.8435778617858887 seconds for one epoch ---
+--- 2.4612479209899902 seconds for one epoch ---
+--- 1.7954881191253662 seconds for one epoch ---
+--- 2.175628185272217 seconds for one epoch ---
+--- 1.489333152770996 seconds for one epoch ---
+--- 2.524261951446533 seconds for one epoch ---
+--- 1.8486082553863525 seconds for one epoch ---
+--- 2.271348714828491 seconds for one epoch ---
+--- 1.436643362045288 seconds for one epoch ---
+--- 2.477874994277954 seconds for one epoch ---
+--- 1.8955824375152588 seconds for one epoch ---
+--- 2.184476613998413 seconds for one epoch ---
+--- 1.4897897243499756 seconds for one epoch ---
+--- 2.5690886974334717 seconds for one epoch ---
+--- 1.8246345520019531 seconds for one epoch ---
+--- 2.5394535064697266 seconds for one epoch ---
+--- 1.778747797012329 seconds for one epoch ---
+--- 2.2260799407958984 seconds for one epoch ---
+--- 1.5227625370025635 seconds for one epoch ---
+--- 2.565485954284668 seconds for one epoch ---
+--- 1.8695378303527832 seconds for one epoch ---
+--- 2.554985284805298 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99998647]
+ [0.        ]]
+[[-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.90047896]
+ [ 0.        ]]
+--- 1.781081199645996 seconds for one epoch ---
+Epoch 950
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.001982159214094281, (2.1721503e-06, 0.0048287422, 0.00433338, 0.0019580787)
+   validation loss 0.001998533960431814, (2.6588862e-06, 0.008142039, 0.0074778427, 0.0019580787)
+decoder loss ratio: 0.000317, decoder SINDy loss  ratio: 0.000569
+--- 1.8014094829559326 seconds for one epoch ---
+--- 1.6822645664215088 seconds for one epoch ---
+--- 2.472615957260132 seconds for one epoch ---
+--- 1.6431009769439697 seconds for one epoch ---
+--- 2.264371871948242 seconds for one epoch ---
+--- 1.4606132507324219 seconds for one epoch ---
+--- 2.442742109298706 seconds for one epoch ---
+--- 1.7214062213897705 seconds for one epoch ---
+--- 2.486762762069702 seconds for one epoch ---
+--- 1.6852781772613525 seconds for one epoch ---
+--- 2.628192186355591 seconds for one epoch ---
+--- 1.918713092803955 seconds for one epoch ---
+--- 2.431633710861206 seconds for one epoch ---
+--- 1.8199231624603271 seconds for one epoch ---
+--- 2.6651759147644043 seconds for one epoch ---
+--- 1.8802497386932373 seconds for one epoch ---
+--- 2.473615884780884 seconds for one epoch ---
+--- 1.7446584701538086 seconds for one epoch ---
+--- 2.5841150283813477 seconds for one epoch ---
+--- 1.8518702983856201 seconds for one epoch ---
+--- 2.432239055633545 seconds for one epoch ---
+--- 1.6727502346038818 seconds for one epoch ---
+--- 2.6649014949798584 seconds for one epoch ---
+--- 1.887939453125 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99998677]
+ [0.        ]]
+[[ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.90241235]
+ [ 0.        ]]
+--- 1.5479726791381836 seconds for one epoch ---
+Epoch 975
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.001980129163712263, (1.9497106e-06, 0.0049388097, 0.003937995, 0.0019582426)
+   validation loss 0.001996141392737627, (2.7439776e-06, 0.008306975, 0.0069478853, 0.0019582426)
+decoder loss ratio: 0.000327, decoder SINDy loss  ratio: 0.000529
+--- 1.4444122314453125 seconds for one epoch ---
+--- 2.189753293991089 seconds for one epoch ---
+--- 1.4648492336273193 seconds for one epoch ---
+--- 2.322205066680908 seconds for one epoch ---
+--- 1.482114553451538 seconds for one epoch ---
+--- 2.2975780963897705 seconds for one epoch ---
+--- 1.483748197555542 seconds for one epoch ---
+--- 2.3030781745910645 seconds for one epoch ---
+--- 1.4610726833343506 seconds for one epoch ---
+--- 2.245394706726074 seconds for one epoch ---
+--- 1.4965393543243408 seconds for one epoch ---
+--- 2.306063413619995 seconds for one epoch ---
+--- 1.464658498764038 seconds for one epoch ---
+--- 2.3251304626464844 seconds for one epoch ---
+--- 1.427476167678833 seconds for one epoch ---
+--- 2.2880356311798096 seconds for one epoch ---
+--- 1.4629178047180176 seconds for one epoch ---
+--- 2.3290176391601562 seconds for one epoch ---
+--- 1.4679827690124512 seconds for one epoch ---
+--- 2.2756423950195312 seconds for one epoch ---
+--- 1.4425127506256104 seconds for one epoch ---
+--- 2.3024210929870605 seconds for one epoch ---
+--- 1.4558172225952148 seconds for one epoch ---
+--- 2.2745468616485596 seconds for one epoch ---
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.9999875]
+ [0.       ]]
+[[ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.9050015]
+ [-0.       ]]
+--- 1.7184021472930908 seconds for one epoch ---
+Epoch 1000
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0019814178813248873, (1.9663444e-06, 0.0044636116, 0.0041669784, 0.0019583935)
+   validation loss 0.001996746752411127, (2.3365028e-06, 0.0075243227, 0.0071281116, 0.0019583935)
+decoder loss ratio: 0.000279, decoder SINDy loss  ratio: 0.000542
+--- 1.641411542892456 seconds for one epoch ---
+--- 1.507483959197998 seconds for one epoch ---
+--- 2.310023546218872 seconds for one epoch ---
+--- 1.508061408996582 seconds for one epoch ---
+--- 2.3426177501678467 seconds for one epoch ---
+--- 1.4752233028411865 seconds for one epoch ---
+--- 2.3014307022094727 seconds for one epoch ---
+--- 1.4846069812774658 seconds for one epoch ---
+--- 2.3708608150482178 seconds for one epoch ---
+--- 1.501323938369751 seconds for one epoch ---
+--- 2.3093721866607666 seconds for one epoch ---
+--- 1.5290734767913818 seconds for one epoch ---
+--- 2.3652288913726807 seconds for one epoch ---
+--- 1.4710452556610107 seconds for one epoch ---
+--- 2.328087568283081 seconds for one epoch ---
+--- 1.5316414833068848 seconds for one epoch ---
+--- 2.3955740928649902 seconds for one epoch ---
+--- 1.491420030593872 seconds for one epoch ---
+--- 2.3699793815612793 seconds for one epoch ---
+--- 1.5489850044250488 seconds for one epoch ---
+--- 2.432108163833618 seconds for one epoch ---
+--- 1.5788140296936035 seconds for one epoch ---
+--- 2.362691640853882 seconds for one epoch ---
+--- 1.5375745296478271 seconds for one epoch ---
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.9999912]
+ [0.       ]]
+[[-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.92219824]
+ [-0.        ]]
+--- 1.4488840103149414 seconds for one epoch ---
+Epoch 1025
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.00202975794672966, (5.201639e-06, 0.007169307, 0.01285115, 0.001959942)
+   validation loss 0.0020690602250397205, (6.7256547e-06, 0.011560356, 0.020362899, 0.001959942)
+decoder loss ratio: 0.000802, decoder SINDy loss  ratio: 0.001549
+--- 1.4526700973510742 seconds for one epoch ---
+--- 2.2830913066864014 seconds for one epoch ---
+--- 1.4730236530303955 seconds for one epoch ---
+--- 2.3463425636291504 seconds for one epoch ---
+--- 1.428128719329834 seconds for one epoch ---
+--- 2.2675621509552 seconds for one epoch ---
+--- 1.4722890853881836 seconds for one epoch ---
+--- 2.3383266925811768 seconds for one epoch ---
+--- 1.4810338020324707 seconds for one epoch ---
+--- 2.269984006881714 seconds for one epoch ---
+--- 1.4317200183868408 seconds for one epoch ---
+--- 2.3094894886016846 seconds for one epoch ---
+--- 1.4364838600158691 seconds for one epoch ---
+--- 2.3488667011260986 seconds for one epoch ---
+--- 1.4593923091888428 seconds for one epoch ---
+--- 2.271528720855713 seconds for one epoch ---
+--- 1.5246846675872803 seconds for one epoch ---
+--- 2.3566701412200928 seconds for one epoch ---
+--- 1.4480323791503906 seconds for one epoch ---
+--- 2.320655584335327 seconds for one epoch ---
+--- 1.474548578262329 seconds for one epoch ---
+--- 2.3844754695892334 seconds for one epoch ---
+--- 1.4488439559936523 seconds for one epoch ---
+--- 2.316603422164917 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99999213]
+ [0.        ]]
+[[ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.93166673]
+ [ 0.        ]]
+--- 1.6127679347991943 seconds for one epoch ---
+Epoch 1050
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0020053964108228683, (3.3203141e-06, 0.0058785537, 0.008249507, 0.0019605346)
+   validation loss 0.0020310189574956894, (3.980601e-06, 0.009547227, 0.013205301, 0.0019605346)
+decoder loss ratio: 0.000475, decoder SINDy loss  ratio: 0.001005
+THRESHOLDING: 1 active coefficients
+--- 2.3318874835968018 seconds for one epoch ---
+--- 1.530552625656128 seconds for one epoch ---
+--- 2.3391058444976807 seconds for one epoch ---
+--- 1.531339406967163 seconds for one epoch ---
+--- 2.3762104511260986 seconds for one epoch ---
+--- 1.5433626174926758 seconds for one epoch ---
+--- 2.362471103668213 seconds for one epoch ---
+--- 1.5358586311340332 seconds for one epoch ---
+--- 2.364163398742676 seconds for one epoch ---
+--- 1.4844732284545898 seconds for one epoch ---
+--- 2.3118600845336914 seconds for one epoch ---
+--- 1.497018814086914 seconds for one epoch ---
+--- 2.4206128120422363 seconds for one epoch ---
+--- 1.5248217582702637 seconds for one epoch ---
+--- 2.344379425048828 seconds for one epoch ---
+--- 1.439058780670166 seconds for one epoch ---
+--- 2.3315138816833496 seconds for one epoch ---
+--- 1.4750645160675049 seconds for one epoch ---
+--- 2.3599658012390137 seconds for one epoch ---
+--- 1.5265271663665771 seconds for one epoch ---
+--- 2.4350709915161133 seconds for one epoch ---
+--- 1.4872715473175049 seconds for one epoch ---
+--- 2.385287046432495 seconds for one epoch ---
+--- 1.5595731735229492 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99999344]
+ [0.        ]]
+[[ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.93877864]
+ [ 0.        ]]
+--- 1.4880645275115967 seconds for one epoch ---
+Epoch 1075
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.001981412060558796, (3.2987393e-06, 0.0055480134, 0.0033551035, 0.0019610603)
+   validation loss 0.001994600286707282, (4.002967e-06, 0.009068284, 0.0058167325, 0.0019610603)
+decoder loss ratio: 0.000477, decoder SINDy loss  ratio: 0.000443
+--- 1.561835527420044 seconds for one epoch ---
+--- 2.2996137142181396 seconds for one epoch ---
+--- 1.51292085647583 seconds for one epoch ---
+--- 2.2830886840820312 seconds for one epoch ---
+--- 1.5391910076141357 seconds for one epoch ---
+--- 2.3709428310394287 seconds for one epoch ---
+--- 1.5324757099151611 seconds for one epoch ---
+--- 2.2979001998901367 seconds for one epoch ---
+--- 1.560725450515747 seconds for one epoch ---
+--- 2.3665170669555664 seconds for one epoch ---
+--- 1.5232374668121338 seconds for one epoch ---
+--- 2.367204189300537 seconds for one epoch ---
+--- 1.5061824321746826 seconds for one epoch ---
+--- 2.3917770385742188 seconds for one epoch ---
+--- 1.4894707202911377 seconds for one epoch ---
+--- 2.340834617614746 seconds for one epoch ---
+--- 1.5093894004821777 seconds for one epoch ---
+--- 2.3965916633605957 seconds for one epoch ---
+--- 1.5624756813049316 seconds for one epoch ---
+--- 2.416100025177002 seconds for one epoch ---
+--- 1.520850419998169 seconds for one epoch ---
+--- 2.4402055740356445 seconds for one epoch ---
+--- 1.5394477844238281 seconds for one epoch ---
+--- 2.3765673637390137 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99999446]
+ [0.        ]]
+[[-0.      ]
+ [-0.      ]
+ [ 0.      ]
+ [ 0.      ]
+ [ 0.      ]
+ [-0.      ]
+ [-0.      ]
+ [ 0.      ]
+ [-0.      ]
+ [-0.      ]
+ [-0.943734]
+ [-0.      ]]
+--- 1.8349926471710205 seconds for one epoch ---
+Epoch 1100
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.002014618134126067, (3.8230937e-06, 0.0062089455, 0.009796625, 0.0019615015)
+   validation loss 0.0020448449067771435, (4.712742e-06, 0.009949431, 0.015626632, 0.0019615015)
+decoder loss ratio: 0.000562, decoder SINDy loss  ratio: 0.001189
+--- 1.5550322532653809 seconds for one epoch ---
+--- 1.4638302326202393 seconds for one epoch ---
+--- 2.361259698867798 seconds for one epoch ---
+--- 1.5078351497650146 seconds for one epoch ---
+--- 2.349534749984741 seconds for one epoch ---
+--- 1.5296380519866943 seconds for one epoch ---
+--- 2.3252387046813965 seconds for one epoch ---
+--- 1.5151069164276123 seconds for one epoch ---
+--- 2.324490785598755 seconds for one epoch ---
+--- 1.4764845371246338 seconds for one epoch ---
+--- 2.363840103149414 seconds for one epoch ---
+--- 1.4598619937896729 seconds for one epoch ---
+--- 2.3863823413848877 seconds for one epoch ---
+--- 1.555994987487793 seconds for one epoch ---
+--- 2.419693946838379 seconds for one epoch ---
+--- 1.5048284530639648 seconds for one epoch ---
+--- 2.3801028728485107 seconds for one epoch ---
+--- 1.53969407081604 seconds for one epoch ---
+--- 2.4207088947296143 seconds for one epoch ---
+--- 1.5196521282196045 seconds for one epoch ---
+--- 2.381192684173584 seconds for one epoch ---
+--- 1.5653016567230225 seconds for one epoch ---
+--- 2.387385606765747 seconds for one epoch ---
+--- 1.5448338985443115 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99999446]
+ [0.        ]]
+[[-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.94809264]
+ [-0.        ]]
+--- 1.634838342666626 seconds for one epoch ---
+Epoch 1125
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.002005547983571887, (3.6994918e-06, 0.00600111, 0.0079612555, 0.001961742)
+   validation loss 0.002030883217230439, (4.755575e-06, 0.009533067, 0.012781785, 0.001961742)
+decoder loss ratio: 0.000567, decoder SINDy loss  ratio: 0.000972
+--- 1.5683531761169434 seconds for one epoch ---
+--- 2.5883078575134277 seconds for one epoch ---
+--- 1.701643705368042 seconds for one epoch ---
+--- 2.7143590450286865 seconds for one epoch ---
+--- 1.8772103786468506 seconds for one epoch ---
+--- 2.4631359577178955 seconds for one epoch ---
+--- 1.593397617340088 seconds for one epoch ---
+--- 2.4992260932922363 seconds for one epoch ---
+--- 1.5672178268432617 seconds for one epoch ---
+--- 2.3689568042755127 seconds for one epoch ---
+--- 1.5237548351287842 seconds for one epoch ---
+--- 2.438269853591919 seconds for one epoch ---
+--- 1.54697847366333 seconds for one epoch ---
+--- 2.4323790073394775 seconds for one epoch ---
+--- 1.538907766342163 seconds for one epoch ---
+--- 2.5041556358337402 seconds for one epoch ---
+--- 1.5123653411865234 seconds for one epoch ---
+--- 2.4236578941345215 seconds for one epoch ---
+--- 1.504988431930542 seconds for one epoch ---
+--- 2.4221742153167725 seconds for one epoch ---
+--- 1.5585124492645264 seconds for one epoch ---
+--- 2.4882497787475586 seconds for one epoch ---
+--- 1.5649259090423584 seconds for one epoch ---
+--- 2.523381471633911 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99999446]
+ [0.        ]]
+[[ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.9496723]
+ [ 0.       ]]
+--- 1.6353485584259033 seconds for one epoch ---
+Epoch 1150
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.002061928156763315, (8.092592e-06, 0.011048432, 0.01825287, 0.001962019)
+   validation loss 0.002113518537953496, (8.420676e-06, 0.017025001, 0.028445542, 0.001962019)
+decoder loss ratio: 0.001004, decoder SINDy loss  ratio: 0.002164
+--- 1.680368185043335 seconds for one epoch ---
+--- 1.6185879707336426 seconds for one epoch ---
+--- 2.470980644226074 seconds for one epoch ---
+--- 1.6137797832489014 seconds for one epoch ---
+--- 2.462293863296509 seconds for one epoch ---
+--- 1.5136301517486572 seconds for one epoch ---
+--- 2.42659330368042 seconds for one epoch ---
+--- 1.615368366241455 seconds for one epoch ---
+--- 2.5574004650115967 seconds for one epoch ---
+--- 1.5698466300964355 seconds for one epoch ---
+--- 2.4944493770599365 seconds for one epoch ---
+--- 1.5014221668243408 seconds for one epoch ---
+--- 2.523271083831787 seconds for one epoch ---
+--- 1.5975353717803955 seconds for one epoch ---
+--- 2.4738101959228516 seconds for one epoch ---
+--- 1.5935328006744385 seconds for one epoch ---
+--- 2.5380923748016357 seconds for one epoch ---
+--- 1.5338881015777588 seconds for one epoch ---
+--- 2.5312275886535645 seconds for one epoch ---
+--- 1.5481696128845215 seconds for one epoch ---
+--- 2.5515594482421875 seconds for one epoch ---
+--- 1.514981985092163 seconds for one epoch ---
+--- 2.511979579925537 seconds for one epoch ---
+--- 1.542388916015625 seconds for one epoch ---
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.9999943]
+ [0.       ]]
+[[ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.9538441]
+ [ 0.       ]]
+--- 1.4265601634979248 seconds for one epoch ---
+Epoch 1175
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.001980290748178959, (2.1040498e-06, 0.0047007916, 0.00312887, 0.0019623074)
+   validation loss 0.0019923043437302113, (2.572528e-06, 0.0075670844, 0.005409209, 0.0019623074)
+decoder loss ratio: 0.000307, decoder SINDy loss  ratio: 0.000412
+--- 1.4083240032196045 seconds for one epoch ---
+--- 2.3801212310791016 seconds for one epoch ---
+--- 1.4021704196929932 seconds for one epoch ---
+--- 2.4151272773742676 seconds for one epoch ---
+--- 1.500523328781128 seconds for one epoch ---
+--- 2.469683885574341 seconds for one epoch ---
+--- 1.4249839782714844 seconds for one epoch ---
+--- 2.3559410572052 seconds for one epoch ---
+--- 1.4550018310546875 seconds for one epoch ---
+--- 2.4226882457733154 seconds for one epoch ---
+--- 1.4326443672180176 seconds for one epoch ---
+--- 2.4051496982574463 seconds for one epoch ---
+--- 1.4125356674194336 seconds for one epoch ---
+--- 2.4047014713287354 seconds for one epoch ---
+--- 1.462397575378418 seconds for one epoch ---
+--- 2.4129903316497803 seconds for one epoch ---
+--- 1.446382999420166 seconds for one epoch ---
+--- 2.45107102394104 seconds for one epoch ---
+--- 1.467473030090332 seconds for one epoch ---
+--- 2.4713830947875977 seconds for one epoch ---
+--- 1.4486305713653564 seconds for one epoch ---
+--- 2.4841384887695312 seconds for one epoch ---
+--- 1.4880592823028564 seconds for one epoch ---
+--- 2.4351301193237305 seconds for one epoch ---
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.9999944]
+ [0.       ]]
+[[-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.9559263]
+ [-0.       ]]
+--- 1.7424232959747314 seconds for one epoch ---
+Epoch 1200
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0020119117107242346, (4.4961866e-06, 0.0055531696, 0.008936601, 0.0019624548)
+   validation loss 0.0020402329973876476, (5.546187e-06, 0.0087641, 0.014358773, 0.0019624548)
+decoder loss ratio: 0.000661, decoder SINDy loss  ratio: 0.001092
+THRESHOLDING: 1 active coefficients
+--- 2.388174057006836 seconds for one epoch ---
+--- 1.4991381168365479 seconds for one epoch ---
+--- 2.4370477199554443 seconds for one epoch ---
+--- 1.5025634765625 seconds for one epoch ---
+--- 2.5165882110595703 seconds for one epoch ---
+--- 1.5115594863891602 seconds for one epoch ---
+--- 2.502258539199829 seconds for one epoch ---
+--- 1.5325803756713867 seconds for one epoch ---
+--- 2.507402181625366 seconds for one epoch ---
+--- 1.4847760200500488 seconds for one epoch ---
+--- 2.446028470993042 seconds for one epoch ---
+--- 1.5095415115356445 seconds for one epoch ---
+--- 2.5554842948913574 seconds for one epoch ---
+--- 1.4969708919525146 seconds for one epoch ---
+--- 2.468527317047119 seconds for one epoch ---
+--- 1.5080764293670654 seconds for one epoch ---
+--- 2.593205451965332 seconds for one epoch ---
+--- 1.5207791328430176 seconds for one epoch ---
+--- 2.4795565605163574 seconds for one epoch ---
+--- 1.4903926849365234 seconds for one epoch ---
+--- 2.50779128074646 seconds for one epoch ---
+--- 1.4590179920196533 seconds for one epoch ---
+--- 2.4666526317596436 seconds for one epoch ---
+--- 1.4386320114135742 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99999446]
+ [0.        ]]
+[[-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.9577894]
+ [-0.       ]]
+--- 1.6881694793701172 seconds for one epoch ---
+Epoch 1225
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.002093298127874732, (1.34442425e-05, 0.012448496, 0.023274774, 0.0019628576)
+   validation loss 0.0021616118028759956, (1.6639693e-05, 0.019180307, 0.036231086, 0.0019628576)
+decoder loss ratio: 0.001984, decoder SINDy loss  ratio: 0.002756
+--- 1.4873840808868408 seconds for one epoch ---
+--- 2.4368691444396973 seconds for one epoch ---
+--- 1.4975354671478271 seconds for one epoch ---
+--- 2.378296136856079 seconds for one epoch ---
+--- 1.4946269989013672 seconds for one epoch ---
+--- 2.4315056800842285 seconds for one epoch ---
+--- 1.465433120727539 seconds for one epoch ---
+--- 2.3588614463806152 seconds for one epoch ---
+--- 1.5410332679748535 seconds for one epoch ---
+--- 2.4355716705322266 seconds for one epoch ---
+--- 1.5399651527404785 seconds for one epoch ---
+--- 2.393845796585083 seconds for one epoch ---
+--- 1.5103647708892822 seconds for one epoch ---
+--- 2.5134713649749756 seconds for one epoch ---
+--- 1.4948465824127197 seconds for one epoch ---
+--- 2.4142749309539795 seconds for one epoch ---
+--- 1.5128076076507568 seconds for one epoch ---
+--- 2.4866783618927 seconds for one epoch ---
+--- 1.4690124988555908 seconds for one epoch ---
+--- 2.5374326705932617 seconds for one epoch ---
+--- 1.4975872039794922 seconds for one epoch ---
+--- 2.5383317470550537 seconds for one epoch ---
+--- 1.4892053604125977 seconds for one epoch ---
+--- 2.477191209793091 seconds for one epoch ---
+=========================
+[[0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.      ]
+ [0.999995]
+ [0.      ]]
+[[ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.9606662]
+ [ 0.       ]]
+--- 1.6571228504180908 seconds for one epoch ---
+Epoch 1250
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.00200654286891222, (3.1003406e-06, 0.005873673, 0.008041257, 0.0019629425)
+   validation loss 0.0020313591230660677, (3.910693e-06, 0.009243866, 0.012808742, 0.0019629425)
+decoder loss ratio: 0.000466, decoder SINDy loss  ratio: 0.000974
+--- 1.686873197555542 seconds for one epoch ---
+--- 1.5154550075531006 seconds for one epoch ---
+--- 2.567084312438965 seconds for one epoch ---
+--- 1.5998265743255615 seconds for one epoch ---
+--- 2.5214555263519287 seconds for one epoch ---
+--- 1.5853478908538818 seconds for one epoch ---
+--- 2.528273105621338 seconds for one epoch ---
+--- 1.5574932098388672 seconds for one epoch ---
+--- 2.5623278617858887 seconds for one epoch ---
+--- 1.5445356369018555 seconds for one epoch ---
+--- 2.644111156463623 seconds for one epoch ---
+--- 1.5528302192687988 seconds for one epoch ---
+--- 2.5694644451141357 seconds for one epoch ---
+--- 1.5191175937652588 seconds for one epoch ---
+--- 2.529374599456787 seconds for one epoch ---
+--- 1.5608508586883545 seconds for one epoch ---
+--- 2.564237356185913 seconds for one epoch ---
+--- 1.5622940063476562 seconds for one epoch ---
+--- 2.652989387512207 seconds for one epoch ---
+--- 1.574700117111206 seconds for one epoch ---
+--- 2.5838348865509033 seconds for one epoch ---
+--- 1.5587937831878662 seconds for one epoch ---
+--- 2.5708425045013428 seconds for one epoch ---
+--- 1.5440337657928467 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99999535]
+ [0.        ]]
+[[ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.9634194]
+ [ 0.       ]]
+--- 1.6153111457824707 seconds for one epoch ---
+Epoch 1275
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.001997374463826418, (2.7031056e-06, 0.004885519, 0.006256783, 0.0019631432)
+   validation loss 0.0020176463294774294, (3.350158e-06, 0.0076959, 0.010153643, 0.0019631432)
+decoder loss ratio: 0.000399, decoder SINDy loss  ratio: 0.000772
+--- 1.5738837718963623 seconds for one epoch ---
+--- 2.5785441398620605 seconds for one epoch ---
+--- 1.5061790943145752 seconds for one epoch ---
+--- 2.617997407913208 seconds for one epoch ---
+--- 1.5655441284179688 seconds for one epoch ---
+--- 2.570072889328003 seconds for one epoch ---
+--- 1.5741710662841797 seconds for one epoch ---
+--- 2.6451666355133057 seconds for one epoch ---
+--- 1.5971705913543701 seconds for one epoch ---
+--- 2.6035656929016113 seconds for one epoch ---
+--- 1.5923707485198975 seconds for one epoch ---
+--- 2.6839089393615723 seconds for one epoch ---
+--- 1.5641064643859863 seconds for one epoch ---
+--- 2.631331205368042 seconds for one epoch ---
+--- 1.551673173904419 seconds for one epoch ---
+--- 2.597342014312744 seconds for one epoch ---
+--- 1.4689903259277344 seconds for one epoch ---
+--- 2.5314266681671143 seconds for one epoch ---
+--- 1.4926884174346924 seconds for one epoch ---
+--- 2.6209404468536377 seconds for one epoch ---
+--- 1.5778515338897705 seconds for one epoch ---
+--- 2.5799355506896973 seconds for one epoch ---
+--- 1.5282859802246094 seconds for one epoch ---
+--- 2.545875072479248 seconds for one epoch ---
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.9999957]
+ [0.       ]]
+[[-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.96520317]
+ [-0.        ]]
+--- 1.649271011352539 seconds for one epoch ---
+Epoch 1300
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0019769645296037197, (1.3347683e-06, 0.0036880707, 0.0024335908, 0.0019632773)
+   validation loss 0.0019866754300892353, (1.6504378e-06, 0.005884642, 0.0042906827, 0.0019632773)
+decoder loss ratio: 0.000197, decoder SINDy loss  ratio: 0.000326
+--- 1.6819067001342773 seconds for one epoch ---
+--- 1.5452780723571777 seconds for one epoch ---
+--- 2.505937337875366 seconds for one epoch ---
+--- 1.5471923351287842 seconds for one epoch ---
+--- 2.6238303184509277 seconds for one epoch ---
+--- 1.5188772678375244 seconds for one epoch ---
+--- 2.632887125015259 seconds for one epoch ---
+--- 1.5360727310180664 seconds for one epoch ---
+--- 2.6349329948425293 seconds for one epoch ---
+--- 1.5802695751190186 seconds for one epoch ---
+--- 2.6017580032348633 seconds for one epoch ---
+--- 1.5195882320404053 seconds for one epoch ---
+--- 2.5844225883483887 seconds for one epoch ---
+--- 1.4872148036956787 seconds for one epoch ---
+--- 2.6623830795288086 seconds for one epoch ---
+--- 1.5606167316436768 seconds for one epoch ---
+--- 2.704301118850708 seconds for one epoch ---
+--- 1.497309684753418 seconds for one epoch ---
+--- 2.6371657848358154 seconds for one epoch ---
+--- 1.5276014804840088 seconds for one epoch ---
+--- 2.6261489391326904 seconds for one epoch ---
+--- 1.549036979675293 seconds for one epoch ---
+--- 2.6759345531463623 seconds for one epoch ---
+--- 1.5060539245605469 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99999595]
+ [0.        ]]
+[[-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.9657592]
+ [-0.       ]]
+--- 1.4745993614196777 seconds for one epoch ---
+Epoch 1325
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.002028140239417553, (7.597761e-06, 0.012123973, 0.011291578, 0.0019634783)
+   validation loss 0.0020624748431146145, (9.22013e-06, 0.018447723, 0.017770806, 0.0019634783)
+decoder loss ratio: 0.001099, decoder SINDy loss  ratio: 0.001352
+--- 1.486896276473999 seconds for one epoch ---
+--- 3.180272340774536 seconds for one epoch ---
+--- 2.2763431072235107 seconds for one epoch ---
+--- 3.096465587615967 seconds for one epoch ---
+--- 2.0936877727508545 seconds for one epoch ---
+--- 3.1764395236968994 seconds for one epoch ---
+--- 2.166550397872925 seconds for one epoch ---
+--- 3.1477508544921875 seconds for one epoch ---
+--- 2.060401439666748 seconds for one epoch ---
+--- 3.2069005966186523 seconds for one epoch ---
+--- 2.1619455814361572 seconds for one epoch ---
+--- 3.1266870498657227 seconds for one epoch ---
+--- 1.9981820583343506 seconds for one epoch ---
+--- 3.06522798538208 seconds for one epoch ---
+--- 2.065246820449829 seconds for one epoch ---
+--- 3.1055657863616943 seconds for one epoch ---
+--- 2.1257359981536865 seconds for one epoch ---
+--- 3.167853355407715 seconds for one epoch ---
+--- 2.1321723461151123 seconds for one epoch ---
+--- 3.166823387145996 seconds for one epoch ---
+--- 2.0976643562316895 seconds for one epoch ---
+--- 3.0441057682037354 seconds for one epoch ---
+--- 1.9387035369873047 seconds for one epoch ---
+--- 3.009948968887329 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99999684]
+ [0.        ]]
+[[ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.96889645]
+ [ 0.        ]]
+--- 1.6978533267974854 seconds for one epoch ---
+Epoch 1350
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.001977057196199894, (1.5072711e-06, 0.003383924, 0.0023631218, 0.0019635651)
+   validation loss 0.001986519433557987, (1.8784385e-06, 0.0053704176, 0.0041614505, 0.0019635651)
+decoder loss ratio: 0.000224, decoder SINDy loss  ratio: 0.000317
+THRESHOLDING: 1 active coefficients
+--- 2.6369547843933105 seconds for one epoch ---
+--- 1.4621028900146484 seconds for one epoch ---
+--- 2.548696517944336 seconds for one epoch ---
+--- 1.4657797813415527 seconds for one epoch ---
+--- 3.2382240295410156 seconds for one epoch ---
+--- 2.444148302078247 seconds for one epoch ---
+--- 2.656959295272827 seconds for one epoch ---
+--- 1.4871745109558105 seconds for one epoch ---
+--- 3.021157741546631 seconds for one epoch ---
+--- 1.8910231590270996 seconds for one epoch ---
+--- 2.6365091800689697 seconds for one epoch ---
+--- 1.5174965858459473 seconds for one epoch ---
+--- 2.882786989212036 seconds for one epoch ---
+--- 1.9794013500213623 seconds for one epoch ---
+--- 2.6259145736694336 seconds for one epoch ---
+--- 1.5576083660125732 seconds for one epoch ---
+--- 2.648617744445801 seconds for one epoch ---
+--- 1.4382593631744385 seconds for one epoch ---
+--- 2.6678473949432373 seconds for one epoch ---
+--- 1.4969556331634521 seconds for one epoch ---
+--- 2.6272058486938477 seconds for one epoch ---
+--- 1.5001418590545654 seconds for one epoch ---
+--- 2.992094039916992 seconds for one epoch ---
+--- 1.820063591003418 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99999714]
+ [0.        ]]
+[[ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.9691025]
+ [ 0.       ]]
+--- 1.607226848602295 seconds for one epoch ---
+Epoch 1375
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0019959600176662207, (2.8740383e-06, 0.0062002647, 0.0058071166, 0.0019637404)
+   validation loss 0.002017810707911849, (4.45022e-06, 0.009718746, 0.009826841, 0.0019637404)
+decoder loss ratio: 0.000531, decoder SINDy loss  ratio: 0.000748
+--- 1.5070202350616455 seconds for one epoch ---
+--- 2.607663631439209 seconds for one epoch ---
+--- 1.4794888496398926 seconds for one epoch ---
+--- 2.6922881603240967 seconds for one epoch ---
+--- 1.6993961334228516 seconds for one epoch ---
+--- 2.5622692108154297 seconds for one epoch ---
+--- 1.4244844913482666 seconds for one epoch ---
+--- 2.742669105529785 seconds for one epoch ---
+--- 1.7155864238739014 seconds for one epoch ---
+--- 2.513333320617676 seconds for one epoch ---
+--- 1.5196919441223145 seconds for one epoch ---
+--- 2.754774332046509 seconds for one epoch ---
+--- 1.803736925125122 seconds for one epoch ---
+--- 2.6322433948516846 seconds for one epoch ---
+--- 1.5329158306121826 seconds for one epoch ---
+--- 2.8338966369628906 seconds for one epoch ---
+--- 1.709629774093628 seconds for one epoch ---
+--- 2.79327654838562 seconds for one epoch ---
+--- 1.8018262386322021 seconds for one epoch ---
+--- 2.8861539363861084 seconds for one epoch ---
+--- 1.723564863204956 seconds for one epoch ---
+--- 2.851383924484253 seconds for one epoch ---
+--- 1.7914440631866455 seconds for one epoch ---
+--- 2.8878636360168457 seconds for one epoch ---
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.9999976]
+ [0.       ]]
+[[-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.9708967]
+ [-0.       ]]
+--- 2.045987367630005 seconds for one epoch ---
+Epoch 1400
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.00199980940669775, (3.386635e-06, 0.0054820897, 0.0064581526, 0.0019638578)
+   validation loss 0.002021433087065816, (4.6463856e-06, 0.008483337, 0.010500965, 0.0019638578)
+decoder loss ratio: 0.000554, decoder SINDy loss  ratio: 0.000799
+--- 2.091092109680176 seconds for one epoch ---
+--- 1.4506001472473145 seconds for one epoch ---
+--- 2.717263698577881 seconds for one epoch ---
+--- 1.6892049312591553 seconds for one epoch ---
+--- 2.7756102085113525 seconds for one epoch ---
+--- 1.685657024383545 seconds for one epoch ---
+--- 2.8553578853607178 seconds for one epoch ---
+--- 1.6802294254302979 seconds for one epoch ---
+--- 2.7569162845611572 seconds for one epoch ---
+--- 1.6895627975463867 seconds for one epoch ---
+--- 2.783235788345337 seconds for one epoch ---
+--- 1.637075662612915 seconds for one epoch ---
+--- 2.6464405059814453 seconds for one epoch ---
+--- 1.5072762966156006 seconds for one epoch ---
+--- 2.7965121269226074 seconds for one epoch ---
+--- 1.7547025680541992 seconds for one epoch ---
+--- 2.6405205726623535 seconds for one epoch ---
+--- 1.4803857803344727 seconds for one epoch ---
+--- 2.8614392280578613 seconds for one epoch ---
+--- 1.7437083721160889 seconds for one epoch ---
+--- 2.689225196838379 seconds for one epoch ---
+--- 1.5819697380065918 seconds for one epoch ---
+--- 2.953537940979004 seconds for one epoch ---
+--- 1.825221061706543 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99999756]
+ [0.        ]]
+[[-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.9708478]
+ [-0.       ]]
+--- 1.596400499343872 seconds for one epoch ---
+Epoch 1425
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0020062322728335857, (3.7335906e-06, 0.006864787, 0.0076515456, 0.0019638976)
+   validation loss 0.0020297912415117025, (4.389091e-06, 0.010582579, 0.01219508, 0.0019638976)
+decoder loss ratio: 0.000523, decoder SINDy loss  ratio: 0.000928
+--- 1.500011920928955 seconds for one epoch ---
+--- 2.634946584701538 seconds for one epoch ---
+--- 1.48209547996521 seconds for one epoch ---
+--- 2.6646382808685303 seconds for one epoch ---
+--- 1.4489116668701172 seconds for one epoch ---
+--- 2.6440439224243164 seconds for one epoch ---
+--- 1.4899730682373047 seconds for one epoch ---
+--- 2.6667394638061523 seconds for one epoch ---
+--- 1.468888759613037 seconds for one epoch ---
+--- 2.580997943878174 seconds for one epoch ---
+--- 1.5336251258850098 seconds for one epoch ---
+--- 2.6465096473693848 seconds for one epoch ---
+--- 1.5112102031707764 seconds for one epoch ---
+--- 2.6665546894073486 seconds for one epoch ---
+--- 1.5004820823669434 seconds for one epoch ---
+--- 2.6976540088653564 seconds for one epoch ---
+--- 1.5208015441894531 seconds for one epoch ---
+--- 2.6593048572540283 seconds for one epoch ---
+--- 1.5122601985931396 seconds for one epoch ---
+--- 2.681854009628296 seconds for one epoch ---
+--- 1.4890415668487549 seconds for one epoch ---
+--- 2.7255892753601074 seconds for one epoch ---
+--- 1.4630603790283203 seconds for one epoch ---
+--- 2.744217872619629 seconds for one epoch ---
+=========================
+[[0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.        ]
+ [0.99999744]
+ [0.        ]]
+[[ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.9735251]
+ [ 0.       ]]
+--- 1.595231294631958 seconds for one epoch ---
+Epoch 1450
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0019823063630610704, (1.928077e-06, 0.0039139334, 0.003233858, 0.0019640133)
+   validation loss 0.001994350226595998, (2.523018e-06, 0.0061084176, 0.0055016726, 0.0019640133)
+decoder loss ratio: 0.000301, decoder SINDy loss  ratio: 0.000419
+--- 1.6849899291992188 seconds for one epoch ---
+--- 1.4394419193267822 seconds for one epoch ---
+--- 2.644599676132202 seconds for one epoch ---
+--- 1.4794657230377197 seconds for one epoch ---
+--- 2.6041016578674316 seconds for one epoch ---
+--- 1.4389169216156006 seconds for one epoch ---
+--- 2.714016914367676 seconds for one epoch ---
+--- 1.5035285949707031 seconds for one epoch ---
+--- 2.6762969493865967 seconds for one epoch ---
+--- 1.4320528507232666 seconds for one epoch ---
+--- 2.60455060005188 seconds for one epoch ---
+--- 1.4156990051269531 seconds for one epoch ---
+--- 2.7228925228118896 seconds for one epoch ---
+--- 1.47914719581604 seconds for one epoch ---
+--- 2.6893508434295654 seconds for one epoch ---
+--- 1.5010185241699219 seconds for one epoch ---
+--- 2.675049304962158 seconds for one epoch ---
+--- 1.4525892734527588 seconds for one epoch ---
+--- 2.721619129180908 seconds for one epoch ---
+--- 1.4956636428833008 seconds for one epoch ---
+--- 2.761016607284546 seconds for one epoch ---
+--- 1.4687244892120361 seconds for one epoch ---
+--- 2.696343183517456 seconds for one epoch ---
+--- 1.4425628185272217 seconds for one epoch ---
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.9999974]
+ [0.       ]]
+[[ 0.       ]
+ [-0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [ 0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.       ]
+ [-0.9744337]
+ [ 0.       ]]
+--- 1.7419099807739258 seconds for one epoch ---
+Epoch 1475
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.0019757740665227175, (1.096926e-06, 0.002628346, 0.0021015448, 0.001964038)
+   validation loss 0.00198423326946795, (1.3610627e-06, 0.004159275, 0.0037252668, 0.001964038)
+decoder loss ratio: 0.000162, decoder SINDy loss  ratio: 0.000283
+--- 1.6839070320129395 seconds for one epoch ---
+--- 2.905583143234253 seconds for one epoch ---
+--- 1.6954147815704346 seconds for one epoch ---
+--- 2.621633291244507 seconds for one epoch ---
+--- 1.465019702911377 seconds for one epoch ---
+--- 2.8342552185058594 seconds for one epoch ---
+--- 1.702408790588379 seconds for one epoch ---
+--- 2.751500129699707 seconds for one epoch ---
+--- 1.491750955581665 seconds for one epoch ---
+--- 2.8427278995513916 seconds for one epoch ---
+--- 1.611809492111206 seconds for one epoch ---
+--- 2.8697621822357178 seconds for one epoch ---
+--- 1.6668410301208496 seconds for one epoch ---
+--- 2.928229808807373 seconds for one epoch ---
+--- 1.666776180267334 seconds for one epoch ---
+--- 2.8437728881835938 seconds for one epoch ---
+--- 1.6342291831970215 seconds for one epoch ---
+--- 2.9403278827667236 seconds for one epoch ---
+--- 1.6850228309631348 seconds for one epoch ---
+--- 2.9475338459014893 seconds for one epoch ---
+--- 1.6697278022766113 seconds for one epoch ---
+--- 2.95819354057312 seconds for one epoch ---
+--- 1.6765108108520508 seconds for one epoch ---
+--- 2.9930624961853027 seconds for one epoch ---
+=========================
+[[0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.       ]
+ [0.9999973]
+ [0.       ]]
+[[-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [ 0.        ]
+ [-0.        ]
+ [-0.        ]
+ [-0.97612643]
+ [-0.        ]]
+--- 1.7827649116516113 seconds for one epoch ---
+Epoch 1500
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 0.001975879305973649, (1.2908614e-06, 0.0029057898, 0.0020511542, 0.0019641875)
+   validation loss 0.001984247239306569, (1.6465336e-06, 0.0045886664, 0.0036367767, 0.0019641875)
+decoder loss ratio: 0.000196, decoder SINDy loss  ratio: 0.000277
+THRESHOLDING: 1 active coefficients
+REFINEMENT
+Epoch 0
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 1.0406264664197806e-05, (3.007765e-07, 0.0025757682, 0.00199534, 0.0019641633)
+   validation loss 1.841764424170833e-05, (4.406696e-07, 0.0040892246, 0.003554503, 0.0019641633)
+decoder loss ratio: 0.000053, decoder SINDy loss  ratio: 0.000270
+Epoch 25
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 1.5382156561827287e-05, (3.0921506e-06, 0.0030696865, 0.0024273044, 0.001964984)
+   validation loss 2.5270859623560682e-05, (3.9159336e-06, 0.0048744264, 0.0042222408, 0.001964984)
+decoder loss ratio: 0.000467, decoder SINDy loss  ratio: 0.000321
+Epoch 50
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 1.1660144991765264e-05, (1.7252169e-06, 0.0029750627, 0.001957235, 0.0019653293)
+   validation loss 1.97995213966351e-05, (2.12752e-06, 0.0046494184, 0.0034879062, 0.0019653293)
+decoder loss ratio: 0.000254, decoder SINDy loss  ratio: 0.000265
+Epoch 75
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 3.639558781287633e-05, (2.956465e-06, 0.004795548, 0.0066398694, 0.0019652192)
+   validation loss 5.7981276768259704e-05, (3.771043e-06, 0.0073202676, 0.010768845, 0.0019652192)
+decoder loss ratio: 0.000450, decoder SINDy loss  ratio: 0.000819
+Epoch 100
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 1.540372977615334e-05, (1.3522064e-06, 0.003617782, 0.0027741268, 0.0019652627)
+   validation loss 2.658288212842308e-05, (2.118662e-06, 0.0056915022, 0.0048359293, 0.0019652627)
+decoder loss ratio: 0.000253, decoder SINDy loss  ratio: 0.000368
+Epoch 125
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 9.805148692976218e-06, (8.5003586e-07, 0.0022562875, 0.0017684597, 0.001965143)
+   validation loss 1.7171290892292745e-05, (1.0525125e-06, 0.0035326865, 0.0031884287, 0.001965143)
+decoder loss ratio: 0.000125, decoder SINDy loss  ratio: 0.000243
+Epoch 150
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 9.315867828263436e-06, (6.5694775e-07, 0.0020428202, 0.0017113558, 0.001965031)
+   validation loss 1.647232966206502e-05, (8.359805e-07, 0.0032132657, 0.0030951372, 0.001965031)
+decoder loss ratio: 0.000100, decoder SINDy loss  ratio: 0.000235
+Epoch 175
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 1.4867384379613213e-05, (9.2709365e-07, 0.0026626417, 0.002761432, 0.0019648182)
+   validation loss 2.502188908692915e-05, (1.1667289e-06, 0.0041115433, 0.004729917, 0.0019648182)
+decoder loss ratio: 0.000139, decoder SINDy loss  ratio: 0.000360
+Epoch 200
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 9.441151632927358e-06, (4.9563977e-07, 0.0019137862, 0.0017699646, 0.0019647034)
+   validation loss 1.667660581006203e-05, (6.350114e-07, 0.002999232, 0.0031783269, 0.0019647034)
+decoder loss ratio: 0.000076, decoder SINDy loss  ratio: 0.000242
+Epoch 225
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 8.72662440087879e-06, (4.1137113e-07, 0.0017642002, 0.0016454087, 0.001964581)
+   validation loss 1.5647203326807357e-05, (5.492815e-07, 0.002785005, 0.0029917345, 0.001964581)
+decoder loss ratio: 0.000065, decoder SINDy loss  ratio: 0.000228
+Epoch 250
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 1.3917142496211454e-05, (6.4302947e-07, 0.0024375794, 0.0026304468, 0.0019644955)
+   validation loss 2.3387725377688184e-05, (7.784516e-07, 0.003792268, 0.004483932, 0.0019644955)
+decoder loss ratio: 0.000093, decoder SINDy loss  ratio: 0.000341
+Epoch 275
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 8.20721106720157e-06, (3.354345e-07, 0.001628157, 0.0015580738, 0.0019643866)
+   validation loss 1.4949157957744319e-05, (5.020112e-07, 0.0026039605, 0.00286339, 0.0019643866)
+decoder loss ratio: 0.000060, decoder SINDy loss  ratio: 0.000218
+Epoch 300
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 8.464720849588048e-06, (2.7210305e-07, 0.0016097263, 0.0016224264, 0.0019642962)
+   validation loss 1.5303787222364917e-05, (3.7683054e-07, 0.0025634856, 0.0029597564, 0.0019642962)
+decoder loss ratio: 0.000045, decoder SINDy loss  ratio: 0.000225
+Epoch 325
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 1.1145780263177585e-05, (3.6020853e-07, 0.0019254199, 0.00213786, 0.0019642338)
+   validation loss 1.9319868442835286e-05, (4.795664e-07, 0.0030338962, 0.0037377216, 0.0019642338)
+decoder loss ratio: 0.000057, decoder SINDy loss  ratio: 0.000284
+Epoch 350
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 8.563255505578127e-06, (2.031681e-07, 0.001575942, 0.0016562581, 0.001964178)
+   validation loss 1.543960752314888e-05, (2.9673012e-07, 0.0025140462, 0.003003435, 0.001964178)
+decoder loss ratio: 0.000035, decoder SINDy loss  ratio: 0.000228
+Epoch 375
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 8.322745088662487e-06, (1.751421e-07, 0.0014957609, 0.001614563, 0.0019641342)
+   validation loss 1.5083160178619437e-05, (2.6241975e-07, 0.0023999934, 0.002940148, 0.0019641342)
+decoder loss ratio: 0.000031, decoder SINDy loss  ratio: 0.000224
+Epoch 400
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 8.633991456008516e-06, (2.0267915e-07, 0.0014945985, 0.0016713163, 0.001964101)
+   validation loss 1.5547168004559353e-05, (2.8921093e-07, 0.002411533, 0.0030274761, 0.001964101)
+decoder loss ratio: 0.000034, decoder SINDy loss  ratio: 0.000230
+Epoch 425
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 8.240640454459935e-06, (1.5886103e-07, 0.0014246319, 0.0016021095, 0.001964066)
+   validation loss 1.4969717085477896e-05, (2.3598132e-07, 0.0023071922, 0.0029236753, 0.001964066)
+decoder loss ratio: 0.000028, decoder SINDy loss  ratio: 0.000222
+Epoch 450
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 7.741325134702493e-06, (1.3836676e-07, 0.0013155226, 0.0015074365, 0.0019640431)
+   validation loss 1.4209200344339479e-05, (2.1416265e-07, 0.0021527428, 0.00277748, 0.0019640431)
+decoder loss ratio: 0.000026, decoder SINDy loss  ratio: 0.000211
+Epoch 475
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 6.998985099926358e-06, (9.734277e-08, 0.001188827, 0.0013684402, 0.001964025)
+   validation loss 1.3107774066156708e-05, (1.7218667e-07, 0.0019661149, 0.0025674563, 0.001964025)
+decoder loss ratio: 0.000021, decoder SINDy loss  ratio: 0.000195
+Epoch 500
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 7.000880486884853e-06, (9.0612524e-08, 0.0011656925, 0.0013703967, 0.0019640068)
+   validation loss 1.3100583601044491e-05, (1.6103648e-07, 0.0019313873, 0.0025685956, 0.0019640068)
+decoder loss ratio: 0.000019, decoder SINDy loss  ratio: 0.000195
+Epoch 525
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 7.738370186416432e-06, (5.483527e-07, 0.0026827278, 0.0014111763, 0.0019680893)
+   validation loss 1.4127613212622236e-05, (8.2269776e-07, 0.0043204827, 0.0026177783, 0.0019680893)
+decoder loss ratio: 0.000098, decoder SINDy loss  ratio: 0.000199
+Epoch 550
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 1.9695478840731084e-05, (2.88168e-06, 0.006311877, 0.003299641, 0.0019675952)
+   validation loss 3.54140684066806e-05, (5.412131e-06, 0.009778932, 0.0059025986, 0.0019675952)
+decoder loss ratio: 0.000645, decoder SINDy loss  ratio: 0.000449
+Epoch 575
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 9.121563380176667e-06, (1.0865838e-06, 0.0018160477, 0.0015888355, 0.0019672636)
+   validation loss 1.666708521952387e-05, (1.6770671e-06, 0.0029133821, 0.0029688699, 0.0019672636)
+decoder loss ratio: 0.000200, decoder SINDy loss  ratio: 0.000226
+Epoch 600
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 7.5924754128209315e-06, (8.3176747e-07, 0.0016664906, 0.0013354766, 0.0019671055)
+   validation loss 1.366257947665872e-05, (1.0880328e-06, 0.0026368457, 0.002488541, 0.0019671055)
+decoder loss ratio: 0.000130, decoder SINDy loss  ratio: 0.000189
+Epoch 625
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 9.200388376484625e-06, (1.1957405e-06, 0.0015898347, 0.0015850313, 0.0019669218)
+   validation loss 1.634932959859725e-05, (1.7566134e-06, 0.0025657516, 0.0028928858, 0.0019669218)
+decoder loss ratio: 0.000209, decoder SINDy loss  ratio: 0.000220
+Epoch 650
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 6.8961749093432445e-06, (4.6402957e-07, 0.0013631159, 0.0012727979, 0.001966742)
+   validation loss 1.2659376807278022e-05, (6.1426107e-07, 0.002157509, 0.0023874482, 0.001966742)
+decoder loss ratio: 0.000073, decoder SINDy loss  ratio: 0.000182
+Epoch 675
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 7.220718998723896e-06, (5.309491e-07, 0.0013561085, 0.001324393, 0.0019665516)
+   validation loss 1.311319738306338e-05, (6.706258e-07, 0.0021208653, 0.0024673056, 0.0019665516)
+decoder loss ratio: 0.000080, decoder SINDy loss  ratio: 0.000188
+Epoch 700
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 1.0805790225276724e-05, (7.473676e-07, 0.0017517584, 0.001994167, 0.0019664138)
+   validation loss 1.9465280274744146e-05, (1.3339986e-06, 0.0027888562, 0.003598368, 0.0019664138)
+decoder loss ratio: 0.000159, decoder SINDy loss  ratio: 0.000274
+Epoch 725
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 6.453189598687459e-06, (3.1732043e-07, 0.001166857, 0.0012155053, 0.001966258)
+   validation loss 1.2002942639810499e-05, (4.358398e-07, 0.0018550137, 0.0022948706, 0.001966258)
+decoder loss ratio: 0.000052, decoder SINDy loss  ratio: 0.000175
+Epoch 750
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 6.6280949795327615e-06, (2.8902835e-07, 0.0011614573, 0.0012561987, 0.0019661237)
+   validation loss 1.2286333003430627e-05, (4.0453503e-07, 0.0018431564, 0.002357928, 0.0019661237)
+decoder loss ratio: 0.000048, decoder SINDy loss  ratio: 0.000179
+Epoch 775
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 6.163953912619036e-06, (2.2669437e-07, 0.0009961607, 0.0011774903, 0.001966039)
+   validation loss 1.1598035598581191e-05, (3.2809635e-07, 0.0016077512, 0.0022379104, 0.001966039)
+decoder loss ratio: 0.000039, decoder SINDy loss  ratio: 0.000170
+Epoch 800
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 6.100484824855812e-06, (1.8233435e-07, 0.0010490689, 0.0011731394, 0.0019659458)
+   validation loss 1.1498826097522397e-05, (2.7240432e-07, 0.0016846738, 0.0022284377, 0.0019659458)
+decoder loss ratio: 0.000032, decoder SINDy loss  ratio: 0.000170
+Epoch 825
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 6.0543729887285735e-06, (1.6852212e-07, 0.0010852899, 0.0011663173, 0.0019658902)
+   validation loss 1.1415767403377686e-05, (2.479026e-07, 0.0017421093, 0.002216152, 0.0019658902)
+decoder loss ratio: 0.000030, decoder SINDy loss  ratio: 0.000169
+Epoch 850
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 5.880080607312266e-06, (1.3288e-07, 0.0009596834, 0.0011398433, 0.0019658068)
+   validation loss 1.1172553968208376e-05, (2.0907815e-07, 0.0015558555, 0.0021771367, 0.0019658068)
+decoder loss ratio: 0.000025, decoder SINDy loss  ratio: 0.000166
+Epoch 875
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 5.822406365041388e-06, (1.1452052e-07, 0.00094144186, 0.0011321628, 0.0019657477)
+   validation loss 1.1085766345786396e-05, (1.8492956e-07, 0.0015333857, 0.0021648335, 0.0019657477)
+decoder loss ratio: 0.000022, decoder SINDy loss  ratio: 0.000165
+Epoch 900
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 5.6914755077741574e-06, (9.396563e-08, 0.0008901335, 0.0011106007, 0.001965703)
+   validation loss 1.089329907699721e-05, (1.5820434e-07, 0.0014604459, 0.0021324146, 0.001965703)
+decoder loss ratio: 0.000019, decoder SINDy loss  ratio: 0.000162
+Epoch 925
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 5.620003776130034e-06, (8.434464e-08, 0.0008570103, 0.0010985618, 0.001965665)
+   validation loss 1.0784199730551336e-05, (1.4592896e-07, 0.0014123017, 0.002113531, 0.001965665)
+decoder loss ratio: 0.000017, decoder SINDy loss  ratio: 0.000161
+Epoch 950
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 6.1113541960367e-06, (1.238998e-07, 0.001000162, 0.0011874893, 0.0019656338)
+   validation loss 1.1537069440237246e-05, (1.876432e-07, 0.0016263984, 0.0022536214, 0.0019656338)
+decoder loss ratio: 0.000022, decoder SINDy loss  ratio: 0.000171
+Epoch 975
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 5.7041079344344325e-06, (7.951041e-08, 0.0008945512, 0.001115974, 0.0019656064)
+   validation loss 1.091855392587604e-05, (1.4092825e-07, 0.001472177, 0.0021408035, 0.0019656064)
+decoder loss ratio: 0.000017, decoder SINDy loss  ratio: 0.000163
+Epoch 1000
+dict_keys(['decoder', 'sindy_z', 'sindy_x', 'sindy_regularization'])
+   training loss 5.461307864607079e-06, (6.518517e-08, 0.00080707564, 0.0010711538, 0.0019655759)
+   validation loss 1.054995482263621e-05, (1.2648783e-07, 0.0013472451, 0.0020712211, 0.0019655759)
+decoder loss ratio: 0.000015, decoder SINDy loss  ratio: 0.000158
+params['save_name']
+pendulum_2022_10_15_15_24_29_644056
