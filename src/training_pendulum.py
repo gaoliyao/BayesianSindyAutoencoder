@@ -156,7 +156,7 @@ def train_network(training_data, val_data, params):
                 sindy_model_terms.append(np.sum(params['coefficient_mask']))
 
         print('REFINEMENT')
-        params["learning_rate"] = lr
+        params["learning_rate"] = 1e-4
 #         loss, losses, loss_refinement = define_loss(autoencoder_network, params, sess)
         save_sindy_coeff = np.zeros((110, 12, 1))
         for i_refinement in range(params['refinement_epochs']):
