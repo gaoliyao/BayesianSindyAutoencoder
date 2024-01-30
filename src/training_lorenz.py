@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 import pickle
-from autoencoder import full_network, define_loss_init
+from autoencoder_lorenz import full_network, define_loss_init
 import time, math
 
 def train_network(training_data, val_data, params):
@@ -14,8 +14,7 @@ def train_network(training_data, val_data, params):
     saver = tf.train.Saver(var_list=tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES))
     c_std = params["c_std"]
     epsilon = params["epsilon"]
-    # Update hidden variable via SA
-#     decay = params["decay"]
+
     v0 = epsilon
     v1 = c_std**2
     pi_val = params["pi"]
@@ -48,7 +47,6 @@ def train_network(training_data, val_data, params):
     with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, allow_soft_placement=True)) as sess:
         sess.run(tf.global_variables_initializer())
         for i in range(params['max_epochs']):
-            print("=================", i, " ==================")
             if (i % params['print_frequency'] == 0):
                 print(sess.run(autoencoder_network['p_star']))
                 print(sess.run(autoencoder_network['sindy_coefficients']*params['coefficient_mask']))
@@ -79,7 +77,6 @@ def train_network(training_data, val_data, params):
                     np.save(f, save_sindy_coeff)
                     
             if params['prior'] == "spike-and-slab" and i % 2 == 0:
-#                 print("--- %s seconds for before prior computation ---" % (time.time() - start_time_huge))
                 sindy_coefficients = autoencoder_network['sindy_coefficients']
                 p_star = autoencoder_network['p_star']
                 
@@ -87,7 +84,6 @@ def train_network(training_data, val_data, params):
                 log_b_star = v0_dist.log_prob(sindy_coefficients)
                 b_divide_a = tf.exp(log_b_star-log_a_star) * (1-params["pi"]) / params["pi"]
                 a_divide_a_and_b = 1.0 / (1.0 + b_divide_a)
-                # a_divide_a_and_b = tf.clip_by_value(a_divide_a_and_b, clip_value_min=0, clip_value_max=1)
                 
                 p_star = tf.add(tf.multiply((1 - params["decay"]), p_star), tf.multiply(params["decay"], a_divide_a_and_b))
                 
@@ -95,18 +91,11 @@ def train_network(training_data, val_data, params):
                 autoencoder_network['d_star1'] = tf.add(tf.multiply((1 - params["decay"]), autoencoder_network['d_star1']), tf.multiply(params["decay"], tf.divide(p_star, v1)))
                 autoencoder_network['p_star'] = tf.multiply(p_star, params['coefficient_mask'])
                 
-#                 alpha = 0.001
-#                 noise_std = np.sqrt(2 * alpha * params['learning_rate'])
-#                 noise_ = tf.random.normal(shape = sindy_coefficients.get_shape(), mean=0., stddev=temp*noise_std)
-# #                 noise_ = tf.multiply(noise_, mask)
-#                 autoencoder_network['sindy_coefficients'] = tf.add(sindy_coefficients, noise_)
-
                 if i % 500 == 0:
                     # params["learning_rate"] = 1e-3
                     params["learning_rate"] = 1e-3
                 params["decay"] /= (1.0008)
                 params["learning_rate"] /= (1.0008)
-#                 print("--- %s seconds for after prior computation ---" % (time.time() - start_time_huge))
                 
             if params['print_progress'] and (i % params['print_frequency'] == 0):
                 validation_losses.append(print_progress(sess, i, loss, losses, train_dict, validation_dict, x_norm, sindy_predict_norm_x))
