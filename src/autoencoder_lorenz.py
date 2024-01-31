@@ -4,11 +4,9 @@ import tensorflow as tf
 def full_network(params):
     """
     Define the full network architecture.
-
     Arguments:
         params - Dictionary object containing the parameters that specify the training.
         See README file for a description of the parameters.
-
     Returns:
         network - Dictionary containing the tensorflow objects that make up the network.
     """
@@ -107,7 +105,6 @@ def full_network(params):
 def define_loss_init(network, params):
     """
     Create the loss functions.
-
     Arguments:
         network - Dictionary object containing the elements of the network architecture.
         This will be the output of the full_network() function.
@@ -186,9 +183,7 @@ def linear_autoencoder(x, input_dim, d):
 def nonlinear_autoencoder(x, input_dim, latent_dim, widths, activation='elu'):
     """
     Construct a nonlinear autoencoder.
-
     Arguments:
-
     Returns:
         z -
         x_decode -
@@ -216,7 +211,6 @@ def nonlinear_autoencoder(x, input_dim, latent_dim, widths, activation='elu'):
 def build_network_layers(input, input_dim, output_dim, widths, activation, name):
     """
     Construct one portion of the network (either encoder or decoder).
-
     Arguments:
         input - 2D tensorflow array, input to the network (shape is [?,input_dim])
         input_dim - Integer, number of state variables in the input to the first layer
@@ -224,7 +218,6 @@ def build_network_layers(input, input_dim, output_dim, widths, activation, name)
         widths - List of integers representing how many units are in each network layer
         activation - Tensorflow function to be used as the activation function at each layer
         name - String, prefix to be used in naming the tensorflow variables
-
     Returns:
         input - Tensorflow array, output of the network layers (shape is [?,output_dim])
         weights - List of tensorflow arrays containing the network weights
@@ -339,14 +332,12 @@ def build_network_layers(input, input_dim, output_dim, widths, activation, name)
 def sindy_library_tf(z, latent_dim, poly_order, include_sine=False):
     """
     Build the SINDy library.
-
     Arguments:
         z - 2D tensorflow array of the snapshots on which to build the library. Shape is number of
         time points by the number of state variables.
         latent_dim - Integer, number of state variable in z.
         poly_order - Integer, polynomial order to which to build the library. Max value is 5.
         include_sine - Boolean, whether or not to include sine terms in the library. Default False.
-
     Returns:
         2D tensorflow array containing the constructed library. Shape is number of time points by
         number of library functions. The number of library functions is determined by the number
@@ -438,7 +429,6 @@ def sindy_library_tf_order2(z, dz, latent_dim, poly_order, include_sine=False):
 def z_derivative(input, dx, weights, biases, activation='elu'):
     """
     Compute the first order time derivatives by propagating through the network.
-
     Arguments:
         input - 2D tensorflow array, input to the network. Dimensions are number of time points
         by number of state variables.
@@ -448,7 +438,6 @@ def z_derivative(input, dx, weights, biases, activation='elu'):
         activation - String specifying which activation function to use. Options are
         'elu' (exponential linear unit), 'relu' (rectified linear unit), 'sigmoid',
         or linear.
-
     Returns:
         dz - Tensorflow array, first order time derivatives of the network output.
     """
@@ -482,7 +471,6 @@ def z_derivative(input, dx, weights, biases, activation='elu'):
 def z_derivative_order2(input, dx, ddx, weights, biases, activation='elu'):
     """
     Compute the first and second order time derivatives by propagating through the network.
-
     Arguments:
         input - 2D tensorflow array, input to the network. Dimensions are number of time points
         by number of state variables.
@@ -493,7 +481,6 @@ def z_derivative_order2(input, dx, ddx, weights, biases, activation='elu'):
         activation - String specifying which activation function to use. Options are
         'elu' (exponential linear unit), 'relu' (rectified linear unit), 'sigmoid',
         or linear.
-
     Returns:
         dz - Tensorflow array, first order time derivatives of the network output.
         ddz - Tensorflow array, second order time derivatives of the network output.

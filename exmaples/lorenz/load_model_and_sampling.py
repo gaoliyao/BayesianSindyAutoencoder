@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 from example_lorenz import get_lorenz_data
 from sindy_utils import library_size
-from training_lorenz import train_network
+from training import load_network
 import tensorflow as tf
 
 from tensorflow.python.client import device_lib
@@ -23,9 +23,7 @@ print(device_lib.list_local_devices())
 noise_strength = 1e-6
 
 print("Start of data generation")
-# training_data = get_lorenz_data(1024, noise_strength=noise_strength)
 training_data = get_lorenz_data(1024, noise_strength=noise_strength)
-# training_data = get_lorenz_data(2048, noise_strength=noise_strength)
 validation_data = get_lorenz_data(20, noise_strength=noise_strength)
 print("End of data generation")
 
@@ -94,8 +92,10 @@ for i in range(num_experiments):
     params['save_name'] = 'lorenz_' + datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S_%f")
 
     tf.reset_default_graph()
+    print(type(training_data))
+    print(training_data)
 
-    results_dict = train_network(training_data, validation_data, params)
+    results_dict = load_network(training_data, validation_data, params)
     
     print("training finished")
     
