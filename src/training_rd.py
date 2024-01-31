@@ -63,7 +63,6 @@ def train_network(training_data, val_data, params):
     with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, allow_soft_placement=True)) as sess:
         sess.run(tf.global_variables_initializer())
         for i in range(params['max_epochs']):
-            print("=================", i, " ==================")
             if (i % params['print_frequency'] == 0):
                 print(sess.run(autoencoder_network['p_star']))
                 print(sess.run(autoencoder_network['sindy_coefficients']*params['coefficient_mask']))

@@ -24,15 +24,15 @@ params['library_dim'] = library_size(params['latent_dim'], params['poly_order'],
 # sequential thresholding parameters
 params['sequential_thresholding'] = True
 params['coefficient_threshold'] = 0.1
-params['threshold_frequency'] = 500
+params['threshold_frequency'] = 250
 params['threshold_start'] = 0
 params['coefficient_mask'] = np.ones((params['library_dim'], params['latent_dim']))
 params['coefficient_initialization'] = 'normal'
 
 # loss function weighting
 params['loss_weight_decoder'] = 1.0
-params['loss_weight_sindy_z'] = 0.05
-params['loss_weight_sindy_x'] = 0.5
+params['loss_weight_sindy_z'] = 0.01
+params['loss_weight_sindy_x'] = 0.1
 
 params['activation'] = 'sigmoid'
 params['widths'] = [256]
