@@ -1,6 +1,6 @@
 # Bayesian Sindy Autoencoders
 
-Code for the paper **Bayesian autoencoders for data-driven discovery of coordinates, governing equations and fundamental constants** by Liyao Mars Gao and J. Nathan Kutz. This work is based on the prior work 'Data-driven discovery of coordinates and governing equations' PNAS, and the implementation is built upon Kathleen Champion's open-source software https://github.com/kpchamp/SindyAutoencoders. 
+Code for the paper **Bayesian autoencoders for data-driven discovery of coordinates, governing equations and fundamental constants** by Liyao Mars Gao and J. Nathan Kutz in Proceedings of the Royal Society A: Mathematical, Physical and Engineering Sciences. This work is based on the prior work 'Data-driven discovery of coordinates and governing equations' PNAS, and the implementation is built upon Kathleen Champion's open-source software https://github.com/kpchamp/SindyAutoencoders. 
 
 ## Installation of related dependencies
 
@@ -29,7 +29,7 @@ We open source the pendulum video data in this link: https://drive.google.com/fi
 
 ## Future works
 
-Our group and myself is working on a stronger version for GoPro physics. Stay tuned for our future works. If you're interested in citing our work, please use the following for proper citation. The formal version is expected to appear soon in the Proceedings of the Royal Society A, and we are very excited about the results. 
+We have a stronger version for GoPro physics ready for future works so please stay tuned. If you're interested in citing our work, please use the following for proper citation. 
 
 ```
 @article{gao2022bayesian,
