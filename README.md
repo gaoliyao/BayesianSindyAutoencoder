@@ -1,9 +1,11 @@
 # Bayesian Sindy Autoencoders
 
+Code for the paper **Bayesian autoencoders for data-driven discovery of coordinates, governing equations and fundamental constants** by Liyao Mars Gao and J. Nathan Kutz in Proceedings of the Royal Society A: Mathematical, Physical and Engineering Sciences. This work is based on the prior work 'Data-driven discovery of coordinates and governing equations' PNAS, and the implementation is built upon Kathleen Champion's open-source software https://github.com/kpchamp/SindyAutoencoders. 
+
+
 <img width="1154" alt="Screen Shot 2024-06-27 at 5 06 16 PM" src="https://github.com/gaoliyao/BayesianSindyAutoencoder/assets/14102784/eb57cf68-c943-401a-81c7-fcd4cccfb965">
 
 
-Code for the paper **Bayesian autoencoders for data-driven discovery of coordinates, governing equations and fundamental constants** by Liyao Mars Gao and J. Nathan Kutz in Proceedings of the Royal Society A: Mathematical, Physical and Engineering Sciences. This work is based on the prior work 'Data-driven discovery of coordinates and governing equations' PNAS, and the implementation is built upon Kathleen Champion's open-source software https://github.com/kpchamp/SindyAutoencoders. 
 
 ## Installation of related dependencies
 
