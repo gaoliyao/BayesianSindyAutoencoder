@@ -37,10 +37,14 @@ We open source the pendulum video data in this link: https://drive.google.com/fi
 We have a stronger version for GoPro physics ready for future works so please stay tuned. If you're interested in citing our work, please use the following for proper citation. 
 
 ```
-@article{gao2022bayesian,
+@article{mars2024bayesian,
   title={Bayesian autoencoders for data-driven discovery of coordinates, governing equations and fundamental constants},
-  author={Gao, L and Kutz, J Nathan},
-  journal={arXiv preprint arXiv:2211.10575},
-  year={2022}
+  author={Mars Gao, L and Nathan Kutz, J},
+  journal={Proceedings of the Royal Society A},
+  volume={480},
+  number={2286},
+  pages={20230506},
+  year={2024},
+  publisher={The Royal Society}
 }
 ```
